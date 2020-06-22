@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-06-20 18:40:27
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-06-22 00:20:26
+ * @LastEditTime: 2020-06-22 09:36:20
  * @FilePath: /js-demo/data-structures/DoublyLinkList/DoublyLinkList.test.js
  */ 
 
@@ -38,11 +38,18 @@ describe('双向链表', () => {
         const doublyLinkList = new DoublyLinkList()
         expect(doublyLinkList.append(1)).to.equal(1)
         expect(doublyLinkList.toString()).to.equal('1')
+        expect(doublyLinkList.head.data).to.equal(1)
+        expect(doublyLinkList.rear.data).to.equal(1)
         expect(doublyLinkList.add(1,2)).to.equal(2)
         expect(doublyLinkList.toString()).to.equal('1,2')
+        expect(doublyLinkList.rear.data).to.equal(2)
         expect(doublyLinkList.add(2,3)).to.equal(3)
+        expect(doublyLinkList.head.data).to.equal(1)
+        expect(doublyLinkList.rear.data).to.equal(3)
         expect(doublyLinkList.toString()).to.equal('1,2,3')
         expect(doublyLinkList.add(3, 4)).to.equal(4)
+        expect(doublyLinkList.head.data).to.equal(1)
+        expect(doublyLinkList.rear.data).to.equal(4)
         expect(doublyLinkList.toString()).to.equal('1,2,3,4')
     })
 

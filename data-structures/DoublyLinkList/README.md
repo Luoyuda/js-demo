@@ -109,6 +109,7 @@ class DoublyLinkList {
     add(el, data){
         // 查找到要插入的节点
         let curr = this.contains(el)
+        if(curr == this.rear) return this.append(data)
         // 如果不存在 返回 null
         if(!curr) throw null
         // 初始化一个节点 node

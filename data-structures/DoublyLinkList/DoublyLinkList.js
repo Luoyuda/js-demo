@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-06-20 09:58:25
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-06-22 00:21:40
+ * @LastEditTime: 2020-06-22 09:34:40
  * @FilePath: /js-demo/data-structures/DoublyLinkList/DoublyLinkList.js
  */ 
 class DoublyLinkList {
@@ -23,6 +23,7 @@ class DoublyLinkList {
         let curr = this.contains(el)
         // 如果不存在 返回 null
         if(!curr) throw null
+        if(curr == this.rear) return this.append(data)
         // 初始化一个节点 node
         let node = this.node(data)
         // 取出插入节点 curr 的 next
