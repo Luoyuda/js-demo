@@ -1,4 +1,4 @@
-# 双向循环链表（CircularLinkedList）
+# 双向循环链表（CircularDoublyLinkList）
 
 ## 双向循环链表
 
