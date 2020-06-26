@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-06-20 18:40:27
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-06-21 09:00:52
+ * @LastEditTime: 2020-06-24 15:36:58
  * @FilePath: /js-demo/data-structures/LinkList/LinkList.test.js
  */ 
 
@@ -91,6 +91,7 @@ describe('单链表', () => {
         expect(linkList.add(1, 2)).to.equal(2)
         expect(linkList.add(2, 3)).to.equal(3)
         expect(linkList.add(5, 6)).to.equal(6)
+        expect(linkList.rear.data).to.equal(6)
         expect(linkList.toString()).to.equal('1,2,3,4,5,6')
         expect(linkList.toArray()).to.eql([1,2,3,4,5,6])
     })

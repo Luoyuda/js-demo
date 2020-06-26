@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-06-20 15:37:12
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-06-24 09:56:55
+ * @LastEditTime: 2020-06-24 10:47:38
  * @FilePath: /js-demo/data-structures/Stack/Stack.js
  */ 
 const { LinkList } = require('../LinkList/LinkList')
@@ -63,7 +63,7 @@ class Stack {
     }
     push(data){
         let curr = this.list.push(data)
-        return curr
+        return data
     }
     peek(){
         return this.top() >= 0 && this.list[this.top()] || null

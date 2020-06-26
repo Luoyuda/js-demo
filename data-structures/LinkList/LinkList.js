@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-06-20 09:58:25
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-06-21 09:00:32
+ * @LastEditTime: 2020-06-24 15:38:43
  * @FilePath: /js-demo/data-structures/LinkList/LinkList.js
  */ 
 class LinkList {
@@ -23,6 +23,8 @@ class LinkList {
         let curr = this.contains(el)
         // 如果不存在 返回 null
         if(!curr) throw null
+        // 如果 curr 是尾节点
+        if(curr == this.rear) return this.append(data)
         // 初始化一个节点 node
         let node = this.node(data)
         // 取出插入节点 curr 的 next
