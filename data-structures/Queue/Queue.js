@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-06-20 15:37:12
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-06-24 10:50:23
+ * @LastEditTime: 2020-06-30 08:45:23
  * @FilePath: /js-demo/data-structures/Queue/Queue.js
  */ 
 const { LinkList } = require('../LinkList/LinkList')
@@ -50,6 +50,7 @@ class QueueStack {
         return this.s1.isEmpty() && this.s2.isEmpty()
     }
     front(){
+        if(!this.s2.isEmpty()) return
         while(!this.s1.isEmpty()){
             this.s2.push(this.s1.pop())
         }
