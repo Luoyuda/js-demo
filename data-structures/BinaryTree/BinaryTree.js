@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-06-30 21:30:26
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-07-01 23:33:02
+ * @LastEditTime: 2020-07-04 15:32:28
  * @FilePath: /js-demo/data-structures/BinaryTree/BinaryTree.js
  */ 
 const { Queue } = require('../Queue/Queue')
@@ -122,6 +122,8 @@ const TreeNode = function(data) {
     this.data = data
     this.leftChild = null
     this.rightChild = null
+    this.lTag = 0
+    this.rTag = 0
 }
 // 使用前序顺序生成
 const createBinaryTree = function(list){
@@ -136,12 +138,35 @@ const createBinaryTree = function(list){
     return node
 }
 
+// 二叉树线索化
+let pre = null
+const ThreadedInOrderTraversal = function(treeNode, res=[]) {
+    if(!treeNode) return []
+    // 取左子树
+    ThreadedInOrderTraversal(treeNode.leftChild, res)
+    if(!treeNode.leftChild){
+        treeNode.lTag = 1
+        treeNode.leftChild = pre
+    }
+    // 取中间节点
+    res.push(treeNode.data)
+    if(pre && !pre.rightChild){
+        pre.rTag = 1
+        pre.rightChild = treeNode
+    }
+    pre = treeNode
+    // 最后取右子树
+    ThreadedInOrderTraversal(treeNode.rightChild, res)
+    return res
+}
+
 module.exports = {
     createBinaryTree,
     preOrderTraversal,
     preOrderTraversalByStack,
     inOrderTraversal,
     inOrderTraversalByStack,
+    ThreadedInOrderTraversal,
     postOrderTraversal,
     postOrderTraversalByStack,
     levelOrderTraversal

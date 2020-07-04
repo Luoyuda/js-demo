@@ -213,3 +213,36 @@ const createBinaryTree = function(list){
     return node
 }
 ```
+
+
+## 线索二叉树
+
+指向前驱和后继的指针称为线索，加上线索的二叉链表称为线索链表，相应的二叉树就被称为线索二叉树
+
+### 原理
+
+把二叉树进行中序遍历之后，把所有空指针中rightChild指向它的后继节点，把leftChild指向前驱节点，这个过程称为线索化。需要通过 ltag 跟 rtag 的值 0/1 来区分是左右孩子还前驱后继
+
+```js
+// 二叉树线索化
+let pre = null
+const ThreadedInOrderTraversal = function(treeNode, res=[]) {
+    if(!treeNode) return []
+    // 取左子树
+    ThreadedInOrderTraversal(treeNode.leftChild, res)
+    if(!treeNode.leftChild){
+        treeNode.lTag = 1
+        treeNode.leftChild = pre
+    }
+    // 取中间节点
+    res.push(treeNode.data)
+    if(pre && !pre.rightChild){
+        pre.rTag = 1
+        pre.rightChild = treeNode
+    }
+    pre = treeNode
+    // 最后取右子树
+    ThreadedInOrderTraversal(treeNode.rightChild, res)
+    return res
+}
+```
