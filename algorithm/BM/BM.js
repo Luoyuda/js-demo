@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-06-28 17:06:04
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-06-30 20:46:04
+ * @LastEditTime: 2020-07-05 20:31:01
  * @FilePath: /js-demo/algorithm/BM/BM.js
  */ 
 // 坏字符散列表
@@ -64,6 +64,7 @@ const BM = (S='', T='', pos=0) => {
     let t = T.length
     let s = S.length
     if(!s || !t) return -1
+    const bmBc = generateBmBc(T)
     const { suffix, prefix } = generateBmGs(T)
     let i = pos
     while(i <= s - t){

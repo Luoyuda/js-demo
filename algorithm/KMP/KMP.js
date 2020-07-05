@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-06-28 11:08:16
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-06-28 17:23:03
+ * @LastEditTime: 2020-07-05 20:30:48
  * @FilePath: /js-demo/algorithm/KMP/KMP.js
  */ 
 
@@ -106,7 +106,7 @@ const KMP = (S='', T='', pos=0) => {
         } else {
             // j 回溯到 next 数组提示到回溯位置
             // j 回溯到最初到位置
-            j = j > 0 ? next[j - 1] : 0
+            j = j > 0 ? next[j] : 0
             i++
         }
     }
