@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-06-28 11:14:33
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-07-14 16:52:28
+ * @LastEditTime: 2020-07-14 17:22:22
  * @FilePath: /js-demo/data-structures/HuffmanTree/HuffmanTree.test.js
  */ 
 
