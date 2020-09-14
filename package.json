@@ -1,0 +1,26 @@
+{
+  "name": "js-demo",
+  "version": "1.0.0",
+  "description": "<!--  * @Author: xiaohuolong  * @Date: 2020-06-06 20:46:21  * @LastEditors: xiaohuolong  * @LastEditTime: 2020-06-26 12:52:38  * @FilePath: /js-demo/README.md -->  # javascript",
+  "main": "index.js",
+  "scripts": {
+    "watch": "onchange --await-write-finish 500 -i \"**/*.js\" -- cross-env change='{{changed}}' node scripts/change.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Luoyuda/js-demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Luoyuda/js-demo/issues"
+  },
+  "devDependencies": {
+    "chalk": "^4.1.0",
+    "cross-env": "^7.0.2",
+    "onchange": "^7.0.2",
+    "shelljs": "^0.8.4"
+  },
+  "homepage": "https://github.com/Luoyuda/js-demo#readme"
+}

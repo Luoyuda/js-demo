@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-07-14 17:22:53
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-07-17 18:00:45
+ * @LastEditTime: 2020-09-14 16:04:28
  * @FilePath: /js-demo/leetcode/1373.js
  */ 
 class BinarySearchTree {
@@ -113,11 +113,11 @@ const levelOrderTraversal = function(treeNode) {
     let res = []
     while (queue.length) {
         let node = queue.shift()
-        res.push(node.val)
-        if(node.left != null) {
+        if(node == null){
+            res.push(null)
+        }else{
+            res.push(node.val)
             queue.push(node.left)
-        }
-        if(node.right != null) {
             queue.push(node.right)
         }
     }
@@ -134,19 +134,38 @@ const isBST = (root, min=-Infinity, max=Infinity) => {
         && isBST(root.right, root.val, max);
 }
 
-const maxSumBST = (node) => {
-    if (!node) return 0;
-    // 这个节点是BST，直接求和了
-    if (isBST(node)) {
-        // 是二叉搜索树，求节点和，节点和的最优解，肯定在子节点求和的过程中
-        // console.log(node)
-        return Math.max(inOrderTraversal(node), maxSumBST(node.left), maxSumBST(node.right))
+var maxSumBST = function(root) {
+    // 计算二叉树最大和
+    function dfs(root){
+      // 四元组分别表示当前子树为二叉搜索树、子树最小值、子树最大值，
+      // 以及当前二叉搜索树数值求和
+        if(!root) return [true,Infinity,-Infinity,0]
+        const left=dfs(root.left)
+        const right=dfs(root.right)
+    
+        let sum=0,curMax,curMin;
+
+        // 判断是否为二叉搜索树。当前节点比左子树最大值小或者比右子树最小值大都不是搜索树
+        if(!left[0]||!right[0] 
+            || root.val<=left[2]||root.val>=right[1]){
+            return [false,0,0,0]
+        }
+    
+        // 包含当前节点的二叉搜索树中节点值范围[左子树最小值,右子树最大值]
+        curMin=root.left?left[1]:root.val;
+        curMax=root.right?right[2]:root.val;
+    
+        // 先计算临时和，再与当前最大和比较。类似数组求最大和的过程
+        sum+=left[3]+right[3]+root.val;
+        max=Math.max(max,sum)
+        
+    
+        return [true,curMin,curMax,sum]
     }
-    // 不是BST，递归进入左右子树
-    return Math.max(maxSumBST(node.left), maxSumBST(node.right))
+    let max=0;
+    dfs(root)
+    return max;
 }
-
-
 // 中序遍历
 const inOrderTraversal = function(treeNode, res=0) {
     if(!treeNode) return 0
@@ -171,23 +190,40 @@ function TreeNode(val, left, right) {
 //     new TreeNode(3,
 //         new TreeNode(2), new TreeNode(5, new TreeNode(4), new TreeNode(6)))
 //     )
-// 使用前序顺序生成
+// 使用层序遍历生成
 const createBinaryTree = function(list){
     let node = null
-    if(list == null || list.length == 0) return null 
+    if(list == null || list.length == 0) return node 
+    let nodes = []
     let data = list.shift()
-    if(data) {
-        node = new TreeNode(data)
-        node.left = createBinaryTree(list, node.left)
-        node.right = createBinaryTree(list, node.right)
+    let preNode =  node = new TreeNode(data)
+    nodes.push(node)
+    while(nodes.length){
+        let leftNode = null
+        let rightNode = null
+        if(list.length > 0){
+            let left = list.length > 0 ? list.shift() : null
+            leftNode = left != null ? new TreeNode(left) : null
+            nodes.push(leftNode)
+            let right = list.length > 0 ? list.shift() : null
+            rightNode = right != null ? new TreeNode(right) : null
+            nodes.push(rightNode)
+        }
+        node = nodes.shift()
+        if(node){
+            node.left = leftNode
+            node.right = rightNode
+        }
     }
-    return node
+    return preNode
 }
-const root1 = createBinaryTree([4,8,6,9,null,null,null,1,-5,null,-3,null,null,4,null,10,null,null,null])
-// const root1 = createBinaryTree([4,8,6,9])
-console.log(root1)
-console.log(root1.left.left)
-    // 
-// console.log(levelOrderTraversal(root1))
+// const root1 = createBinaryTree([4,8,6,9,null,null,null,1,-5,null,-3,null,null,4,null,10,null,null,null])
+// const root1 = createBinaryTree([1,4,3,2,4,2,5,null,null,null,null,null,null,4,6])
+const root1 = createBinaryTree([4,8,null,6,1,9,null,-5,4,null,null,null,-3,null,10])
+// const root1 = createBinaryTree([1,4,3])
+// console.log(root1)
+// console.log(root1.left)
+// console.log(root1.right)
+console.log(levelOrderTraversal(root1))
 
 console.log(maxSumBST(root1))

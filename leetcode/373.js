@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-07-12 17:37:52
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-07-13 16:39:17
+ * @LastEditTime: 2020-09-14 11:45:37
  * @FilePath: /js-demo/leetcode/373.js
  */
 const { Heap } = require('../data-structures/Heap/Heap.js')
@@ -50,6 +50,6 @@ var kSmallestPairs = function(nums1, nums2, k) {
     }
     return res
 };
-// console.log(kSmallestPairs([1,7,11],[2,4,6], 3))
-console.log(kSmallestPairs([1,1,2],[1,2,3], 2))
+console.log(kSmallestPairs([1,7,11],[2,4,6], 3))
+// console.log(kSmallestPairs([1,1,2],[1,2,3], 2))
 
