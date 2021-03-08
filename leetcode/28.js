@@ -2,10 +2,24 @@
  * @Author: xiaohuolong
  * @Date: 2020-07-05 19:40:15
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-07-07 00:40:05
+ * @LastEditTime: 2021-03-03 14:16:53
  * @FilePath: /js-demo/leetcode/28.js
  */ 
-
+/*
+    28. 实现 strStr()
+    实现 strStr() 函数。
+        给定一个 haystack 字符串和一个 needle 字符串，在 haystack 字符串中找出 
+        needle 字符串出现的第一个位置 (从0开始)。如果不存在，则返回  -1。
+    示例 1:
+        输入: haystack = "hello", needle = "ll"
+        输出: 2
+    示例 2:
+        输入: haystack = "aaaaa", needle = "bba"
+        输出: -1
+    说明:
+        当 needle 是空字符串时，我们应当返回什么值呢？这是一个在面试中很好的问题。
+        对于本题而言，当 needle 是空字符串时我们应当返回 0 。这与C语言的 strstr() 以及 Java的 indexOf() 定义相符。
+*/
 // 推导 Next 数组
 const getNext = (string) => {
     // 前缀变量
@@ -42,6 +56,7 @@ const strStr = (S='', T='') => {
     let i = 0
     let j = 0
     let next = getNext(T)
+    console.log(next)
     while(i < S.length && j < T.length){
         if (S[i] === T[j]) {
             j++
@@ -94,35 +109,35 @@ const Sunday = (S='', T='', pos=0) => {
     return j >= tLen ? i - tLen : -1
 }
 
-let s1 = 'abcbcglx'
-let t11 = 'abca'
-let r11 = -1
-let t12 = 'bcgl'
-let r12 = 3
-let s2 = 'abcxabcdabxabcdabcdabcy'
-let t21 = 'abcdabcy'
-let r21 = 15
-let t22 = 'abcdabca'
-let r22 = -1
-let s3 = 'abcxabcdabxaabcdabcabcdabcdabcy'
-let t31 = 'abcdabca'
-let r31 = 12
-let t32 = 'aabaabaaa'
-let r32 = -1
-    console.log(Sunday('', ''),-1);
-    console.log(Sunday('a', ''),-1);
-    // console.log(Sunday('a', 'a'),0);
-    console.log(Sunday(s1, t11),r11);
-    console.log(Sunday(s1, t12),r12);
-    console.log(Sunday(s2, t21),r21);
-    console.log(Sunday(s2, t22),r22);
-    console.log(Sunday(s3, t31),r31);
-    console.log(Sunday(s3, t32),r32);
+// let s1 = 'abcbcglx'
+// let t11 = 'abca'
+// let r11 = -1
+// let t12 = 'bcgl'
+// let r12 = 3
+// let s2 = 'abcxabcdabxabcdabcdabcy'
+// let t21 = 'abcdabcy'
+// let r21 = 15
+// let t22 = 'abcdabca'
+// let r22 = -1
+// let s3 = 'abcxabcdabxaabcdabcabcdabcdabcy'
+// let t31 = 'abcdabca'
+// let r31 = 12
+// let t32 = 'aabaabaaa'
+// let r32 = -1
+//     console.log(Sunday('', ''),-1);
+//     console.log(Sunday('a', ''),-1);
+//     // console.log(Sunday('a', 'a'),0);
+//     console.log(Sunday(s1, t11),r11);
+//     console.log(Sunday(s1, t12),r12);
+//     console.log(Sunday(s2, t21),r21);
+//     console.log(Sunday(s2, t22),r22);
+//     console.log(Sunday(s3, t31),r31);
+//     console.log(Sunday(s3, t32),r32);
 
-// console.log('Sunday: ', Sunday('helilillo', 'll'))
-// console.log('Sunday: ', Sunday('mississippi', 'issip'))
-// console.log('Sunday: ', Sunday('mississippipi', 'issi'))
-console.log('Sunday: ', Sunday('mississippipi', 'pi'))
+// // console.log('Sunday: ', Sunday('helilillo', 'll'))
+// // console.log('Sunday: ', Sunday('mississippi', 'issip'))
+// // console.log('Sunday: ', Sunday('mississippipi', 'issi'))
+// console.log('Sunday: ', Sunday('mississippipi', 'pi'))
 // m i s s i s s i p p i    =>  p i
 // 0 1 2 3 4 5 6 7 8 9 10   =>  0 1
 // i = 0 j = 0 S[0 - 0 + 2] = s next = 3 => j = 0 i = 3
@@ -134,6 +149,48 @@ console.log('Sunday: ', Sunday('mississippipi', 'pi'))
 // console.log('Sunday: ', Sunday('hello', 'll'))
 // console.log(strStr('mississippi', 'issip'))
 // console.log(strStr('mississippi', 'a'))
+let strStr1 = (S, T) => {
+    let getNext = (T) => {
+        let j = -1
+        let next = [j]
+        for (let i = 1; i < T.length; i++) {
+            while (j >= 0 && T[i] != T[j + 1]) { // 前后缀不相同了
+                j = next[j]; // 向前回溯
+            }
+            if(T[i] == T[j + 1]) j++
+            next[i] = j
+        }
+        return next
+    }
+    if (T.length == 0) return 0;
+    let next = getNext(T)
+    let j = -1; // 因为next数组里记录的起始位置为-1
+    for (let i = 0; i < S.length; i++) { // 注意i就从0开始
+        while(j >= 0 && S[i] != T[j + 1]) { // 不匹配
+            j = next[j]; // j 寻找之前匹配的位置
+        }
+        if (S[i] == T[j + 1]) { // 匹配，j和i同时向后移动
+            j++; // i的增加在for循环里
+        }
+        if (j == (T.length - 1) ) { // 文本串s里出现了模式串t
+            return (i - T.length + 1);
+        }
+    }
+    return -1;
+}
+var strStr2 = (S, T) => {
+    if(!T.length) return 0
+    if(T.length == S.length) return S == T ? 0 : -1
+    for (let i = 0; i < S.length - T.length + 1; i++) {
+        if(S[i] != T[0]) continue
+        if(S.substring(i, T.length + i) == T){
+            return i
+        }
+    }
+    return -1
+}
+// console.log(strStr2('aabaabaafa', 'aabaaf'))
+console.log(strStr2('abc', 'c'))
 // console.log(getNextStr([5,'i','s','s','i','p']))
 
 

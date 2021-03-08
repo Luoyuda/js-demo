@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-06-29 11:41:19
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-06-29 11:41:22
+ * @LastEditTime: 2021-03-04 18:03:32
  * @FilePath: /js-demo/leetcode/1.js
  */ 
 var twoSum = function(nums, target) {
@@ -21,3 +21,5 @@ var twoSum = function(nums, target) {
     }
     return res
 }
+
+console.log(twoSum([2,7,11,15], 9))
