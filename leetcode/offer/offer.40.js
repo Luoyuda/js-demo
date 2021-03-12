@@ -2,12 +2,12 @@
  * @Author: xiaohuolong
  * @Date: 2020-07-09 17:41:31
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-07-09 21:41:24
- * @FilePath: /js-demo/leetcode/offer.40.js
+ * @LastEditTime: 2021-03-12 10:09:04
+ * @FilePath: /js-demo/leetcode/offer/offer.40.js
  */ 
 
 
-const { Heap } = require('../data-structures/Heap/Heap.js')
+const { Heap } = require('../../data-structures/Heap/Heap.js')
 
 class KthLargest extends Heap {
     constructor(max, list){
