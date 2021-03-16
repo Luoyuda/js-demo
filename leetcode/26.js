@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-07-08 00:13:19
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-07-08 21:43:31
+ * @LastEditTime: 2021-03-15 08:17:51
  * @FilePath: /js-demo/leetcode/26.js
  */ 
 var removeDuplicates = function(nums) {
@@ -20,5 +20,5 @@ var removeDuplicates = function(nums) {
     return nums.length
 };
 
-// console.log(removeDuplicates([0,0,1,1,1,2,2,3,3,4]))
+console.log(removeDuplicates([0,0,1,1,1,2,2,3,3,4]))
 // console.log(removeDuplicates([1,1,2,3]))
