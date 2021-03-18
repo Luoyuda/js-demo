@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2020-06-29 22:17:27
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-06-30 08:31:37
- * @FilePath: /js-demo/leetcode/3.js
+ * @LastEditTime: 2021-03-16 17:46:03
+ * @FilePath: /js-demo/leetcode/常规题目/3.js
  */ 
 /**
  * @param {string} s
@@ -61,3 +61,28 @@ var lengthOfLongestSubstring2 = (string) => {
     }
     return num
 }
+
+var lengthOfLongestSubstring = (string) => {
+    let left = 0
+    let right = -1
+    let max = 0
+    if(!string.length) return max
+    let set = new Set()
+    while (left < string.length){
+        // console.log(left, right)
+        // console.log(string[left], string[right])
+        if(left != 0) set.delete(string[left - 1])
+        while(right + 1 < string.length){
+            if(set.has(string[right+1])) break
+            set.add(string[++right])
+        }
+        // console.log(right - left, max)
+        max = Math.max(max, right - left + 1)
+        left++
+    }
+    return max
+}
+
+console.log(lengthOfLongestSubstring('abceabcefdb'))
+console.log(lengthOfLongestSubstring('bbbbbbbb'))
+console.log(lengthOfLongestSubstring("pwwkew"))

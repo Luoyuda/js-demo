@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-23 10:09:38
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-23 10:32:11
- * @FilePath: /js-demo/leetcode/15.js
+ * @LastEditTime: 2021-03-16 17:23:28
+ * @FilePath: /js-demo/leetcode/常规题目/15.js
  */
 /**
  * @param {number[]} nums
@@ -77,5 +77,43 @@ var threeSum = function(nums) {
     }
     return res
 };
+
+var threeSum = function(nums) {
+    // 结果数组
+    let res = []
+    let len = nums.length
+    // 少于三个数
+    if(len < 2) return res
+    // 先排序
+    nums.sort((a, b) => a - b)
+    // console.log(nums)
+    for (let i = 0; i < len - 2; i++) {
+        const num = nums[i];
+        // 大于0后续都是正数，直接跳出
+        if(num > 0) break
+        if(i > 0 && num == nums[i - 1]) continue
+        let left = i + 1
+        let right = len - 1
+        while(left < right){
+            let sum = num + nums[left] + nums[right]
+            if(sum == 0){
+                res.push([num, nums[left], nums[right]])
+                while(left < right && nums[left] == nums[left + 1]){
+                    left++
+                }
+                while(left < right && nums[right] == nums[right - 1]){
+                    right--
+                }
+                left++
+                right--
+            }else if(sum > 0){
+                right--
+            }else if(sum < 0){
+                left++
+            }
+        }
+    }
+    return res
+}
 
 console.log(threeSum([-1,0,1,2,-1,-4]))
