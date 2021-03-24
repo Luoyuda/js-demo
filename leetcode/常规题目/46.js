@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-18 14:12:03
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-18 15:20:20
- * @FilePath: /js-demo/leetcode/46.js
+ * @LastEditTime: 2021-03-23 12:43:21
+ * @FilePath: /js-demo/leetcode/常规题目/46.js
  */
 /**
  * @param {number[]} nums
@@ -44,4 +44,27 @@ var permute = function (nums) {
     dfs([]);
     return res;
 };
+
+
+
+var permute = function (nums) {
+    let res = []
+    let vis = {}
+    let len = nums.length
+    let dfs = (t) => {
+        if(t.length == len) return res.push(t)
+        for (let i = 0; i < nums.length; i++) {
+            const num = nums[i];
+            if(vis[num]) continue
+            vis[num] = true
+            t.push(num)
+            dfs(t.slice())
+            t.pop()
+            vis[num] = false
+        }
+    }
+    dfs([])
+    return res
+}
+
 console.log(permute([1,2,3]))

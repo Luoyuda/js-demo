@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-16 09:47:31
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-16 10:20:25
- * @FilePath: /js-demo/leetcode/322.js
+ * @LastEditTime: 2021-03-21 19:03:31
+ * @FilePath: /js-demo/leetcode/常规题目/322.js
  */
 /**
  * @param {number[]} coins
@@ -33,7 +33,23 @@
         1 <= coins.length <= 12
         1 <= coins[i] <= 231 - 1
         0 <= amount <= 104
-        */
+*/
+var coinChange = function(coins, amount) {
+    // f(X) = min(f(X-2)+1, f(X-5)+1, f(X-7)+1)
+    let dp = []
+    dp[0] = 0
+    for (let i = 1; i <= amount; i++) {
+        let min = Infinity
+        for (let j = 0; j < coins.length; j++) {
+            const coin = coins[j];
+            if(coin > i) continue
+            min = Math.min(min, dp[i - coin] != undefined ? dp[i - coin] + 1 : Infinity)
+        }
+        dp[i] = min
+    }
+    return dp[amount] == Infinity ? -1 : dp[amount]
+};
+
 var coinChange = function(coins, amount) {
     // f(X) = min(f(X-2)+1, f(X-5)+1, f(X-7)+1)
     let dp = []

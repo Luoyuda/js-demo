@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-15 16:56:11
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-15 17:17:34
+ * @LastEditTime: 2021-03-20 23:17:45
  * @FilePath: /js-demo/leetcode/offer/offer.63.js
  */
 /*
@@ -52,4 +52,19 @@ var maxProfit = function(prices) {
 };
 // @lc code=end
 
+var maxProfit = function(prices) {
+    // f(x) = max(f(x-1), prices(i) - min)
+    let prev = 0
+    let min = Infinity
+    let max = 0
+    for (let i = 0; i < prices.length; i++) {
+        min = Math.min(prices[i], min)
+        prev = Math.max(prev, prices[i] - min)
+        max = Math.max(max, prev)
+    }
+    return max
+};
+
 console.log(maxProfit([7,1,5,3,6,4]))
+console.log(maxProfit([7,6,5,4,3,2,1]))
+console.log(maxProfit([1, 2]))

@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-16 20:27:49
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-16 20:38:04
+ * @LastEditTime: 2021-03-21 17:29:11
  * @FilePath: /js-demo/leetcode/常规题目/62.js
  */
 /**
@@ -38,15 +38,16 @@ var uniquePaths = function(m, n) {
     for (let i = 0; i < m; i++) {
         dp.push(new Array(n).fill(0))
     }
-    for (let i = 0; i < n; i++){
-        dp[0][i] = 1
-    }
+    // for (let i = 0; i < n; i++){
+    //     dp[0][i] = 1
+    // }
+    // for (let i = 0; i < m; i++){
+    //     dp[i][0] = 1
+    // }
     for (let i = 0; i < m; i++){
-        dp[i][0] = 1
-    }
-    for (let i = 1; i < m; i++){
-        for (let j = 1; j < n; j++) {
-            dp[i][j] = dp[i-1][j] + dp[i][j-1]
+        for (let j = 0; j < n; j++) {
+            if(i == 0 || j == 0) dp[i][j] = 1
+            else dp[i][j] = dp[i-1][j] + dp[i][j-1]
         }
     }
     // console.log(dp)

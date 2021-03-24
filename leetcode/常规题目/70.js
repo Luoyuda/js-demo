@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-16 13:20:29
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-16 15:32:35
- * @FilePath: /js-demo/leetcode/70.js
+ * @LastEditTime: 2021-03-20 09:49:44
+ * @FilePath: /js-demo/leetcode/常规题目/70.js
  */
 /**
  * @param {number} n
@@ -59,7 +59,22 @@ var climbStairs2 = function(n) {
     return dp[n]
 }
 
+var climbStairs3 = function(n) {
+    // f(x) = f(x-1) + f(x-2)
+    let one = 1
+    let two = 1
+    for(let i = 2; i <= n; i++){
+        let tem = two
+        two = one + two
+        one = tem
+    }
+    return two
+}
+
 // console.log(climbStairs(2))
 // console.log(climbStairs(3))
 // console.log(climbStairs2(2))
+console.log(climbStairs3(3))
+console.log(climbStairs3(5))
+console.log(climbStairs2(3))
 console.log(climbStairs2(5))
