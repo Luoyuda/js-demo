@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-29 09:05:24
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-29 12:17:49
+ * @LastEditTime: 2021-04-02 17:17:38
  * @FilePath: /js-demo/algorithm/Sort/QuickSort.js
  */
 let partition = (arr, p, q) => {
