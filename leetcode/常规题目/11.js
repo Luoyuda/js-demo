@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-23 11:56:11
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-23 12:18:43
- * @FilePath: /js-demo/leetcode/11.js
+ * @LastEditTime: 2021-04-06 22:16:13
+ * @FilePath: /js-demo/leetcode/常规题目/11.js
  */
 /**
  * @param {number[]} height
@@ -68,5 +68,23 @@ var maxArea = function(height){
     }
     return res
 }
+
+var maxArea = function(height){
+    let len = height.length - 1
+    let left = 0
+    let right = len
+    let res = 0
+    while(left < right){
+        let area = Math.min(height[left], height[right]) * (right - left)
+        res = Math.max(area, res)
+        if(height[left] < height[right]){
+            left++
+        }else{
+            right--
+        }
+    }
+    return res
+}
+
 
 console.log(maxArea([2,3,4,5,18,17,6]))
