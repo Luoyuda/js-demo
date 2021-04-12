@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-10 10:27:22
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-10 10:34:55
- * @FilePath: /js-demo/leetcode/offer.49.js
+ * @LastEditTime: 2021-04-11 08:01:28
+ * @FilePath: /js-demo/leetcode/offer/offer.49.js
  */
 /**
  * @param {number} n
@@ -37,4 +37,4 @@ var nthUglyNumber = function(n) {
     return dp[n - 1]
 };
 
-console.log(nthUglyNumber(10))
+console.log(nthUglyNumber(1690))
