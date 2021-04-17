@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-27 10:04:53
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-27 10:20:29
- * @FilePath: /js-demo/leetcode/349.js
+ * @LastEditTime: 2021-04-16 11:52:52
+ * @FilePath: /js-demo/leetcode/常规题目/349.js
  */
 /**
  * @param {number[]} nums1

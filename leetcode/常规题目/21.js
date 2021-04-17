@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2020-07-03 23:35:08
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-07-04 00:11:09
- * @FilePath: /js-demo/leetcode/21.js
+ * @LastEditTime: 2021-04-17 09:01:15
+ * @FilePath: /js-demo/leetcode/常规题目/21.js
  */ 
 /**
  * Definition for singly-linked list.
@@ -45,6 +45,27 @@ var mergeTwoLists2 = function(l1, l2){
     prev.next = !l1 ? l2 : l1
     return head.next
 }
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function(l1, l2) {
+    let head = new ListNode(null)
+    let curr = head
+    while(l1 && l2){
+        if(l1.val < l2.val){
+            curr.next = l1
+            l1 = l1.next
+        }else{
+            curr.next = l2
+            l2 = l2.next
+        }
+        curr = curr.next
+    }
+    curr.next = !l1 ? l2 : l1
+    return head.next
+};
 
 let merge = mergeTwoLists2(
     new ListNode(1, new ListNode(2, new ListNode(3, null))),

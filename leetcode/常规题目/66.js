@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-15 08:30:13
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-15 09:48:41
- * @FilePath: /js-demo/leetcode/66.js
+ * @LastEditTime: 2021-04-16 12:01:42
+ * @FilePath: /js-demo/leetcode/常规题目/66.js
  */
 /**
  * @param {number[]} digits
@@ -33,6 +33,22 @@ var plusOne = function(digits) {
         }
     }
     digits.splice(0, 0, 1)
+    return digits
+};
+/**
+ * @param {number[]} digits
+ * @return {number[]}
+ */
+var plusOne = function(digits) {
+    let carry = 1
+    let len = digits.length - 1
+    for (let i = len; i >= 0; i--) {
+        let sum = digits[i] + carry
+        carry = Math.floor(sum / 10)
+        digits[i] = sum % 10
+        if(carry == 0) return digits
+    }
+    if(carry) digits.unshift(carry)
     return digits
 };
 

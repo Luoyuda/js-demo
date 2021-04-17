@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-25 17:40:22
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-25 17:48:57
- * @FilePath: /js-demo/leetcode/125.js
+ * @LastEditTime: 2021-04-16 16:13:55
+ * @FilePath: /js-demo/leetcode/常规题目/125.js
  */
 /**
  * @param {string} s
@@ -41,5 +41,28 @@ var isPalindrome = function(s) {
 };
 
 var isValid = c => (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9');
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isPalindrome = function(s) {
+    let left = 0
+    let right = s.length - 1
+    while(left < right) {
+        let leftCh = s[left]
+        let rightCh = s[right]
+        if(!isValid(leftCh)) {
+            left++
+        }else if(!isValid(rightCh)) {
+            right--
+        }else{
+            if(leftCh.toLocaleLowerCase() !== rightCh.toLocaleLowerCase()) return false
+            left++
+            right--
+        }
+    }
+    return true
+};
 
 console.log(isPalindrome("A man, a plan, a canal: Panama"))
+console.log(isPalindrome("race a car"))

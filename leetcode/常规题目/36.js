@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-16 08:08:00
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-16 08:46:26
- * @FilePath: /js-demo/leetcode/36.js
+ * @LastEditTime: 2021-04-16 13:30:07
+ * @FilePath: /js-demo/leetcode/常规题目/36.js
  */
 /**
  * @param {character[][]} board
@@ -79,6 +79,31 @@ var isValidSudoku = function(board) {
     return true
 };
 
+var isValidSudoku = function(board){
+    let row = {}
+    let column = {}
+    let square = {}
+    let m = board.length
+    let n = board.length
+    for (let i = 0; i < m; i++) {
+        column[i] = {}
+        row[i] = {}
+        square[i] = {}
+    }
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            let num = board[i][j]
+            if(num == '.') continue
+            let index = parseInt(i / 3) * 3 + parseInt((j / 3))
+            if(row[i][num] || column[j][num] || square[index][num]) return false
+            row[i][num] = true
+            column[j][num] = true
+            square[index][num] = true
+        }
+    }
+    // console.log(row, column, square)
+    return true
+}
 console.log(isValidSudoku(
     [
         ["5","3",".",".","7",".",".",".","."],

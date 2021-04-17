@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-02 18:46:53
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-02 18:54:08
- * @FilePath: /js-demo/leetcode/offer.50.js
+ * @LastEditTime: 2021-04-16 14:36:33
+ * @FilePath: /js-demo/leetcode/offer/offer.50.js
  */
 /**
  * @param {string} s
@@ -32,6 +32,23 @@ var firstUniqChar = function(s) {
     }
     return ' '
 };
-
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var firstUniqChar = function(s) {
+    if(!s) return -1
+    let map = {}
+    let len = s.length
+    for (let i = 0; i < len; i++) {
+        const ch = s[i];
+        if(map[ch] != undefined) map[ch] += len
+        else map[ch] = i
+    }
+    for (const ch in map) {
+        if(map[ch] < len) return map[ch]
+    }
+    return -1
+};
 console.log(firstUniqChar('abaccdeff'))
-console.log(firstUniqChar(''))
+console.log(firstUniqChar('loveleetcode'))

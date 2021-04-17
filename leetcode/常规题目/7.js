@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2020-06-30 20:48:19
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-02 17:46:58
- * @FilePath: /js-demo/leetcode/7.js
+ * @LastEditTime: 2021-04-16 14:23:53
+ * @FilePath: /js-demo/leetcode/常规题目/7.js
  */ 
 var reverse = function(num) {
     if(typeof num !== 'number') return
@@ -27,6 +27,19 @@ var reverse = function(num) {
     return i
 };
 
-console.log(reverse(Math.pow(2,31)))
+var reverse = function(num) {
+    let x = Math.abs(num)
+    let i = 0
+    let large = Math.pow(2, 31)
+    while(x > 0){
+        let j = x % 10
+        x = Math.floor(x / 10)
+        i = i * 10 + j
+    }
+    if(i > large-1 || i < -large) return 0
+    return i * (num > 0 ? 1 : -1)
+}
+
+console.log(reverse(Math.pow(2,30)))
 console.log(reverse(120))
 console.log(reverse(-120))

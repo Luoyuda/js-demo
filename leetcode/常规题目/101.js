@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-08 21:17:00
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-08 21:28:47
+ * @LastEditTime: 2021-04-17 11:42:42
  * @FilePath: /js-demo/leetcode/常规题目/101.js
  */
 /**
@@ -48,16 +48,33 @@ var isSymmetric = function(root) {
     }
     return true
 };
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isSymmetric = function(root) {
+    return dfs(root.left, root.right)
+};
+var dfs = (left, right) => {
+    if(!left && !right) return true
+    if(!left || !right) return false
+    if(left.val != right.val) return false
+    return dfs(left.right, right.left) && dfs(left.left, right.right)
+}
 
 var isSymmetric = function(root) {
-    if(!root) return true
-    let dfs = (left, right) => {
-        if(!left && !right) return true
+    if(!root || (root.left == root.right && root.right == null)) return true
+    let q = [root.left, root.right]
+    while(q.length){
+        let left = q.shift()
+        let right = q.shift()
+        if(!left && !right) continue
         if(!left || !right) return false
         if(left.val != right.val) return false
-        return dfs(left.right, right.left) &&  dfs(left.left, right.right)
+        q.push(left.left, right.right)
+        q.push(left.right, right.left)
     }
-    return dfs(root.left, root.right)
+    return true
 }
 
 function TreeNode(val, left, right) {
@@ -72,8 +89,8 @@ new TreeNode(1,
         new TreeNode(4)
     ), 
     new TreeNode(2,
-        new TreeNode(3),
         new TreeNode(4),
+        new TreeNode(3),
     )
 )
 console.log(isSymmetric(root))

@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2020-07-05 19:40:15
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-03 14:16:53
- * @FilePath: /js-demo/leetcode/28.js
+ * @LastEditTime: 2021-04-16 18:38:57
+ * @FilePath: /js-demo/leetcode/常规题目/28.js
  */ 
 /*
     28. 实现 strStr()
@@ -49,7 +49,7 @@ const getNext = (string) => {
     return next
 }
 // KMP实现
-const strStr = (S='', T='') => {
+var strStr = (S='', T='') => {
     // 判断空
     if(S == T || !T.length) return 0
     if(!S.length) return -1
@@ -71,7 +71,7 @@ const strStr = (S='', T='') => {
     return j >= T.length ? i - T.length : -1
 }
 
-const Sunday = (S='', T='', pos=0) => {
+var Sunday = (S='', T='', pos=0) => {
     let tLen = T.length
     let sLen = S.length
     if(S == T || !tLen) return 0
@@ -149,7 +149,7 @@ const Sunday = (S='', T='', pos=0) => {
 // console.log('Sunday: ', Sunday('hello', 'll'))
 // console.log(strStr('mississippi', 'issip'))
 // console.log(strStr('mississippi', 'a'))
-let strStr1 = (S, T) => {
+var strStr1 = (S, T) => {
     let getNext = (T) => {
         let j = -1
         let next = [j]
@@ -189,8 +189,51 @@ var strStr2 = (S, T) => {
     }
     return -1
 }
-// console.log(strStr2('aabaabaafa', 'aabaaf'))
-console.log(strStr2('abc', 'c'))
+var strStr = (haystack, needle) => {
+    if(!needle.length) return 0
+    if(haystack.length == needle.length) return haystack == needle ? 0 : -1
+    for (let i = 0; i < haystack.length - needle.length + 1; i++) {
+        if(haystack[i] != needle[0]) continue
+        let j = i
+        let z = 0
+        while(j < haystack.length && z < needle.length){
+            if(haystack[j] != needle[z]) break
+            j++
+            z++
+        }
+        if(z == needle.length) return i
+    }
+    return -1
+}
+// Sunday
+var strStr = (S='', T='', pos=0) => {
+    let tLen = T.length
+    let sLen = S.length
+    if(!sLen || sLen < tLen) return -1
+    if(tLen == sLen || !tLen) return S == T ? 0 : -1
+    let i = pos
+    let j = 0
+    let dic = { 'not': tLen + 1 }
+    for (let i = tLen - 1; i >= 0; i--) {
+        let ch = T[i]
+        if(!dic[ch]) dic[ch] = tLen - i
+    }
+    while (i < sLen && j < tLen){
+        if(S[i] == T[j]){
+            i++
+            j++
+        }else{
+            let next_i = i - j + tLen
+            let next = dic[S[next_i]] || dic['not']
+            i += next - j
+            j = 0
+        }
+    }
+    return j == tLen ? i - tLen : -1
+}
+console.log(strStr('aabaabaafa', 'aabaaf'))
+console.log(strStr('aabaaeeaafa', 'aabaaf'))
+// console.log(strStr('abc', 'c'))
 // console.log(getNextStr([5,'i','s','s','i','p']))
 
 

@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-25 17:33:34
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-25 17:37:32
- * @FilePath: /js-demo/leetcode/141.js
+ * @LastEditTime: 2021-04-17 09:11:38
+ * @FilePath: /js-demo/leetcode/常规题目/141.js
  */
 /**
  * @param {ListNode} head
@@ -41,6 +41,22 @@ var hasCycle = function(head) {
     let fast = head
     let slow = head
     while(fast && fast.next){
+        fast = fast.next.next
+        slow = slow.next
+        if(fast == slow){
+            return true
+        }
+    }
+    return false
+};
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var hasCycle = function(head) {
+    let fast = head
+    let slow = head
+    while (fast && fast.next){
         fast = fast.next.next
         slow = slow.next
         if(fast == slow){

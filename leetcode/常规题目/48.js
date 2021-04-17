@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-15 08:07:57
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-15 08:12:40
- * @FilePath: /js-demo/leetcode/48.js
+ * @LastEditTime: 2021-04-16 14:02:14
+ * @FilePath: /js-demo/leetcode/常规题目/48.js
  */
 /**
  * @param {number[][]} matrix
@@ -42,7 +42,25 @@ var rotate = function(matrix) {
     }
     return matrix;
 };
-
+/**
+ * @param {number[][]} matrix
+ * @return {void} Do not return anything, modify matrix in-place instead.
+ */
+var rotate = function(matrix) {
+    let n = matrix.length
+    let mMid = Math.floor(n / 2)
+    let nMid = Math.floor((n + 1) / 2)
+    for (let i = 0; i < mMid; i++) {
+        for (let j = 0; j < nMid; j++){
+            let temp = matrix[i][j]
+            matrix[i][j] = matrix[n - j - 1][i]
+            matrix[n - j - 1][i] = matrix[n - i - 1][n - j - 1]
+            matrix[n - i - 1][n - j - 1] = matrix[j][n - i - 1]
+            matrix[j][n - i - 1] = temp
+        }
+    }
+    return matrix
+};
 console.log(rotate([
     [1,2,3],
     [4,5,6],

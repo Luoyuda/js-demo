@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-04 17:22:42
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-04 17:32:28
- * @FilePath: /js-demo/leetcode/189.js
+ * @LastEditTime: 2021-04-16 11:35:40
+ * @FilePath: /js-demo/leetcode/常规题目/189.js
  */
 /**
  * @param {number[]} nums
@@ -33,7 +33,7 @@
         0 <= k <= 105
  */
 
-let reverse = (nums, start, end) => {
+var reverse = (nums, start, end) => {
     while(start < end){
         let temp = nums[start]
         nums[start] = nums[end]
@@ -52,4 +52,36 @@ var rotate = function(nums, k) {
     return nums
 };
 
-console.log(rotate([1,2,3,4,5,6,7], 7))
+
+var reverse = function(nums, start, end) {
+    while (start < end){
+        let temp = nums[start]
+        nums[start++] = nums[end]
+        nums[end--] = temp
+    }
+    return nums
+}
+
+var rotate = function(nums, k) {
+    let n = nums.length
+    k %= n
+    if(k == 0) return nums
+    reverse(nums, 0, n - 1)
+    reverse(nums, 0, k - 1)
+    reverse(nums, k, n - 1)
+    return nums
+};
+
+var rotate = function(nums, k) {
+    let n = nums.length
+    let ans = []
+    for (let i = 0; i < nums.length; i++) {
+        ans[(i+k) % n] = nums[i]
+    }
+    for (let i = 0; i < ans.length; i++) {
+        nums[i] = ans[i]
+    }
+    return nums
+};
+
+console.log(rotate([1,2,3,4,5,6,7], 2))

@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-24 17:00:22
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-24 17:11:00
- * @FilePath: /js-demo/leetcode/19.js
+ * @LastEditTime: 2021-04-17 08:48:20
+ * @FilePath: /js-demo/leetcode/常规题目/19.js
  */
 /**
  * Definition for singly-linked list.
@@ -35,21 +35,20 @@
         1 <= n <= sz
  */
 var removeNthFromEnd = function(head, n) {
-    let dummyHead = new ListNode(null, head);
+    if(!head) return head
+    let dummyHead = new ListNode(null, head)
     let fast = dummyHead
     let slow = dummyHead
-    let k = n
-    while(k--) fast = fast.next
-    // console.log(fast)
+    while(n--) fast = fast.next
+    
     while(fast.next){
         fast = fast.next
         slow = slow.next
     }
-    // console.log(slow)
+    
     slow.next = slow.next.next
     return dummyHead.next
 };
-
 function ListNode(val, next) {
     this.val = (val===undefined ? 0 : val)
     this.next = (next===undefined ? null : next)
@@ -70,3 +69,5 @@ while(l3){
     console.log(l3.val)
     l3 = l3.next
 }
+
+console.log(removeNthFromEnd(new ListNode(1), 1))

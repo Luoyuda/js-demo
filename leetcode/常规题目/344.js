@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-23 11:42:26
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-23 11:47:14
- * @FilePath: /js-demo/leetcode/344.js
+ * @LastEditTime: 2021-04-16 14:05:40
+ * @FilePath: /js-demo/leetcode/常规题目/344.js
  */
 /**
  * @param {character[]} s
@@ -41,6 +41,19 @@ var reverseString = function(s) {
     }
     return s
 };
-
+/**
+ * @param {character[]} s
+ * @return {void} Do not return anything, modify s in-place instead.
+ */
+var reverseString = function(s) {
+    let left = 0
+    let right = s.length - 1
+    while (left < right) {
+        let temp = s[left]
+        s[left++] = s[right]
+        s[right--] = temp
+    }
+    return s
+};
 console.log(reverseString(["h","e","l","l","o"]))
 console.log(reverseString(["H","a","n","n","a","h"]))

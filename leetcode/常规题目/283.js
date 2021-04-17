@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-27 09:48:21
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-27 10:03:49
- * @FilePath: /js-demo/leetcode/283.js
+ * @LastEditTime: 2021-04-16 12:12:22
+ * @FilePath: /js-demo/leetcode/常规题目/283.js
  */
 /**
  * @param {number[]} nums
@@ -32,5 +32,23 @@ var moveZeroes = function(nums) {
     }
     return nums
 };
-
+/**
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+var moveZeroes = function(nums) {
+    let left = 0
+    let right = 0
+    let n = nums.length
+    while (right < n){
+        if(nums[right] != 0){
+            let temp = nums[left]
+            nums[left] = nums[right]
+            nums[right] = temp
+            left++
+        }
+        right++
+    }
+    return nums
+};
 console.log(moveZeroes([0,1,0,3,12]))

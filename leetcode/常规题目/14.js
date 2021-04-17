@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2020-07-03 21:43:02
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-03 14:42:43
- * @FilePath: /js-demo/leetcode/14.js
+ * @LastEditTime: 2021-04-17 08:32:48
+ * @FilePath: /js-demo/leetcode/常规题目/14.js
  */ 
 var longestCommonPrefix = function(strs) {
     let length = strs.length
@@ -98,11 +98,52 @@ var isCommonPrefix = function(strs, len){
     }
     return true
 }
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function(strs) {
+    let len = strs.length
+    if(!len) return ''
+    if(len == 1) return strs[0]
+    // 1.找出最短的
+    let min = Infinity
+    let T = ''
+    let index = 0
+    for (let i = 0; i < strs.length; i++) {
+        if(strs[i].length < min){
+            min = strs[i].length
+            T = strs[i]
+            index = i
+        }
+    }
+    let s = ''
+    for (let i = 0; i < strs.length; i++) {
+        if(i == index) continue
+        if(min == 0) return ''
+        let left = 0
+        let right = min
+        let str = strs[i]
+        s = ''
+        while (left < right){
+            if(T[left] == str[left]){
+                s+=T[left]
+                left++
+            }else{
+                // console.log(min, T, s)
+                min = left
+                T = s
+                break
+            }
+        }
+    }
+    // console.log(min, T, index)
+    return s
+};
 
-
-// console.log(longestCommonPrefix(["flower","flow","flight"]))
-// console.log(longestCommonPrefix(["dog","racecar","car"]))
-// console.log(longestCommonPrefix(["aaa","aa","aaa"]))
+console.log(longestCommonPrefix(["flower","flow","flight"]))
+console.log(longestCommonPrefix(["dog","racecar","car"]))
+console.log(longestCommonPrefix(["aaa","aa","aaa"]))
 console.log(longestCommonPrefix2(["flower","flow","flight"]))
 console.log(longestCommonPrefix2(["dog","racecar","car"]))
 console.log(longestCommonPrefix2(["aaa","aa","aaa"]))

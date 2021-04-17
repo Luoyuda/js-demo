@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-02 17:50:15
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-02 17:59:37
- * @FilePath: /js-demo/leetcode/242.js
+ * @LastEditTime: 2021-04-16 18:22:35
+ * @FilePath: /js-demo/leetcode/常规题目/242.js
  */
 /**
  * @param {string} s
@@ -47,6 +47,22 @@ var isAnagram = function(s, t) {
     }
     return true
 }
-
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+var isAnagram = function(s, t) {
+    if(s.length != t.length) return false;
+    let hash = {}
+    for (const ch of s) {
+        hash[ch] = (hash[ch] || 0) + 1
+    }
+    for (const ch of t) {
+        if(!hash[ch]) return false
+        hash[ch] = (hash[ch] || 0) - 1
+    }
+    return true
+};
 console.log(isAnagram('anagram', 'nagaram'))
 console.log(isAnagram('rat', 'car'))
