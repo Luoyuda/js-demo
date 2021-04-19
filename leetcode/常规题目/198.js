@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-20 23:23:08
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-20 23:37:45
+ * @LastEditTime: 2021-04-17 13:39:25
  * @FilePath: /js-demo/leetcode/常规题目/198.js
  */
 /**
@@ -40,6 +40,30 @@ var rob = function(nums) {
         prev = curr
         curr = temp
     }
+    return curr
+};
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var rob = function(nums) {
+    // dp[i] = Math.max(dp[i-1], dp[i-2] + nums[i])
+    let n = nums.length
+    if(!nums || !n) return 0;
+    if(n == 1) return nums[0]
+    // let dp = []
+    // dp[0] = nums[0]
+    // dp[1] = Math.max(nums[0], nums[1])
+    let prev = nums[0]
+    let curr = Math.max(nums[0], nums[1])
+    for (let i = 2; i < n; i++) {
+        let temp = Math.max(curr, prev + nums[i])
+        prev = curr
+        curr = temp
+        // dp[i] = Math.max(dp[i-1], dp[i - 2] + nums[i])
+    }
+    // return dp[n-1]
     return curr
 };
 

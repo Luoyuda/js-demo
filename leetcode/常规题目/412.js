@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-03 17:30:02
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-03 17:33:24
- * @FilePath: /js-demo/leetcode/412.js
+ * @LastEditTime: 2021-04-17 14:19:13
+ * @FilePath: /js-demo/leetcode/常规题目/412.js
  */
 /**
  * @param {number} n
@@ -34,16 +34,19 @@
             "FizzBuzz"
         ]
  */
+/**
+ * @param {number} n
+ * @return {string[]}
+ */
 var fizzBuzz = function(n) {
-    let res = []
+    let ans = []
     for (let i = 1; i <= n; i++) {
         let str = ''
-        if(i % 3 == 0) str = 'Fizz'
+        if(i % 3 == 0) str += 'Fizz'
         if(i % 5 == 0) str += 'Buzz'
         if(str == '') str = i + ''
-        res.push(str)
+        ans.push(str)
     }
-    return res
+    return ans
 };
-
 console.log(fizzBuzz(15))

@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-13 08:56:36
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-13 09:05:34
+ * @LastEditTime: 2021-04-17 14:56:58
  * @FilePath: /js-demo/leetcode/常规题目/118.js
  */
 /**
@@ -33,5 +33,4 @@ var generate = function(numRows) {
     }
     return res
 };
-
 console.log(generate(5))

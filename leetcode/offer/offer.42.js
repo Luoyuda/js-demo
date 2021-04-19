@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-09 08:51:54
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-09 09:00:59
- * @FilePath: /js-demo/leetcode/offer.42.js
+ * @LastEditTime: 2021-04-17 13:12:55
+ * @FilePath: /js-demo/leetcode/offer/offer.42.js
  */
 /**
  * @param {number[]} nums

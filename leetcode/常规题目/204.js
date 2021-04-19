@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-03 17:37:50
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-03 18:06:38
- * @FilePath: /js-demo/leetcode/204.js
+ * @LastEditTime: 2021-04-17 14:26:04
+ * @FilePath: /js-demo/leetcode/常规题目/204.js
  */
 /**
  * @param {number} n
@@ -23,9 +23,13 @@
     提示：
         0 <= n <= 5 * 106
  */
+/**
+ * @param {number} n
+ * @return {number}
+ */
 var countPrimes = function(n) {
-    let arr = new Array(n).fill(0)
     let count = 0
+    let arr = new Array(n).fill(0)
     for (let i = 2; i < n; i++) {
         if(!arr[i]){
             count += 1
@@ -36,5 +40,4 @@ var countPrimes = function(n) {
     }
     return count
 };
-
-console.log(countPrimes(1))
+console.log(countPrimes(10))

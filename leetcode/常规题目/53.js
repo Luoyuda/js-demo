@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-20 08:58:15
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-20 09:16:55
+ * @LastEditTime: 2021-04-17 13:32:48
  * @FilePath: /js-demo/leetcode/常规题目/53.js
  */
 /**
@@ -41,6 +41,20 @@ var maxSubArray = function(nums) {
     // console.log(max)
     return max
 };
-
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxSubArray = function(nums) {
+    let dp = []
+    let len = nums.length - 1
+    let max = 0
+    dp[0] = nums[0]
+    for (let i = 1; i <= len; i++) {
+        dp[i] = Math.max(dp[i - 1] + nums[i], nums[i])
+        max = Math.max(dp[i], max)
+    }
+    return max
+};
 console.log(maxSubArray([-2,1,-3,4,-1,2,1,-5,4]))
 console.log(maxSubArray([2, 3,-6,2,4]))

@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-25 18:37:09
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-26 08:36:15
- * @FilePath: /js-demo/leetcode/88.js
+ * @LastEditTime: 2021-04-17 12:16:05
+ * @FilePath: /js-demo/leetcode/常规题目/88.js
  */
 /**
  * @param {number[]} nums1
@@ -32,11 +32,10 @@ var merge = function(nums1, m, nums2, n) {
     let pos1 = m - 1
     let pos2 = n - 1
     let pos = m + n - 1
-    while(pos1 >= 0 && pos2 >= 0){
+    while (pos1 >= 0 && pos2 >= 0){
         nums1[pos--] = nums1[pos1] > nums2[pos2] ? nums1[pos1--] : nums2[pos2--]
     }
     if(pos1 == -1){
-        // console.log(pos, pos1, pos2)
         for (let i = 0; i < pos2 + 1; i++) {
             nums1[i] = nums2[i]
         }

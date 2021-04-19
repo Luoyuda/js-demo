@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-08 18:18:17
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-08 18:57:15
- * @FilePath: /js-demo/leetcode/offer.37.js
+ * @LastEditTime: 2021-04-18 11:45:49
+ * @FilePath: /js-demo/leetcode/offer/offer.37.js
  */
 /**
 剑指 Offer 37. 序列化二叉树

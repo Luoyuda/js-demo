@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-13 20:47:03
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-13 20:59:16
+ * @LastEditTime: 2021-04-18 10:22:56
  * @FilePath: /js-demo/leetcode/常规题目/105.js
  */
 /**
@@ -40,6 +40,24 @@ var buildTree = function(preorder, inorder) {
         map.set(inorder[i], i)
     }
     return build(preorder, inorder, 0, n-1, 0, n-1, map)
+};
+var build = function(preorder, inorder, preorderLeft, preorderRight, inorderLeft, inorderRight, map){
+    if(preorderLeft > preorderRight) return null
+    let rootIndex = preorderLeft
+    let rootVal = preorder[rootIndex]
+    let inorderIndex = map.get(rootVal)
+    let root = new TreeNode(rootVal)
+    let size = inorderIndex - inorderLeft
+    root.left = build(preorder, inorder, preorderLeft + 1, preorderLeft + size, inorderLeft, inorderIndex - 1, map)
+    root.right = build(preorder, inorder, preorderLeft + 1 + size, preorderRight, inorderIndex + 1, inorderRight, map)
+    return root
+}
+var buildTree = function(preorder, inorder) {
+    let map = new Map();
+    inorder.forEach((item, index) => {
+        map.set(item, index)
+    })
+    return build(preorder, inorder, 0, preorder.length - 1, 0, inorder.length - 1, map)
 };
 function TreeNode(val, left, right) {
     this.val = (val===undefined ? 0 : val)

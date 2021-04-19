@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-15 16:44:13
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-15 17:17:59
- * @FilePath: /js-demo/leetcode/121.js
+ * @LastEditTime: 2021-04-17 13:07:05
+ * @FilePath: /js-demo/leetcode/常规题目/121.js
  */
 /*
  * @lc app=leetcode.cn id=121 lang=javascript
@@ -52,5 +52,22 @@ var maxProfit = function(prices) {
     return max
 };
 // @lc code=end
+
+var maxProfit = function(prices) {
+    let len = prices.length
+    if(len < 2) return 0
+    let dp = []
+    for (let i = 0; i < len; i++) {
+        dp.push(new Array(2).fill(0))
+    }
+    // i 第几天， j 0 卖出， 1持有
+    dp[0][0] = 0
+    dp[0][1] = -prices[0]
+    for (let i = 1; i < len; i++) {
+        dp[i][0] = Math.max(dp[i - 1][0], dp[i-1][1] + prices[i])
+        dp[i][1] = Math.max(dp[i - 1][1], -prices[i])
+    }
+    return dp[len-1][0]
+}
 
 console.log(maxProfit([7,1,5,3,6,4]))
