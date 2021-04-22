@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-08 19:00:32
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-08 21:11:37
+ * @LastEditTime: 2021-04-21 23:02:19
  * @FilePath: /js-demo/leetcode/常规题目/752.js
  */
 /**
@@ -96,6 +96,46 @@ var openLock = function(deadends, target) {
     }
     return -1
 };
-
+var plusOne = (s, j) => {
+    s = s.split('')
+    if(s[j] == '9'){
+        s[j] = '0'
+    }else{
+        s[j] = Number(s[j]) + 1
+    }
+    return s.join('')
+}
+var minusOne = (s, j) => {
+    s = s.split('')
+    if(s[j] == '0'){
+        s[j] = '9'
+    }else{
+        s[j] = Number(s[j]) - 1
+    }
+    return s.join('')
+}
+var openLock = function(deadends, target){
+    let q = []
+    let steps = 0
+    let visited = new Set(deadends)
+    q.push('0000')
+    while(q.length){
+        let len = q.length
+        for (let i = 0; i < len; i++) {
+            let str = q.shift()
+            if(visited.has(str)) continue
+            visited.add(str)
+            if(str == target) return steps
+            for (let j = 0; j < str.length; j++) {
+                let up = plusOne(str,j)
+                let down = minusOne(str,j)
+                if(!visited.has(up)) q.push(up)
+                if(!visited.has(down)) q.push(down)
+            }
+        }
+        steps+=1
+    }
+    return -1
+}
 console.log(openLock(["0201","0101","0102","1212","2002"], "0202"))
 console.log(openLock(["8887","8889","8878","8898","8788","8988","7888","9888"], "8888"))

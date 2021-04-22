@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-16 20:45:39
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-16 21:21:23
+ * @LastEditTime: 2021-04-20 23:51:45
  * @FilePath: /js-demo/leetcode/常规题目/61.js
  */
 function ListNode(val, next) {
@@ -46,11 +46,29 @@ var rotateRight = function(head, k) {
         newTail = newTail.next
     }
     let newHead = newTail.next
-    // console.log(newTail, oldTail, head, newHead)
     oldTail.next = head
     newTail.next = null
-    // console.log(n, n - k % n - 1, oldTail)
 
+    return newHead
+};
+var rotateRight = function(head, k) {
+    if(!head) return null
+    if(!head.next) return head
+    let oldTail = head
+    // 1. 遍历，找到链表尾部
+    let n = 1
+    while(oldTail.next){
+        oldTail = oldTail.next
+        n++
+    }
+    if(k % n == 0) return head
+    let newTail = head
+    for (let i = 0; i < n - k % n - 1; i++) {
+        newTail = newTail.next
+    }
+    let newHead = newTail.next
+    oldTail.next = head
+    newTail.next = null
     return newHead
 };
 

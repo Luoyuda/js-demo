@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2020-09-14 16:34:24
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-09-14 18:27:30
- * @FilePath: /js-demo/leetcode/430.js
+ * @LastEditTime: 2021-04-21 00:06:58
+ * @FilePath: /js-demo/leetcode/常规题目/430.js
  */
 /**
 // Definition for a Node.
@@ -19,16 +19,14 @@ function Node(val,prev,next,child) {
  * @return {Node}
  */
 var flatten = function(head) {
-    let copy = head;
-    while (copy){
+    let copy = head
+    while(copy){
         let next = copy.next
-        console.log(copy.val)
-        if(copy.child){
+        while(copy.child){
             let node = flatten(copy.child)
             copy.child = null
             copy.next = node
             node.prev = copy
-            
             let end = node
             while(end.next){
                 end = end.next

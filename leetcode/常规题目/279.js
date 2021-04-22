@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-13 20:27:30
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-13 20:34:45
+ * @LastEditTime: 2021-04-22 10:10:00
  * @FilePath: /js-demo/leetcode/常规题目/279.js
  */
 /**
@@ -26,14 +26,13 @@
     1 <= n <= 104
  */
 var numSquares = function(n) {
-    let dp = new Array(n + 1).fill(0)
+    let dp = new Array(n+1).fill(0)
     for (let i = 1; i <= n; i++) {
         dp[i] = i
         for (let j = 1; i - j * j >= 0; j++) {
-            dp[i] = Math.min(dp[i - j * j] + 1, dp[i])
+            dp[i] = Math.min(dp[i], dp[i - j * j] + 1)
         }
     }
-    // console.log(dp)
     return dp[n]
 };
 
