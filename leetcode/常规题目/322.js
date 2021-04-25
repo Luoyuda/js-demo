@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-16 09:47:31
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-21 19:03:31
+ * @LastEditTime: 2021-04-24 19:29:01
  * @FilePath: /js-demo/leetcode/常规题目/322.js
  */
 /**
@@ -52,20 +52,16 @@ var coinChange = function(coins, amount) {
 
 var coinChange = function(coins, amount) {
     // f(X) = min(f(X-2)+1, f(X-5)+1, f(X-7)+1)
-    let dp = []
-    dp[0] = 0
-    let getNumber = (i, j) => {
-        return dp[i-j] === undefined ? Infinity : dp[i-j] + 1
-    }
+    let dp = new Array(amount + 1).fill(0)
     for (let i = 1; i <= amount; i++) {
-        // dp[i] = Math.min(...coins.map(j => getNumber(i, j)))
-        let min = Infinity
+        dp[i] = Infinity
         for (let j = 0; j < coins.length; j++) {
-            min = Math.min(min, getNumber(i, coins[j]))
+            const coin = coins[j]
+            // 硬币比i小才能凑出来
+            if(coin > i) continue
+            dp[i] = Math.min(dp[i], dp[i - coin] + 1)
         }
-        dp[i] = min
     }
-    // console.log(dp)
     return dp[amount] == Infinity ? -1 : dp[amount]
 };
 

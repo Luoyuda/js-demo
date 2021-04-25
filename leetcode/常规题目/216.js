@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-20 18:02:59
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-20 18:06:19
- * @FilePath: /js-demo/leetcode/216.js
+ * @LastEditTime: 2021-04-25 08:53:53
+ * @FilePath: /js-demo/leetcode/常规题目/216.js
  */
 /**
  * @param {number} k
@@ -34,6 +34,24 @@ var combinationSum3 = function(k, n) {
         }
     }
     dfs([], 1, 0)
+    return res
+};
+
+var combinationSum3 = function(k, n) {
+    let res = []
+    let t = []
+    let dfs = (k, start, n) => {
+        if(!k){
+            if(!n) res.push(t.slice())
+            return
+        }
+        for (let i = start; i <= 10 - k; i++) {
+            t.push(i)
+            dfs(k-1, i + 1, n - i)
+            t.pop()
+        }
+    }
+    dfs(k, 1, n)
     return res
 };
 

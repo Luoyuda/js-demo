@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-18 15:20:31
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-18 15:34:29
- * @FilePath: /js-demo/leetcode/47.js
+ * @LastEditTime: 2021-04-25 08:26:49
+ * @FilePath: /js-demo/leetcode/常规题目/47.js
  */
 /**
  * @param {number[]} nums
@@ -45,4 +45,27 @@ var permuteUnique = function (nums) {
     dfs([]);
     return res;
 };
+
+var permuteUnique = function (nums) {
+    let res = [];
+    nums.sort((a, b) => a - b); // 先排序
+    let n = nums.length
+    let vis = {};
+    let dfs = (t, u, start) => {
+        if(u == n){
+            res.push(t)
+            return
+        }
+        for (let i = start; i < n; i++) {
+            if(vis[i]) continue
+            vis[i] = true
+            t[i] = nums[u]
+            dfs(t.slice(), u + 1, u + 1 < n && nums[u + 1] == nums[u] ? i + 1 : 0)
+            vis[i] = false
+        }
+    }
+    dfs([], 0, 0);
+    return res;
+};
+console.log(permuteUnique([1,1,2]))
 console.log(permuteUnique([1,1,1,3]))

@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-20 08:07:45
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-20 08:19:20
+ * @LastEditTime: 2021-04-22 13:11:11
  * @FilePath: /js-demo/leetcode/常规题目/150.js
  */
 /**
@@ -82,7 +82,32 @@ var evalRPN = function(tokens) {
     }
     return stack[0]
 };
-
+/**
+ * @param {string[]} tokens
+ * @return {number}
+ */
+var evalRPN = function(tokens) {
+    let stack = []
+    for(let i = 0; i < tokens.length; i++){
+        let token = tokens[i]
+        if(token == '+'){
+            stack.push(stack.pop() + stack.pop())
+        }else if(token == '-'){
+            let s1 = stack.pop()
+            let s2 = stack.pop()
+            stack.push(s2 - s1)
+        }else if(token == '*'){
+            stack.push(parseInt(stack.pop() * stack.pop()))
+        }else if(token == '/'){
+            let s1 = stack.pop()
+            let s2 = stack.pop()
+            stack.push(parseInt(s2 / s1))
+        }else{
+            stack.push(Number(token))
+        }
+    }
+    return stack[0]
+};
 console.log(evalRPN(["10","6","9","3","+","-11","*","/","*","17","+","5","+"]))
-console.log(evalRPN(["2","1","+","3","*"]))
-console.log(evalRPN(["4","13","5","/","+"]))
+// console.log(evalRPN(["2","1","+","3","*"]))
+// console.log(evalRPN(["4","13","5","/","+"]))

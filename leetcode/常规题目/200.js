@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-21 21:39:31
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-21 21:57:31
+ * @LastEditTime: 2021-04-24 20:32:01
  * @FilePath: /js-demo/leetcode/常规题目/200.js
  */
 /*
@@ -58,7 +58,32 @@ var numIslands = function(grid) {
     }
     return ans
 };
-
+let dx = [-1, 0, 1, 0]
+let dy = [0, -1, 0, 1]
+let dfs = (grid, x, y) => {
+    grid[x][y] = 0
+    for (let i = 0; i < 4; i++) {
+        let a = x + dx[i]
+        let b = y + dy[i]
+        if(a >= 0 && b >=0 && a < grid.length && b < grid[0].length && grid[a][b] == 1){
+            dfs(grid, a, b)
+        }
+    }
+}
+var numIslands = function(grid) {
+    let m = grid.length
+    let n = grid[0].length
+    let ans = 0
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if(grid[i][j] == 1){
+                ans += 1
+                dfs(grid, i, j)
+            }
+        }
+    }
+    return ans
+};
 console.log(numIslands([
     ["1","1","0","0","0"],
     ["1","1","0","0","0"],

@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-08 20:31:49
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-08 20:46:53
+ * @LastEditTime: 2021-04-24 20:06:13
  * @FilePath: /js-demo/leetcode/常规题目/111.js
  */
 /**
@@ -73,6 +73,14 @@ var minDepth = function(root) {
     }
     return depth
 };
+
+var minDepth = function(root){
+    if(!root) return 0
+    let left = minDepth(root.left)
+    let right = minDepth(root.right)
+    if(!left || !right) return left + right + 1
+    return Math.min(left, right) + 1
+}
 
 function TreeNode(val, left, right) {
     this.val = (val===undefined ? 0 : val)

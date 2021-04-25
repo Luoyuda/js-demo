@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-20 15:50:11
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-20 15:58:50
- * @FilePath: /js-demo/leetcode/77.js
+ * @LastEditTime: 2021-04-24 21:52:12
+ * @FilePath: /js-demo/leetcode/常规题目/77.js
  */
 /**
  * @param {number} n
@@ -44,4 +44,19 @@ var combine = function(n, k) {
     return res
 };
 
+var combine = function(n, k) {
+    let res = []
+    let dfs = (t, start) => {
+        if(t.length == k){
+            return res.push(t)
+        }
+        for (let i = start; i <= n; i++) {
+            t.push(i)
+            dfs(t.slice(), i+1)
+            t.pop()
+        }
+    }
+    dfs([], 1)
+    return res
+};
 console.log(combine(4, 2))

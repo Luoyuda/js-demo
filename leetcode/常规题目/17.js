@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-23 15:05:04
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-23 15:14:32
- * @FilePath: /js-demo/leetcode/17.js
+ * @LastEditTime: 2021-04-25 08:03:53
+ * @FilePath: /js-demo/leetcode/常规题目/17.js
  */
 /**
  * @param {string} digits
@@ -51,5 +51,48 @@ var letterCombinations = function(digits) {
     dfs('', 0)
     return res
 };
+
+const map = { 
+    '2': 'abc', 
+    '3': 'def', 
+    '4': 'ghi', 
+    '5': 'jkl', 
+    '6': 'mno', 
+    '7': 'pqrs', 
+    '8': 'tuv', 
+    '9': 'wxyz'
+};
+var letterCombinations = function(digits) {
+    let res = [];
+    if(!digits) return res
+    let dfs = (cur, start) => {
+        if(cur.length == digits.length){
+            res.push(cur)
+            return
+        }
+        let str = map[digits[start]]
+        for (const s of str) {
+            dfs(cur + s, start + 1)
+        }
+    }
+    dfs('', 0)
+    return res
+}
+
+var letterCombinations = function(digits) {
+    if(!digits) return []
+    let state = map[digits[0]].split('')
+    for (let i = 1; i < digits.length; i++) {
+        const d = digits[i];
+        let now = []
+        for (const c of map[d]) {
+            for (const s of state) {
+                now.push(s + c)
+            }
+        }
+        state = now
+    }
+    return state
+}
 
 console.log(letterCombinations('234'))

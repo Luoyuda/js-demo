@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-16 12:21:36
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-16 15:32:46
- * @FilePath: /js-demo/leetcode/518.js
+ * @LastEditTime: 2021-04-24 19:34:47
+ * @FilePath: /js-demo/leetcode/常规题目/518.js
  */
 /**
  * @param {number} amount
@@ -48,6 +48,19 @@ var change = function(amount, coins) {
         }
     }
     // console.log(dp)
+    return dp[amount]
+}
+
+var change = function(amount, coins){
+    let dp = new Array(amount + 1).fill(0)
+    dp[0] = 1
+    for (let j = 0; j < coins.length; j++) {
+        for (let i = 1; i <= amount; i++) {
+            let coin = coins[j]
+            if(coin > i) continue
+            dp[i] = dp[i] + dp[i - coin]
+        }
+    }
     return dp[amount]
 }
 

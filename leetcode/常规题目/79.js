@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-20 12:21:53
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-20 14:45:50
- * @FilePath: /js-demo/leetcode/79.js
+ * @LastEditTime: 2021-04-24 23:15:39
+ * @FilePath: /js-demo/leetcode/常规题目/79.js
  */
 /**
  * @param {character[][]} board
@@ -52,6 +52,45 @@ var exist = function(board, word) {
     return false
 };
 
+var exist = function(board, word){
+    let m = board.length
+    let n = board[0].length
+    let dx = [-1, 0, 1, 0]
+    let dy = [0, 1, 0, -1]
+    let dfs = (x, y, t) => {
+        if(t == word.length) return true
+        let temp = board[x][y]
+        board[x][y] = '#'
+        for (let i = 0; i < 4; i++) {
+            let a = x + dx[i]
+            let b = y + dy[i]
+            if(a >= 0 && a < m && b >= 0 && b < n && board[a][b] == word[t]){
+                if(dfs(a, b, t + 1)) return true
+            }
+        }
+        board[x][y] = temp
+        return false
+    }
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if(board[i][j] == word[0]){
+                if(dfs(i, j, 1)) return true
+            }
+        }
+    }
+    return false
+}
+
+console.log(exist([
+    ["A","B","C","E"],
+    ["S","F","C","S"],
+    ["A","D","E","E"]
+], "ABCCED"))
+console.log(exist([
+    ["A","B","C","E"],
+    ["S","F","C","S"],
+    ["A","D","E","E"]
+], "SEE"))
 console.log(exist([
     ["A","B","C","E"],
     ["S","F","C","S"],

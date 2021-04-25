@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-23 16:44:41
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-23 16:59:04
- * @FilePath: /js-demo/leetcode/739.js
+ * @LastEditTime: 2021-04-22 12:58:08
+ * @FilePath: /js-demo/leetcode/常规题目/739.js
  */
 /**
  * @param {number[]} T
@@ -22,7 +22,7 @@ var dailyTemperatures = function(T) {
     let stack = []
     let res = new Array(T.length).fill(0)
     for (let i = 0; i < T.length; i++) {
-        while(stack.length && T[i] > T[stack[stack.length-1]]){
+        while (stack.length && T[i] > T[stack[stack.length - 1]]){
             let idx = stack.pop()
             res[idx] = i - idx
         }

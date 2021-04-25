@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-18 14:12:03
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-23 12:43:21
+ * @LastEditTime: 2021-04-25 08:12:26
  * @FilePath: /js-demo/leetcode/常规题目/46.js
  */
 /**
@@ -61,6 +61,28 @@ var permute = function (nums) {
             dfs(t.slice())
             t.pop()
             vis[num] = false
+        }
+    }
+    dfs([])
+    return res
+}
+
+var permute = function (nums) {
+    let res = []
+    let vis = {}
+    let len = nums.length
+    let dfs = (t) => {
+        if(t.length == len){
+            res.push(t)
+            return 
+        }
+        for (let i = 0; i < len; i++) {
+            if(vis[i]) continue
+            vis[i] = true
+            t.push(nums[i])
+            dfs(t.slice())
+            t.pop()
+            vis[i] = false
         }
     }
     dfs([])

@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-13 20:27:30
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-22 10:10:00
+ * @LastEditTime: 2021-04-24 20:14:20
  * @FilePath: /js-demo/leetcode/常规题目/279.js
  */
 /**
@@ -36,5 +36,25 @@ var numSquares = function(n) {
     return dp[n]
 };
 
-console.log(numSquares(3))
+var numSquares = function(n) {
+    let q = [0]
+    let dist = new Array(n + 1).fill(Infinity)
+    dist[0] = 0
+    while (q.length){
+        // console.log(q, dist)
+        let t = q.shift()
+        if(t == n) return dist[t]
+        for (let i = 1; i*i + t <= n; i++) {
+            let j = t + i*i
+            if(dist[j] > dist[t] + 1){
+                dist[j] = dist[t] + 1
+                q.push(j)
+            }
+        }
+    }
+    return 0
+};
+
+
+// console.log(numSquares(3))
 console.log(numSquares(13))

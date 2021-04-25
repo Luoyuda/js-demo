@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-18 17:06:31
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-18 17:12:40
- * @FilePath: /js-demo/leetcode/78.js
+ * @LastEditTime: 2021-04-25 08:35:38
+ * @FilePath: /js-demo/leetcode/常规题目/78.js
  */
 /**
  * @param {number[]} nums
@@ -34,5 +34,22 @@ var subsets = function(nums) {
     dfs([], 0);
     return res;
 };
+
+var subset = function(nums){
+    let res = []
+    let n = nums.length
+    // 3 000 001 010 100 101 110 011 111
+    let b = 1 << n
+    for (let i = 0; i < b; i++) {
+        let now = []
+        for (let j = 0; j < n; j++) {
+            if(i >> j & 1){
+                now.push(nums[j])
+            }
+        }
+        res.push(now)
+    }
+    return res
+}
 
 console.log(subsets([1,2,3]))

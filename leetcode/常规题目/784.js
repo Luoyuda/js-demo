@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-19 15:01:54
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-19 15:09:02
- * @FilePath: /js-demo/leetcode/784.js
+ * @LastEditTime: 2021-04-24 21:44:07
+ * @FilePath: /js-demo/leetcode/常规题目/784.js
  */
 /**
  * @param {string} S
@@ -20,23 +20,23 @@
  */
 var letterCasePermutation = function(S) {
     let res = []
+    let s = S.split('')
     let sLength = S.length
-    let dfs = (t, str) => {
-        if(t.length >= sLength) return res.push(t)
-        let s = str[0]
-        let nextStr = str.substr(1)
-        if(!isNaN(Number(s))){
-            // 是数字，只有一种结果
-            dfs(t + s, nextStr)
-        }else{
-            let tmp = s.toUpperCase()
-            if(tmp === s) tmp = s.toLowerCase()
-            dfs(t + s, nextStr)
-            dfs(t + tmp, nextStr)
+    let dfs = (s, u) => {
+        if(u == sLength){
+            res.push(s.join(''))
+            return
+        }
+        dfs(s, u+1)
+        if(isNaN(Number(s[u]))){
+            let r = s.slice()
+            r[u] = String.fromCharCode(s[u].charCodeAt() ^ 32)
+            dfs(r, u + 1)
         }
     }
-    dfs('', S)
+    dfs(s, 0)
     return res
 };
 
 console.log(letterCasePermutation('a1b2'))
+console.log(letterCasePermutation('C'))
