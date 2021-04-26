@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-22 16:14:20
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-22 16:47:25
- * @FilePath: /js-demo/leetcode/37.js
+ * @LastEditTime: 2021-04-25 21:17:26
+ * @FilePath: /js-demo/leetcode/常规题目/37.js
  */
 /**
  * @param {character[][]} board
@@ -20,42 +20,6 @@
         你可以假设给定的数独只有唯一解。
         给定数独永远是 9x9 形式的。
  */
-// var solveSudoku = function (board) {
-//     let check = (x, y, val) => {
-//         // 一行或者一列有重复元素，剪掉
-//         for (let i = 0; i < 9; i++) {
-//             if (board[x][i] == val || board[i][y] == val) return true;
-//         }
-//         let xx = Math.floor(x / 3) * 3;
-//         let yy = Math.floor(y / 3) * 3;
-//         // 3x3宫格内重复的情况，剪掉
-//         for (let i = 0; i < 3; i++) {
-//             for (let j = 0; j < 3; j++) {
-//                 if (board[xx + i][yy + j] == val) return true;
-//             }
-//         }
-//         return false; // 没有冲突情况
-//     }
-//     let dfs = (x, y) => {
-//         if (y == 9) {
-//             x++;
-//             y = 0;
-//             if (x == 9) return true; // 都填完了，直接返回 true
-//         }
-//         // 如果这里有值，直接下一个
-//         if (board[x][y] != '.') return dfs(x, y + 1);
-//         for (let i = 1; i < 10; i++) {
-//             if (check(x, y, String(i))) continue;
-//             board[x][y] = String(i);
-//             if (dfs(x, y + 1)) return true; // 如果往下走，能够解出数独，直接返回 true
-//             board[x][y] = '.'; // 回溯，因为往下走得不到一个解
-//         }
-//         return false;
-//     }
-//     dfs(0, 0);
-//     return board;
-// };
-
 var solveSudoku = function (board) {
     let check = (x, y, val) => {
         // 一行或者一列有重复元素，剪掉
@@ -101,7 +65,97 @@ var solveSudoku = function (board) {
     return board;
 };
 
-
+var solveSudoku = function (board) {
+    let row = new Array(9)
+    let col = new Array(9)
+    let cell = new Array(3)
+    for (let i = 0; i < 3; i++) {
+        cell[i] = new Array(3)
+        for (let j = 0; j < 3; j++) {
+            cell[i][j] = new Array(9)
+        }
+    }
+    for (let i = 0; i < 9; i++) {
+        row[i] = new Array(9)
+        col[i] = new Array(9)
+    }
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            let c = board[i][j]
+            if(c != '.'){
+                let t = c - 1
+                row[i][t] = col[j][t] = cell[Math.floor(i / 3)][Math.floor(j / 3)][t] = true
+            }
+        }
+    }
+    let dfs = (x, y) => {
+        if(y === 9){
+            x++
+            y = 0
+        }
+        if(x === 9) return true
+        if(board[x][y] != '.') return dfs(x, y + 1)
+        for (let i = 0; i < 9; i++) {
+            let cellX = Math.floor(x / 3)
+            let cellY = Math.floor(y / 3)
+            if(!row[x][i] && !col[y][i] && !cell[cellX][cellY][i]){
+                board[x][y] = String(i + 1)
+                row[x][i] = col[y][i] = cell[cellX][cellY][i] = true
+                if(dfs(x, y + 1)) return true
+                row[x][i] = col[y][i] = cell[cellX][cellY][i] = false
+                board[x][y] = '.'
+            }
+        }
+    }
+    dfs(0, 0)
+    return board
+};
+var solveSudoku = function (board) {
+    let cellNum = num => Math.floor(num / 3)
+    let row = new Array(9)
+    let col = new Array(9)
+    let cell = new Array(3)
+    for (let i = 0; i < 3; i++) {
+        cell[i] = new Array(3)
+        for (let j = 0; j < 3; j++) {
+            cell[i][j] = new Array(9)    
+        }
+    }
+    for (let i = 0; i < 9; i++) {
+        row[i] = new Array(9)
+        col[i] = new Array(9)
+    }
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            let c = board[i][j]
+            if(c != '.'){
+                let t = c - 1
+                row[i][t] = col[j][t] = cell[cellNum(i)][cellNum(j)][t] = true
+            }
+        }
+    }
+    var dfs = function(x, y) {
+        if(y === 9){
+            x += 1;
+            y = 0
+        }
+        if(x === 9) return true
+        if(board[x][y] != '.') return dfs(x, y + 1)
+        let a = cellNum(x)
+        let b = cellNum(y)
+        for (let i = 0; i < 9; i++) {
+            if(!row[x][i] && !col[y][i] && !cell[a][b][i]){
+                board[x][y] = String(i + 1)
+                row[x][i] = col[y][i] = cell[a][b][i] = true
+                if(dfs(x, y + 1)) return true
+                row[x][i] = col[y][i] = cell[a][b][i] = false
+                board[x][y] = '.'
+            }
+        }
+    }
+    dfs(0, 0)
+    return board
+}
 console.log(solveSudoku([
     [5,3,'.','.',7,'.','.','.','.'],
     [6,'.','.',1,9,5,'.','.','.'],

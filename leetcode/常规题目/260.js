@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-14 13:54:18
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-14 14:02:21
- * @FilePath: /js-demo/leetcode/260.js
+ * @LastEditTime: 2021-04-26 08:55:02
+ * @FilePath: /js-demo/leetcode/常规题目/260.js
  */
 /**
  * @param {number[]} nums
@@ -39,6 +39,20 @@ var singleNumber = function(nums) {
         else y ^= nums[i]
     }
     return [x, y]
+};
+
+var singleNumber = function(nums) {
+    let s = 0
+    for(num of nums) s ^= num
+    let k = 0
+    while(!(s >> k & 1)) k++
+    let x = 0
+    for(num of nums){
+        if(num >> k & 1){
+            x ^= num
+        }
+    }
+    return [x, x^s]
 };
 
 console.log(singleNumber([1,2,1,3,2,5]))

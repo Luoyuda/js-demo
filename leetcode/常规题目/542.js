@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-24 21:04:09
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-24 21:16:31
+ * @LastEditTime: 2021-04-25 12:48:29
  * @FilePath: /js-demo/leetcode/常规题目/542.js
  */
 /*
@@ -72,7 +72,42 @@ var updateMatrix = function(matrix) {
     }
     return dist
 };
-
+var updateMatrix = function(matrix) {
+    let m = matrix.length
+    if(!m) return
+    let n = matrix[0].length
+    if(!n) return
+    let seen = new Array(m)
+    let dist = new Array(m)
+    let q = []
+    for(let i = 0; i < m; i++){
+        seen[i] = new Array(n).fill(0)
+        dist[i] = new Array(n).fill(0)
+    }
+    for(let i = 0; i < m; i++){
+        for(let j = 0; j < n; j++){
+            if(matrix[i][j] == 0){
+                q.push([i, j])
+                seen[i][j] = 1
+            }
+        }
+    }
+    let dx = [-1, 0 ,1, 0]
+    let dy = [0, 1, 0, -1]
+    while(q.length){
+        let [x, y] = q.shift()
+        for(let i = 0; i < 4; i++){
+            let a = x + dx[i]
+            let b = y + dy[i]
+            if(a >= 0 && b >= 0 && a < m && b < n && seen[a][b]!=1){
+                q.push([a, b])
+                dist[a][b] = dist[x][y] + 1
+                seen[a][b] = 1
+            }
+        }
+    }
+    return dist
+};
 console.log(updateMatrix(
     [[0,0,0],
     [0,1,0],
