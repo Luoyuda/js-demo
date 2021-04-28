@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-16 17:53:32
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-16 18:15:20
+ * @LastEditTime: 2021-04-28 14:31:12
  * @FilePath: /js-demo/leetcode/常规题目/334.js
  */
 /**
@@ -39,6 +39,16 @@ var increasingTriplet = function(nums) {
     }
     return false
 };
+var increasingTriplet = function(nums) {
+    let first = Infinity
+    let second = Infinity
+    for (const x of nums) {
+        if(x <= first) first = x
+        else if(x <= second) second = x
+        else if(x > second) return true
+    }
+    return false
+}
 console.log(increasingTriplet([5,4,3,2,1]))
 console.log(increasingTriplet([1,2,3,4,5]))
 console.log(increasingTriplet([2,1,5,0,4,6]))

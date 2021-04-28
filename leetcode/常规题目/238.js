@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-16 15:58:55
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-16 16:12:22
+ * @LastEditTime: 2021-04-28 14:56:33
  * @FilePath: /js-demo/leetcode/常规题目/238.js
  */
 /**
@@ -25,6 +25,7 @@ var productExceptSelf = function(nums) {
     for (let i = 1; i < len; i++) {
         result[i] = nums[i-1] * result[i-1]
     }
+    // console.log(result)
     let right = 1
     for (let i = len - 1; i >= 0; i--) {
         result[i] *= right

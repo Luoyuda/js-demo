@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-27 09:48:21
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-16 12:12:22
+ * @LastEditTime: 2021-04-28 12:56:15
  * @FilePath: /js-demo/leetcode/常规题目/283.js
  */
 /**
@@ -40,7 +40,7 @@ var moveZeroes = function(nums) {
     let left = 0
     let right = 0
     let n = nums.length
-    while (right < n){
+    while (right < n) {
         if(nums[right] != 0){
             let temp = nums[left]
             nums[left] = nums[right]
