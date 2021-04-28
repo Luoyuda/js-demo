@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-20 14:55:03
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-20 15:12:38
- * @FilePath: /js-demo/leetcode/212.js
+ * @LastEditTime: 2021-04-27 19:03:31
+ * @FilePath: /js-demo/leetcode/常规题目/212.js
  */
 /**
  * @param {character[][]} board
@@ -39,68 +39,87 @@
         words[i] 由小写英文字母组成
         words 中的所有字符串互不相同
  */
+var TrieNode = function(){
+    this.end = false
+    this.children = {}
+}
+var Trie = function(){
+    this.root = new TrieNode()
+}
+Trie.prototype.insert = function(word){
+    let cur = this.root
+    for (const w of word) {
+        if(!cur.children[w]){
+            cur.children[w] = new TrieNode()
+        }
+        cur = cur.children[w]
+    }
+    cur.end = true
+}
+let dx = [-1, 0, 1, 0]
+let dy = [0, -1, 0, 1]
 var findWords = function(board, words) {
-    class TrieNode {
-        constructor(){
-            this.end = false
-            this.child = {}
-        }
-    }
-    let root = null 
-    let Trie = function(){
-        root = new TrieNode()
-    }
-    Trie.prototype.insert = function(word){
-        let cur = root
-        for (let i = 0; i < word.length; i++) {
-            const element = word[i];
-            if(!cur.child[element]){
-                cur.child[element] = new TrieNode()
-            }
-            cur = cur.child[element]
-        }
-        cur.end = true
-    }
     // 创建根节点
     let trie = new Trie()
     for (let i = 0; i < words.length; i++) {
         trie.insert(words[i])
     }
     let res = []
+    let m = board.length
+    let n = board[0].length
     let dfs = (x, y, t, cur) => {
         if(cur.end){
             res.push(t)
-            cur.end = false // 避免重复计算
+            cur.end = false
         }
-        // 剪枝条件：
-        // 1.边界处理 
-        // 2.下一步是否可走 
-        // 3.下一步字典树是否可走
-        if(x<0 || x>=board.length || y<0 || y>=board[0].length || board[x][y] == '#' || !cur.child[board[x][y]]) return
-        let tmp = board[x][y]
-        board[x][y] = '#'  // 走
-        cur = cur.child[tmp]
-        dfs(x+1,y,t+tmp,cur)  // 上下左右四个方向遍历
-        dfs(x,y+1,t+tmp,cur)
-        dfs(x-1,y,t+tmp,cur)
-        dfs(x,y-1,t+tmp,cur)
-        board[x][y] = tmp // 回溯（还原）
+        for (let i = 0; i < 4; i++) {
+            let a = x + dx[i]
+            let b = y + dy[i]
+            if(a >= 0 && b >= 0 && a < m && b < n && cur.children[board[a][b]]){
+                let temp = board[a][b]
+                board[a][b] = '#'
+                dfs(a, b, t + temp, cur.children[temp])
+                board[a][b] = temp
+            }
+        }
+        return false
     }
     // 对单词表进行全局搜索
-    for(let i=0;i<board.length;i++){
-        for(let j=0;j<board[0].length;j++){
-            dfs(i,j,'',root)
+    for(let i=0;i<m;i++){
+        for(let j=0;j<n;j++){
+            let ch = board[i][j]
+            let cur = trie.root.children[ch]
+            if(cur){
+                board[i][j] = '#'
+                dfs(i, j, ch, cur)
+                board[i][j] = ch
+            }
         }
     }
     return res
 };
-
 console.log(findWords(
     [
         ["o","a","a","n"],
         ["e","t","a","e"],
         ["i","h","k","r"],
         ["i","f","l","v"]
-    ], 
-    ["oath","pea","eat","rain"]
-))
+    ],
+    ["oath","pea","eat","rain","oathi","oathk","oathf","oate","oathii","oathfi","oathfii"]
+    )
+)
+// console.log(findWords(
+//     [
+//         ["o","a","a","n"],
+//         ["e","t","a","e"],
+//         ["i","h","k","r"],
+//         ["i","f","l","v"]
+//     ], 
+//     ["oath","pea","eat","rain"]
+// ))
+// console.log(findWords(board = [
+//     ["a","b"],
+//     ["c","d"]
+// ], ["abcb"]))
+// console.log(findWords([["a","a"]], ["aaa"]))
+

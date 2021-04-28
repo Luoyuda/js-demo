@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-25 10:16:04
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-17 14:45:51
+ * @LastEditTime: 2021-04-27 11:30:39
  * @FilePath: /js-demo/leetcode/offer/offer.15.js
  */
 /**
@@ -30,10 +30,15 @@
  */
 var hammingWeight = function(n) {
     let count = 0
-    while (n){
-        n &= (n - 1)
-        count++
+    for (let i = 0; i < 32; i++) {
+        if((n >> i) & 1){
+            count++
+        }
     }
+    // while (n){
+    //     n &= (n - 1)
+    //     count++
+    // }
     return count
 };
-console.log(hammingWeight(31))
+console.log(hammingWeight(parseInt('11111111111111111111111111111101', 2)))

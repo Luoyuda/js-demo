@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-25 17:40:22
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-16 16:13:55
+ * @LastEditTime: 2021-04-27 16:24:37
  * @FilePath: /js-demo/leetcode/常规题目/125.js
  */
 /**
@@ -64,5 +64,21 @@ var isPalindrome = function(s) {
     return true
 };
 
+var isPalindrome = function(s) {
+    let l = 0
+    let r = s.length - 1
+    while(l < r){
+        if(!isValid(s[l])){
+            l++
+        }else if(!isValid(s[r])){
+            r--
+        }else{
+            if(s[l].toLocaleLowerCase() != s[r].toLocaleLowerCase()) return false
+            l++
+            r--
+        }
+    }
+    return true
+};
 console.log(isPalindrome("A man, a plan, a canal: Panama"))
 console.log(isPalindrome("race a car"))

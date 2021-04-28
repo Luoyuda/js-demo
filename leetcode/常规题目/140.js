@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-22 08:43:18
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-22 08:54:59
+ * @LastEditTime: 2021-04-27 18:23:31
  * @FilePath: /js-demo/leetcode/常规题目/140.js
  */
 /**
@@ -42,35 +42,36 @@
     输出:
         []
  */
-var wordBreak = function(s, wordDict) {
-    let len = s.length
-    let wordSet = new Set(wordDict)
-    let dp = new Array(len + 1).fill(false)
-    dp[0] = true
-    let pos = []
-    for (let i = 1; i <= len; i++) {
-        for (let j = i-1; j >= 0; j--) {
-            if(dp[i]) break
-            if(!dp[j]) continue
-            let str = s.slice(j, i)
-            if(wordSet.has(str) && dp[j]){
-                // console.log(str)
-                dp[i] = true
-                // pos.push(str)
-                pos[i] = j
-                break
+const backtrack = (s, length, wordSet, index, map) => {
+    if(map.has(index)) return map.get(index)
+    const wordBreaks = []
+    if(index == length){
+        wordBreaks.push([])
+    }
+    for (let i = index + 1; i <= length; i++) {
+        let word = s.substring(index, i)
+        if(wordSet.has(word)){
+            const nextWordBreaks = backtrack(s, length, wordSet, i, map)
+            for (const nextWordBreak of nextWordBreaks) {
+                const wordBreak = [word, ...nextWordBreak]
+                wordBreaks.push(wordBreak)
             }
         }
     }
-    if(!dp[len]) return []
-    console.log(pos)
-    let res = []
-    // let dfs = (start) => {
-    //     if(start == len) 
-    // }
-    // dfs()
-    return res
+    map.set(index, wordBreaks)
+    return wordBreaks
+}
+var wordBreak = function(s, wordDict) {
+    const map = new Map()
+    const set = new Set(wordDict)
+    const length = s.length
+    const wordBreaks = backtrack(s, length, set, 0, map)
+    const breakList = []
+    for (const wordBreak of wordBreaks) {
+        breakList.push(wordBreak.join(' '))
+    }
+    return breakList
 };
 
-console.log(wordBreak('applepenapple', ["apple", "pen"]))
-console.log(wordBreak('catsanddog',  ["cat", "cats", "and", "sand", "dog"]))
+// console.log(wordBreak('applepenapple', ["apple", "pen"]))
+console.log(wordBreak("catsanddog", ["cat", "cats", "and", "sand", "dog"]))

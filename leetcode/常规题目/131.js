@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-22 14:17:45
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-22 15:00:48
- * @FilePath: /js-demo/leetcode/131.js
+ * @LastEditTime: 2021-04-27 16:49:15
+ * @FilePath: /js-demo/leetcode/常规题目/131.js
  */
 /**
  * @param {string} s
@@ -55,4 +55,35 @@ function isPal(str) {
     }
     return true;
 }
+
+var partition = function(s) {
+    let res = []
+    let n = s.length
+    let dp = new Array(n)
+    for (let i = 0; i < n; i++) {
+        dp[i] = new Array(n).fill(true)
+    }
+    for (let i = n - 1; i >= 0; i--) {
+        for (let j = i + 1; j < n; j++) {
+            dp[i][j] = (s[i] == s[j]) && dp[i+1][j-1]
+        }
+    }
+    let ret = []
+    let dfs = (i) => {
+        if(i == n){
+            res.push(ret.slice())
+            return
+        }
+        for (let j = i; j < n; j++) {
+            if(dp[i][j]){
+                ret.push(s.slice(i, j + 1))
+                dfs(j + 1)
+                ret.pop()
+            }
+        }
+    }
+    dfs(0)
+    return res
+};
+
 console.log(partition('aab'))

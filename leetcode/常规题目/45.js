@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-07 23:26:38
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-07 23:30:29
+ * @LastEditTime: 2021-04-28 10:29:44
  * @FilePath: /js-demo/leetcode/常规题目/45.js
  */
 /**
@@ -34,6 +34,23 @@ var jump = function(nums) {
     }
     return steps
 };
-
+var jump = function(nums) {
+    let n = nums.length
+    if(n == 1) return 0
+    let l = 0
+    let r = 0
+    let steps = 0
+    while(l <= r){
+        let max = 0
+        for (let i = l; i <= r; i++){
+            max = Math.max(max, nums[i] + i)
+        }
+        l = r + 1
+        r = max
+        steps++
+        if(r >= n - 1) break
+    }
+    return steps
+};
 var nums = [2,3,1,1,4]
 console.log(jump(nums))

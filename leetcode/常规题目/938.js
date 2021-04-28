@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-05 14:19:04
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-05 14:27:09
+ * @LastEditTime: 2021-04-27 00:15:58
  * @FilePath: /js-demo/leetcode/常规题目/938.js
  */
 /**
@@ -29,6 +29,25 @@ var rangeSumBST = function(root, low, high) {
     if(root.val > high) return rangeSumBST(root.left, low, high)
     if(root.val < low) return rangeSumBST(root.right, low, high)
     return root.val + rangeSumBST(root.left, low, high) + rangeSumBST(root.right, low, high)
+};
+var rangeSumBST = function(root, low, high) {
+    if(!root) return 0
+    let q = [root]
+    let sum = 0
+    while(q.length){
+        let node = q.shift()
+        if(!node) continue
+        if(node.val > high){
+            q.push(node.left)
+        }else if(node.val < low){
+            q.push(node.right)
+        }else{
+            sum += node.val
+            q.push(node.left)
+            q.push(node.right)
+        }
+    }
+    return sum
 };
 
 function TreeNode(val, left, right) {

@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-13 22:48:06
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-13 22:57:16
+ * @LastEditTime: 2021-04-28 07:58:07
  * @FilePath: /js-demo/leetcode/常规题目/406.js
  */
 /**
@@ -42,11 +42,10 @@ var reconstructQueue = function(people) {
             return b[0] - a[0]
         }
     })
-    console.log(people)
+    // console.log(people)
     let res = []
-    for (let i = 0; i < people.length; i++) {
+    for (const item of people) {
         let resLen = res.length
-        let item = people[i]
         let index = item[1]
         if(resLen <= index){
             res.push(item)
@@ -61,5 +60,5 @@ var reconstructQueue = function(people) {
 };
 
 var people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]
-var people = [[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]
+// var people = [[6,0],[5,0],[4,0],[3,2],[2,2],[1,4]]
 console.log(reconstructQueue(people))

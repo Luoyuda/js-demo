@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-04 08:15:02
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-04 08:24:16
- * @FilePath: /js-demo/leetcode/171.js
+ * @LastEditTime: 2021-04-27 12:07:10
+ * @FilePath: /js-demo/leetcode/常规题目/171.js
  */
 /**
  * @param {string} s
@@ -42,6 +42,16 @@ var titleToNumber = function(s) {
     return sum
 };
 
-console.log(titleToNumber('AB'))
+var titleToNumber = function(s) {
+    let ans = 0
+    let code = "A".charCodeAt()
+    for (let i = 0; i < s.length; i++) {
+        let num = (s[i]).toUpperCase().charCodeAt() - code + 1
+        ans = ans * 26 + num
+    }
+    return ans
+};
+
+console.log(titleToNumber('AAA'))
 console.log(titleToNumber('ZY'))
 // console.log('Z'.charCodeAt() - 'A'.charCodeAt())

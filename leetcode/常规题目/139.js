@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-22 07:58:33
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-22 08:18:43
+ * @LastEditTime: 2021-04-27 17:58:19
  * @FilePath: /js-demo/leetcode/常规题目/139.js
  */
 /**
@@ -37,8 +37,8 @@ var wordBreak = function(s, wordDict) {
             if(dp[i]) break
             if(!dp[j]) continue
             let str = s.slice(j, i)
+            // console.log(str)
             if(wordSet.has(str) && dp[j]){
-                // console.log(str)
                 dp[i] = true
                 break
             }
@@ -47,5 +47,25 @@ var wordBreak = function(s, wordDict) {
     return dp[len]
 };
 
+var wordBreak = function(s, wordDict) {
+    let len = s.length
+    let map = {}
+    for (const word of wordDict) {
+        map[word] = true
+    }
+    let dp = new Array(len + 1).fill(false)
+    dp[0] = true
+    for (let i = 1; i <= len; i++) {
+        for (let j = i-1; j >= 0; j--) {
+            if(!dp[j]) continue
+            let str = s.slice(j, i)
+            if(map[str]){
+                dp[i] = true
+                break
+            }
+        }
+    }
+    return dp[len]
+};
 console.log(wordBreak('applepenapple', ["apple", "pen"]))
 console.log(wordBreak('catsandog', ["cats", "dog", "sand", "and", "cat"]))

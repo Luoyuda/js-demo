@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-27 15:42:37
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-28 07:45:52
+ * @LastEditTime: 2021-04-28 10:33:26
  * @FilePath: /js-demo/leetcode/常规题目/402.js
  */
 /**
@@ -52,5 +52,38 @@ var removeKdigits = function(num, k) {
     // console.log(j, res)
     return res.slice(j).join('')
 };
+var removeKdigits = function(num, k) {
+    let res = []
+    for (const c of num) {
+        while (res.length && res[res.length - 1] > c && k){
+            res.pop()
+            k--
+        }
+        res.push(c)
+    }
+    while (k--) res.pop()
+    let i = 0
+    while (i < res.length && res[i] == '0') i++
+    if(i == res.length) return '0'
+    return res.slice(i).join('')
+};
+var removeKdigits = function(num, k) {
+    let stack = []
+    let n = num.length
+    for(let x of num){
+        while(stack.length && stack[stack.length - 1] > x && k){
+            k--
+            stack.pop()
+        }
+        stack.push(x)
+    }
+    while(k--)stack.pop()
+    let i = 0
+    n = stack.length
+    while(i < n && stack[i] == '0') i++
+    if(i == n)return '0'
+    return stack.slice(i).join('')
+};
 
 console.log(removeKdigits('1000001112', 1)) 
+console.log(removeKdigits('1432219', 3)) 

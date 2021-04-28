@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-24 18:06:40
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-24 19:15:25
+ * @LastEditTime: 2021-04-27 08:11:28
  * @FilePath: /js-demo/leetcode/常规题目/860.js
  */
 /**
@@ -43,21 +43,21 @@
 var lemonadeChange = function(bills) {
     let five = 0
     let ten = 0
-    for(bill of bills){
+    for (const bill of bills) {
         if(bill == 5){
-            five+=1
+            five++
         }else if(bill == 10){
-            if(five == 0)return false
-            five-=1
-            ten+=1
-        }else {
-            if(ten == 0) {
-                if(five < 3) return false
-                five-=3
+            if(five == 0) return false
+            five -= 1
+            ten += 1
+        }else{
+            if(ten > 0){
+                if(five == 0) return false
+                five -= 1
+                ten -= 1
             }else{
-                if(five == 0)return false
-                five-=1
-                ten-=1
+                if(five < 3) return false
+                five -= 3
             }
         }
     }

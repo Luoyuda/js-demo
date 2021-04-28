@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-03 20:29:33
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-03 20:51:41
- * @FilePath: /js-demo/leetcode/168.js
+ * @LastEditTime: 2021-04-27 12:02:51
+ * @FilePath: /js-demo/leetcode/常规题目/168.js
  */
 /**
  * @param {number} n
@@ -32,14 +32,13 @@
 const map = ['A', 'B', 'C', 'D', 'E','F','G','H','I','J','K','L','M','N','O','P','Q','R', 'S','T','U','V','W','X','Y','Z']
 var convertToTitle = function(n) {
     let str = ''
-    while(n > 0){
+    let k = 26
+    while(n){
         n -= 1
-        let rem = n % 26
-        // console.log(rem)
-        str = map[rem] + str
-        n = Math.floor(n / 26)
+        str = map[n % k] + str
+        n = Math.floor(n / k)
     }
     return str
 };
 
-console.log(convertToTitle(28))
+console.log(convertToTitle(27))
