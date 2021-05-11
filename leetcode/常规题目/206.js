@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-24 14:38:48
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-24 15:22:10
- * @FilePath: /js-demo/leetcode/206.js
+ * @LastEditTime: 2021-05-04 09:45:50
+ * @FilePath: /js-demo/leetcode/常规题目/206.js
  */
 /**
  * @param {ListNode} head
@@ -42,6 +42,13 @@ var reverseList = function(head) {
     }
     return reverse(null, head)
 };
+var reverseList = function(head){
+    if(!head || !head.next) return head
+    let p = reverseList(head.next)
+    head.next.next = head
+    head.next = null
+    return p
+}
 
 let l1 = new ListNode(1)
 l1.next = new ListNode(2)

@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-23 15:29:31
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-23 15:34:28
- * @FilePath: /js-demo/leetcode/42.js
+ * @LastEditTime: 2021-05-11 08:51:47
+ * @FilePath: /js-demo/leetcode/常规题目/42.js
  */
 /**
  * @param {number[]} height
@@ -38,6 +38,25 @@ var trap = function(height) {
             res += rightHeight - height[right]
             right--
         }
+    }
+    return res
+};
+
+var trap = function(height) {
+    let res = 0
+    let stack = []
+    for(let i = 0; i < height.length; i++){
+        let level = 0
+        while(stack.length && height[i] >= height[stack[stack.length - 1]]){
+            let j = stack.pop()
+            res += (height[j] - level) * (i - j - 1)
+            level = height[j]
+        }
+        if(stack.length){
+            let j = stack[stack.length - 1]
+            res += (height[i] - level) * (i - j - 1)
+        }
+        stack.push(i)
     }
     return res
 };

@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-15 08:20:00
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-15 08:28:52
- * @FilePath: /js-demo/leetcode/80.js
+ * @LastEditTime: 2021-05-08 17:17:14
+ * @FilePath: /js-demo/leetcode/常规题目/80.js
  */
 /**
  * @param {number[]} nums
@@ -45,6 +45,15 @@ var removeDuplicates = function(nums) {
     }
     nums.length = i
     return nums.length
+};
+var removeDuplicates = function(nums) {
+    let len = 0;
+    let count = 2
+    for (let i = 0; i < nums.length; i++) {
+        if (len < count || nums[i] != nums[len - count])
+            nums[len++] = nums[i];
+    }
+    return len;
 };
 
 console.log(removeDuplicates([0,0,1,1,1,1,2,3,3]))

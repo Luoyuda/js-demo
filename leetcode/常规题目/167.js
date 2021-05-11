@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2020-07-20 16:25:53
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-07-20 16:37:26
- * @FilePath: /js-demo/leetcode/167.js
+ * @LastEditTime: 2021-05-07 11:16:50
+ * @FilePath: /js-demo/leetcode/常规题目/167.js
  */ 
 /**
  * @param {number[]} numbers
@@ -11,21 +11,17 @@
  * @return {number[]}
  */
 var twoSum = function(numbers, target) {
-    let low = 0
-    let high = numbers.length - 1
-    while (low < high) {
-        let sum = numbers[low] + numbers[high]
-        if(sum == target) {
-            ++low
-            ++high
-            break
-        }else if(sum < target) {
-            ++low
-        }else{
-            --high
+    let left = 0
+    let right = numbers.length - 1
+    while (left < right) {
+        let sum = numbers[left] + numbers[right]
+        if(sum == target) return [++left, ++right]
+        if(sum < target) {
+            left++
+        }else if(sum > target) {
+            right--
         }
     }
-    if(high <= low) return []
-    return [low, high]
+    return []
 };
-console.log(twoSum([2, 7, 11, 15], 10))
+console.log(twoSum([2, 7, 11, 15], 9))

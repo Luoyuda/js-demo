@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-10 10:42:24
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-10 12:48:40
- * @FilePath: /js-demo/leetcode/offer.45.js
+ * @LastEditTime: 2021-04-29 00:07:17
+ * @FilePath: /js-demo/leetcode/offer/offer.45.js
  */
 /**
  * @param {number[]} nums
@@ -22,18 +22,46 @@
 var minNumber = function(nums) {
     let strs = nums.map(i => String(i))
     sort(strs, 0, strs.length - 1);
+    // bubbleSort(strs)
     // console.log(strs)
-    return strs.join('')
+    let str = strs.join('')
+    let k = 0
+    while (str[k] == '0') k++
+    return str.substr(k)
 };
+var bubbleSort = arr => {
+    let lastIndex = arr.length - 1
+    let swapped = true
+    let swappedIndex = 0
+    while (swapped){
+        swapped = false
+        for (let i = 0; i < lastIndex; i++) {
+            console.log(arr[i] + arr[i + 1], arr[i + 1] + arr[i])
+            if((arr[i] + arr[i + 1]) > (arr[i + 1] + arr[i])){
+                swap(arr, i, i + 1)
+                swapped = true
+                swappedIndex = i
+            }
+        }
+        lastIndex = swappedIndex
+    }
+    return arr
+}
+var swap = (arr, i, j) => {
+    let temp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = temp
+    // arr[i] = arr[i] ^ arr[j]
+    // arr[j] = arr[i] ^ arr[j]
+    // arr[i] = arr[i] ^ arr[j]
+}
+
 var sort = (strs, l, r) => {
     if(l >= r) return
     let i = l
     let j = r
     let tmp = strs[i]
-    // console.log(i, j)
     while(i < j){
-        // console.log(strs[j] + strs[l], strs[l] + strs[j])
-        // console.log(strs[i] + strs[l], strs[l] + strs[i])
         while((strs[j] + strs[l]) >= (strs[l] + strs[j]) && i < j) j--
         while((strs[i] + strs[l]) <= (strs[l] + strs[i]) && i < j) i++
         tmp = strs[i]
@@ -45,33 +73,6 @@ var sort = (strs, l, r) => {
     sort(strs, l, i - 1)
     sort(strs, i + 1, r)
 }
-// class Solution {
-//     public String minNumber(int[] nums) {
-//         String[] strs = new String[nums.length];
-//         for(int i = 0; i < nums.length; i++)
-//             strs[i] = String.valueOf(nums[i]);
-//         quickSort(strs, 0, strs.length - 1);
-//         StringBuilder res = new StringBuilder();
-//         for(String s : strs)
-//             res.append(s);
-//         return res.toString();
-//     }
-//     void quickSort(String[] strs, int l, int r) {
-//         if(l >= r) return;
-//         int i = l, j = r;
-//         String tmp = strs[i];
-//         while(i < j) {
-//             while((strs[j] + strs[l]).compareTo(strs[l] + strs[j]) >= 0 && i < j) j--;
-//             while((strs[i] + strs[l]).compareTo(strs[l] + strs[i]) <= 0 && i < j) i++;
-//             tmp = strs[i];
-//             strs[i] = strs[j];
-//             strs[j] = tmp;
-//         }
-//         strs[i] = strs[l];
-//         strs[l] = tmp;
-//         quickSort(strs, l, i - 1);
-//         quickSort(strs, i + 1, r);
-//     }
-// }
 
-console.log(minNumber([3,30,34,5,9]))
+// console.log(minNumber(['3','30','34','5','9']))
+console.log(minNumber([0,9,8,7,6,5,4,3,2,1]))

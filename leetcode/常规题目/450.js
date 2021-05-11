@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-08 07:46:51
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-08 08:46:41
+ * @LastEditTime: 2021-05-09 21:01:53
  * @FilePath: /js-demo/leetcode/常规题目/450.js
  */
 function TreeNode(val, left, right) {
@@ -74,8 +74,26 @@ var deleteNode = function(root, key) {
     return root
 };
 
+var deleteNode = function(root, key) {
+    if(!root) return null
+    if(root.val > key) root.left = deleteNode(root.left, key)
+    else if(root.val < key) root.right = deleteNode(root.right, key)
+    else{
+        if(!root.left) return root.right
+        if(!root.right) return root.left
+        let node = root.right
+        while(node.left){
+            node = node.left
+        }
+        node.left = root.left
+        root = root.right
+        console.log(root)
+    }
+    return root
+};
 
 let r5 = new TreeNode(5)
+let r55 = new TreeNode(5.5)
 let r3 = new TreeNode(3)
 let r6 = new TreeNode(6)
 let r2 = new TreeNode(2)
@@ -84,11 +102,12 @@ let r7 = new TreeNode(7)
 
 r5.left = r3
 r5.right = r6
+r6.left = r55
 r6.right = r7
 r3.left = r2
 r3.right = r4
 
-// console.log(deleteNode(r5, r5.val))
-console.log(deleteNode(r5, r3.val))
+console.log(deleteNode(r5, r5.val))
+// console.log(deleteNode(r5, r3.val))
 // console.log(deleteNode(r5, r2.val))
 // console.log(deleteNode(r5, r7.val))

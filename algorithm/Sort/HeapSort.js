@@ -1,10 +1,22 @@
 /*
  * @Author: xiaohuolong
- * @Date: 2020-07-09 17:41:31
+ * @Date: 2021-04-30 14:56:58
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-30 16:18:31
- * @FilePath: /js-demo/leetcode/常规题目/703.js
- */ 
+ * @LastEditTime: 2021-04-30 16:18:48
+ * @FilePath: /js-demo/algorithm/Sort/HeapSort.js
+ */
+/**
+ * 堆：符合以下两个条件之一的完全二叉树：
+ * 根节点的值 ≥ 子节点的值，这样的堆被称之为最大堆，或大顶堆；
+ * 根节点的值 ≤ 子节点的值，这样的堆被称之为最小堆，或小顶堆。
+ * 堆排序过程如下：
+ * 用数列构建出一个大顶堆，取出堆顶的数字；
+ * 调整剩余的数字，构建出新的大顶堆，再次取出堆顶的数字；
+ * 循环往复，完成整个排序。
+ * 时间: O(nlogn)
+ * 空间: O(n)
+ * 不稳定
+ */
 class Heap {
     constructor(size, handle){
         this.list = new Array(size + 1)
@@ -117,23 +129,14 @@ class MinHeap extends Heap{
         return a < b
     }
 }
-class KthLargest extends MinHeap {
-    constructor(k, nums){
-        super(k)
-        this.oldAdd = this.add.bind(this)
-        this.add = (val) => {
-            this.oldAdd(val)
-            return this.peek()
-        }
-        for (const x of nums) {
-            this.add(x)
-        }
+var sortArray = function(arr){
+    let n = arr.length
+    let heap = new MinHeap(n)
+    // let heap = new MaxHeap(n)
+    heap.heapify(arr)
+    for (let i = 0; i < n; i++) {
+        arr[i] = heap.pop()
     }
+    return arr
 }
-const k = new KthLargest(3, [4,5,8,2])
-console.log(k)
-console.log(k.add(3))
-console.log(k.add(5));   // returns 5
-console.log(k.add(10));  // returns 5
-console.log(k.add(9));   // returns 8
-console.log(k.add(4));   // returns 8
+console.log(sortArray([5,2,3,1,0,-5]))

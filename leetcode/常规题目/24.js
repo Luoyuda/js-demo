@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-24 16:37:55
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-24 16:45:16
- * @FilePath: /js-demo/leetcode/24.js
+ * @LastEditTime: 2021-05-03 14:42:32
+ * @FilePath: /js-demo/leetcode/常规题目/24.js
  */
 /**
  * @param {ListNode} head
@@ -48,7 +48,13 @@ var swapPairs = function(head) {
     }
     return P.next
 };
-
+var swapPairs = function(head) {
+    if(!head || !head.next) return head
+    let p = head.next
+    head.next = swapPairs(p.next)
+    p.next = head
+    return p
+};
 let l1 = new ListNode(1)
 l1.next = new ListNode(2)
 l1.next.next = new ListNode(3)

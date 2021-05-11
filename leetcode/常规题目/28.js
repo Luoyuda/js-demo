@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-07-05 19:40:15
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-16 18:38:57
+ * @LastEditTime: 2021-05-08 14:40:24
  * @FilePath: /js-demo/leetcode/常规题目/28.js
  */ 
 /*
@@ -21,7 +21,7 @@
         对于本题而言，当 needle 是空字符串时我们应当返回 0 。这与C语言的 strstr() 以及 Java的 indexOf() 定义相符。
 */
 // 推导 Next 数组
-const getNext = (string) => {
+var getNext = (string) => {
     // 前缀变量
     let prefix = 0
     // 后缀变量
@@ -231,8 +231,43 @@ var strStr = (S='', T='', pos=0) => {
     }
     return j == tLen ? i - tLen : -1
 }
-console.log(strStr('aabaabaafa', 'aabaaf'))
-console.log(strStr('aabaaeeaafa', 'aabaaf'))
+
+// KMP
+var strStr = function(S, T){
+    let next = getNext(T)
+    let m = S.length
+    let n = T.length
+    let i = j = 0
+    while (i < m && j < n){
+        if(j < 0 || S[i] == T[j]){
+            i++
+            j++
+        }else{
+            j = next[j]
+        }
+    }
+    return j == n ? i - j : -1
+}
+var getNext = function(T){
+    let m = T.length
+    let j = 0
+    let next = new Array(m)
+    let t = -1
+    next[0] = -1
+    while (j < m - 1){
+        if(t < 0 || T[j] == T[t]){
+            j++
+            t++
+            next[j] = t
+        }else{
+            t = next[t]
+        }
+    }
+    return next
+}
+console.log(strStr('ACTGPACTGKACTGPACY', 'ACTGPACY'))
+console.log(strStr("hello", 'll'))
+// console.log(strStr('aabaaeeaafa', 'aabaaf'))
 // console.log(strStr('abc', 'c'))
 // console.log(getNextStr([5,'i','s','s','i','p']))
 

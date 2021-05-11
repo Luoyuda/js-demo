@@ -1,10 +1,23 @@
 /*
  * @Author: xiaohuolong
- * @Date: 2020-07-09 17:41:31
+ * @Date: 2021-04-30 17:23:20
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-30 16:18:31
- * @FilePath: /js-demo/leetcode/常规题目/703.js
- */ 
+ * @LastEditTime: 2021-04-30 17:23:54
+ * @FilePath: /js-demo/leetcode/常规题目/912.js
+ */
+/*
+912. 排序数组
+    给你一个整数数组 nums，请你将该数组升序排列。
+示例 1：
+    输入：nums = [5,2,3,1]
+    输出：[1,2,3,5]
+示例 2：
+    输入：nums = [5,1,1,2,0,0]
+    输出：[0,0,1,1,2,5]
+提示：
+    1 <= nums.length <= 50000
+    -50000 <= nums[i] <= 50000
+*/
 class Heap {
     constructor(size, handle){
         this.list = new Array(size + 1)
@@ -47,7 +60,6 @@ class Heap {
             let right = this.list[r]
             let curr = this.list[i]
             let j = i
-            // console.log(curr, left, right)
             if(left === undefined && right === undefined) break
             if(right === undefined && this.handle(curr, left)) break
             if(this.handle(curr, left) && this.handle(curr, right)) break
@@ -66,7 +78,7 @@ class Heap {
     }
     add(val){
         if(this.realSize >= this.list[0]){
-            if(this.handle(this.peek(), val)){
+            if(this.handle(val, this.peek())){
                 this.pop()
             }else{
                 return
@@ -85,20 +97,10 @@ class Heap {
         return head
     }
     peek(){
-        return this.list[1] != undefined ? this.list[1] : -1
+        return this.list[1] || -1
     }
     size(){
         return this.realSize
-    }
-    heapify(list = [], handle){
-        let size = list.length
-        this.list = new Array(size + 1)
-        this.list[0] = size
-        this.handle = handle || this.handle
-        this.realSize = 0
-        for (let i = 0; i < size; i++) {
-            this.add(list[i])
-        }
     }
 }
 class MaxHeap extends Heap{
@@ -117,23 +119,15 @@ class MinHeap extends Heap{
         return a < b
     }
 }
-class KthLargest extends MinHeap {
-    constructor(k, nums){
-        super(k)
-        this.oldAdd = this.add.bind(this)
-        this.add = (val) => {
-            this.oldAdd(val)
-            return this.peek()
-        }
-        for (const x of nums) {
-            this.add(x)
-        }
+var sortArray = function(arr){
+    let n = arr.length
+    // let heap = new MinHeap(n)
+    let heap = new MaxHeap(n)
+    for (let i = 0; i < n; i++) {
+        heap.add(arr[i])
     }
+    for (let i = 0; i < n; i++) {
+        arr[i] = heap.pop()
+    }
+    return arr.reverse()
 }
-const k = new KthLargest(3, [4,5,8,2])
-console.log(k)
-console.log(k.add(3))
-console.log(k.add(5));   // returns 5
-console.log(k.add(10));  // returns 5
-console.log(k.add(9));   // returns 8
-console.log(k.add(4));   // returns 8

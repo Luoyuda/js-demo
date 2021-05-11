@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-12 22:53:46
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-12 23:17:39
+ * @LastEditTime: 2021-05-09 17:34:18
  * @FilePath: /js-demo/leetcode/常规题目/33.js
  */
 /**
@@ -57,9 +57,32 @@ var search = function(nums, target) {
     return -1
 };
 
-console.log(search([4,5,6,7,0,1,2], 0))
-console.log(search([4,5,6,7,0,1,2], 2))
-console.log(search([4,5,6,7,0,1,2], 4))
-console.log(search([4,5,6,7,8,1,2,3], 8))
-console.log(search([1], 0))
-console.log(search([3,1], 1))
+var search = function(nums, target) {
+    let n = nums.length
+    if(!n) return -1
+    // 先找到分界点
+    let l = 0
+    let r = n - 1
+    while(l < r){
+        let m = l + Math.floor((r - l) / 2)
+        if(nums[m] <= nums[r]) r = m
+        else l = m + 1
+    }
+    if(target <= nums[n - 1]) r = n - 1
+    else {
+        l = 0
+        r--
+    }
+    while(l < r){
+        let m = l + Math.floor((r - l) / 2)
+        if(nums[m] >= target) r = m
+        else l = m + 1
+    }
+    return nums[l] == target ? l : -1
+};
+console.log(search([4,4,5,6,7,0,1,2], 4))
+// console.log(search([4,5,6,7,0,1,2], 2))
+// console.log(search([4,5,6,7,0,1,2], 4))
+// console.log(search([4,5,6,7,8,1,2,3], 8))
+// console.log(search([1], 0))
+// console.log(search([3,1], 1))

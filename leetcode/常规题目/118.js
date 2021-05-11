@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-13 08:56:36
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-17 14:56:58
+ * @LastEditTime: 2021-05-03 15:27:53
  * @FilePath: /js-demo/leetcode/常规题目/118.js
  */
 /**
@@ -33,4 +33,32 @@ var generate = function(numRows) {
     }
     return res
 };
+
+var generate = function(numRows) {
+    let res = []
+    for(let i = 0; i < numRows; i++){
+        let row = new Array(i + 1).fill(1)
+        console.log(res)
+        for(let j = 1; j < i; j++){
+            row[j] = res[i - 1][j - 1] + res[i - 1][j]
+        }
+        res.push(row)
+    }
+    return res
+};
+
+var generate = function(numRows) {
+    let res = []
+    let getRow = (row) => {
+        if(row >= numRows) return
+        let rows = new Array(row + 1).fill(1)
+        for (let i = 1; i < row; i++) {
+            rows[i] = res[row - 1][i - 1] + res[row - 1][i]
+        }
+        res.push(rows)
+        getRow(row + 1)
+    }
+    getRow(0)
+    return res
+}
 console.log(generate(5))
