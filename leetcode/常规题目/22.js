@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-22 15:43:24
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-22 16:05:35
- * @FilePath: /js-demo/leetcode/22.js
+ * @LastEditTime: 2021-05-21 12:00:27
+ * @FilePath: /js-demo/leetcode/常规题目/22.js
  */
 /**
  * @param {number} n
@@ -32,6 +32,28 @@ var generateParenthesis = function(n) {
         if(right > left) dfs(curr + ')', left, right - 1)
     }
     dfs('', n, n)
+    return res
+};
+/**
+ * @param {number} n
+ * @return {string[]}
+ */
+var generateParenthesis = function(n) {
+    let q = [['', n, n]]
+    let res = []
+    while(q.length){
+        let [str, left, right] = q.shift()
+        if(left == 0 && right == 0){
+            res.push(str)
+        }else{
+            if(left > 0) {
+                q.push([str + '(', left - 1, right])
+            }
+            if(right > 0 && right > left) {
+                q.push([str + ')', left, right - 1])
+            }
+        }
+    }
     return res
 };
 

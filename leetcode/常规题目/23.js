@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-07-10 23:37:48
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-06 14:45:58
+ * @LastEditTime: 2021-05-24 17:01:07
  * @FilePath: /js-demo/leetcode/常规题目/23.js
  */ 
 
@@ -87,6 +87,62 @@ var merge = function(l1, l2){
     curr.next = l1 ? l1 : l2
     return head
 }
+
+/**
+ * Definition for singly-linked list.
+ */
+ function ListNode(val, next) {
+    this.val = (val===undefined ? 0 : val)
+    this.next = (next===undefined ? null : next)
+}
+/**
+ * @param {ListNode[]} lists
+ * @return {ListNode}
+ */
+var mergeKLists = function(lists) {
+    if(!lists.length) return null
+    return mergeArr(lists)
+};
+
+/**
+ * @param {ListNode[]} lists
+ * @return {ListNode}
+ */
+var mergeArr = function(lists) {
+    if(lists.length == 1) return lists[0]
+    let m = lists.length >> 1
+    let left = mergeArr(lists.slice(0, m))
+    let right = mergeArr(lists.slice(m))
+    return merge(left, right)
+};
+
+var merge = function(l1, l2){
+    let head = new ListNode(-1)
+    let curr = head
+    while(l1 && l2){
+        if(l1.val <= l2.val){
+            curr.next = l1
+            l1 = l1.next
+            curr = curr.next
+        }else{
+            curr.next = l2
+            l2 = l2.next
+            curr = curr.next
+        }
+    }
+    while(l1){
+        curr.next = l1
+        l1 = l1.next
+        curr = curr.next
+    }
+    while(l2){
+        curr.next = l2
+        l2 = l2.next
+        curr = curr.next
+    }
+    return head.next
+}
+
 let curr = mergeKLists([
     new ListNode(1,new ListNode(4, new ListNode(5))),
     new ListNode(1,new ListNode(3, new ListNode(4))),

@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-27 08:23:07
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-28 10:50:02
+ * @LastEditTime: 2021-05-23 21:03:15
  * @FilePath: /js-demo/leetcode/常规题目/455.js
  */
 /*
@@ -47,6 +47,30 @@ var findContentChildren = function(g, s) {
         }
         if(j < sLen){
             count++
+        }
+    }
+    return count
+};
+/**
+ * @param {number[]} g
+ * @param {number[]} s
+ * @return {number}
+ */
+var findContentChildren = function(g, s) {
+    g.sort((a, b) => a - b)
+    s.sort((a, b) => a - b)
+    let i = 0
+    let j = 0
+    let n = g.length
+    let m = s.length
+    let count = 0
+    while(i < n && j < m){
+        if(g[i] <= s[j]){
+            i++
+            j++
+            count++
+        }else{
+            j++
         }
     }
     return count

@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-18 11:24:58
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-18 12:13:26
+ * @LastEditTime: 2021-05-22 21:00:47
  * @FilePath: /js-demo/leetcode/常规题目/297.js
  */
 /**
@@ -50,7 +50,6 @@ var serialize = function(root) {
     }
     return '[' + ans.substring(0, ans.length-1) + ']';
 };
-
 /**
  * Decodes your encoded data to tree.
  *
@@ -70,6 +69,53 @@ var deserialize = function(data) {
             let right = values.shift()
             node.left = left == 'null' ? null : new TreeNode(left)
             node.right = right == 'null' ? null : new TreeNode(right)
+            q.push(node.left)
+            q.push(node.right)
+        }
+    }
+    return root
+};
+
+/**
+ * Encodes a tree to a single string.
+ *
+ * @param {TreeNode} root
+ * @return {string}
+ */
+var serialize = function(root) {
+    if(!root) return '[]'
+    let q = [root]
+    let res = []
+    while(q.length){
+        let node = q.shift()
+        if(!node) res.push('#')
+        else{
+            res.push(node.val + '')
+            q.push(node.left)
+            q.push(node.right)
+        }
+    }
+    return '[' + res.join(',') + ']'
+};
+/**
+ * Decodes your encoded data to tree.
+ *
+ * @param {string} data
+ * @return {TreeNode}
+ */
+var deserialize = function(data) {
+    if(data == '[]') return null
+    let values = data.substring(1, data.length - 1).split(',')
+    let i = 0
+    let root = new TreeNode(values[i++])
+    let q = [root]
+    while(q.length){
+        let node = q.shift()
+        if(node){
+            let left = values[i++]
+            let right = values[i++]
+            node.left = left == '#' ? null : new TreeNode(left)
+            node.right = right == '#' ? null : new TreeNode(right)
             q.push(node.left)
             q.push(node.right)
         }

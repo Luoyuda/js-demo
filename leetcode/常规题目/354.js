@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-06 21:29:54
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-05-07 18:15:04
+ * @LastEditTime: 2021-05-25 08:35:39
  * @FilePath: /js-demo/leetcode/常规题目/354.js
  */
 /**
@@ -86,5 +86,30 @@ var binarySearch = function(f, height){
     }
     return low
 }
+/**
+ * @param {number[][]} envelopes
+ * @return {number}
+ */
+var maxEnvelopes = function(envelopes) {
+    let nums = envelopes.sort((a, b) => {
+        if(a[0] == b[0]){
+            return b[1] - a[1]
+        }else{
+            return a[0] - b[0]
+        }
+    }).map(item => item[1])
+    let n = nums.length
+    let max = 1
+    let dp = new Array(n).fill(1)
+    for(let i = 1; i < n; i++){
+        for(let j = 0; j < i; j++){
+            if(nums[i] > nums[j]){
+                dp[i] = Math.max(dp[i], dp[j] + 1)
+            }
+        }
+        max = Math.max(max, dp[i])
+    }
+    return max
+};
 var envelopes = [[5,4],[6,7],[6,4],[2,3],[7,9]]
 console.log(maxEnvelopes(envelopes));

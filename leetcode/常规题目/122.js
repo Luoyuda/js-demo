@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-15 17:55:58
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-15 22:28:18
- * @FilePath: /js-demo/leetcode/122.js
+ * @LastEditTime: 2021-05-26 20:40:04
+ * @FilePath: /js-demo/leetcode/常规题目/122.js
  */
 /**
  * @param {number[]} prices
@@ -44,6 +44,22 @@ var maxProfit = function(prices) {
     }
     // console.log(dp)
     return dp[n - 1][0];
+};
+/**
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit = function(prices) {
+    let n = prices.length
+    let sell = 0
+    let buy = -prices[0]
+    for(let i = 1; i < n; i++){
+        let s = Math.max(sell, buy + prices[i])
+        let b = Math.max(buy, sell - prices[i])
+        sell = s
+        buy = b
+    }
+    return sell
 };
 
 var maxProfit = function(prices) {

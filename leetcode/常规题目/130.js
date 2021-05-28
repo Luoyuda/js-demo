@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-24 20:37:06
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-24 20:54:22
+ * @LastEditTime: 2021-05-20 16:54:08
  * @FilePath: /js-demo/leetcode/常规题目/130.js
  */
 /* 
@@ -63,7 +63,53 @@ var dfs = (board, x, y) => {
     }
 }
 
+/**
+ * @param {character[][]} board
+ * @return {void} Do not return anything, modify board in-place instead.
+ */
+var solve = function(board) {
+    let m = board.length
+    let n = board[0].length
+    let dx = [-1, 0, 1, 0]
+    let dy = [0, -1, 0, 1]
+    let inArea = (x, y) => x >= 0 && y >= 0 && x < m && y < n
+    let bfs = (x, y) => {
+        if(board[x][y] != 'O') return
+        let q = [[x, y]]
+        board[x][y] = 'Y'
+        while(q.length){
+            let [x, y] = q.shift()
+            for(let i = 0; i < 4; i++){
+                let a = x + dx[i]
+                let b = y + dy[i]
+                if(inArea(a, b) && board[a][b] == 'O'){
+                    board[a][b] = 'Y'
+                    q.push([a, b])
+                }
+            }
+        }
+    }
+    for(let i = 0; i < m; i++){
+        bfs(i, 0)
+        bfs(i, n - 1)
+    }
+    for(let i = 0; i < n; i++){
+        bfs(0, i)
+        bfs(m - 1, i)
+    }
+    console.log(board)
+    for(let i = 0; i < m; i++){
+        for(let j = 0; j < n; j++){
+            board[i][j] = board[i][j] == 'Y' ? "O" : "X"
+        }
+    }
+};
 
+console.log(solve([
+    ["O","O","O"],
+    ["O","O","O"],
+    ["O","O","O"]
+]))
 console.log(solve([
     ["X","X","X","X"],
     ["X","O","O","X"],

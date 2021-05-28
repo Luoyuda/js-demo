@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-11 08:26:51
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-11 08:46:30
- * @FilePath: /js-demo/leetcode/227.js
+ * @LastEditTime: 2021-05-14 09:33:57
+ * @FilePath: /js-demo/leetcode/常规题目/227.js
  */
 
 /**
@@ -99,4 +99,42 @@ var calculate1 = function(s) {
     return ans;
 };
 
-console.log(calculate('3+2*2*2/2'))
+var calculate = function(s) {
+    let op = []
+    let num = []
+    s += '+0'
+    for(let i = 0; i < s.length; i++){
+        let ch = s[i]
+        if(ch == ' ') continue
+        else if(ch == '+' || ch == '-' || ch == '*' || ch == '/') op.push(ch)
+        else{
+            let j = i
+            while(j < s.length && s[j] >= '0' && s[j] <= '9') j++
+            num.push(Number(s.slice(i, j)))
+            i = j - 1
+            if(op.length){
+                let top = op[op.length - 1]
+                if(top == '*' || top == '/'){
+                    let b = num.pop()
+                    let a = num.pop()
+                    let op1 = op.pop()
+                    let c = op1 == '*' ? a * b : a / b
+                    num.push(Math.floor(c))
+                }else if(op.length >= 2){
+                    let op2 = op.pop()
+                    let op1 = op.pop()
+                    let c = num.pop()
+                    let b = num.pop()
+                    let a = num.pop()
+                    let d = op1 == '+' ? a + b : a - b
+                    num.push(d, c)
+                    op.push(op2)
+                }
+            }
+        }
+    }
+    return num[0]
+};
+
+console.log(calculate('1+1+1'))
+// console.log(calculate('3+2*2*2/2'))

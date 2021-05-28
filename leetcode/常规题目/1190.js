@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-24 08:14:57
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-24 08:37:29
- * @FilePath: /js-demo/leetcode/1190.js
+ * @LastEditTime: 2021-05-26 08:30:51
+ * @FilePath: /js-demo/leetcode/常规题目/1190.js
  */
 /**
  * @param {string} s
@@ -53,6 +53,53 @@ var reverseParentheses = function(s) {
         // console.log(stack)
     }
     return stack.pop()
+};
+var reverseParentheses = function(s) {
+    let stack = ['']
+    for(let x of s){
+        if(x == '('){
+            stack.push('')
+        }else if(x == ')'){
+            let str = stack.pop()
+            for(let i = str.length - 1; i >= 0; i--){
+                stack[stack.length - 1] += str[i]
+            }
+        }else{
+            stack[stack.length - 1] += x
+        }
+    }
+    return stack[stack.length - 1]
+};
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var reverseParentheses = function(s) {
+    let n = s.length
+    let pair = new Array(n).fill(0)
+    let stack = []
+    for(let i = 0; i < n; i++){
+        if(s[i] == '('){
+            stack.push(i)
+        }else if(s[i] == ')'){
+            let j = stack.pop()
+            pair[i] = j
+            pair[j] = i
+        }
+    }
+    let ans = ''
+    let index = 0
+    let step = 1
+    while(index < n){
+        if(s[index] == '(' || s[index] == ')'){
+            index = pair[index]
+            step = -step
+        }else{
+            ans += s[index]
+        }
+        index += step
+    }
+    return ans
 };
 
 console.log(reverseParentheses('a(bcdefghijkl(mno)p)q'))

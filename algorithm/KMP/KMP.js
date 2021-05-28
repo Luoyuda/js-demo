@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2020-06-28 11:08:16
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-07-05 20:30:48
+ * @LastEditTime: 2021-05-17 23:12:57
  * @FilePath: /js-demo/algorithm/KMP/KMP.js
  */ 
 
@@ -112,6 +112,63 @@ const KMP = (S='', T='', pos=0) => {
     }
     return j >= T.length ? i - T.length : -1
 }
+var prefixTable = (T) => {
+    let n = T.length
+    let prefix = new Array(n).fill(0)
+    let len = 0
+    let i = 1
+    while(i < n){
+        if(T[i] == T[len]){
+            len++
+            prefix[i] = len
+            i++
+        }else{
+            if(len > 0){
+                len = prefix[len - 1]
+            }else{
+                prefix[i] = len
+                i++
+            }
+        }
+    }
+    return prefix
+}
+var getNextTable = (T) => {
+    let prefix = prefixTable(T)
+    for (let i = prefix.length - 1; i > 0; i--) {
+        prefix[i] = prefix[i - 1]
+    }
+    prefix[0] = -1
+    return prefix
+}
+/**
+ * 
+ * @param {string} S 
+ * @param {string} T 
+ * @returns 
+ */
+var kmp = (S, T) => {
+    let m = S.length
+    let n = T.length
+    let next = getNextTable(T)
+    let i = 0
+    let j = 0
+    while (i < m && j < n){
+        if(S[i] == T[j]){
+            i++
+            j++
+        }else{
+            j = next[j]
+            if(j == -1){
+                i++
+                j++
+            }
+        }
+    }
+    console.log(i, j)
+    return j == n ? i - j : -1
+}
+console.log(kmp('mississippi','issip'))
 module.exports = {
     KMP,
     KMPStr

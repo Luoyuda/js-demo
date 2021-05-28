@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-29 09:05:24
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-30 21:17:43
+ * @LastEditTime: 2021-05-14 20:36:10
  * @FilePath: /js-demo/algorithm/Sort/QuickSort.js
  */
 /**
@@ -137,7 +137,7 @@ var partition = (arr, p, q) => {
  * @param {*} q 
  * @returns 
  */
-let QuickSort = (arr, p, q) => {
+var QuickSort = (arr, p, q) => {
     if(p < q){
          // 将数组分区，并获得中间值的下标
         const r = partition(arr, p, q)
@@ -178,6 +178,52 @@ var swap = function(arr, i, j) {
     arr[j] = temp
 };
 
+
+var sortArray = function(nums){
+    shuffle(nums)
+    return QuickSort(nums, 0, nums.length - 1)
+}
+
+var QuickSort = (nums, p, q) => {
+    if(p < q){
+        let m = partition(nums, p, q)
+        QuickSort(nums, p, m - 1)
+        QuickSort(nums, m + 1, q)
+    }
+    return nums
+}
+
+var partition = (nums, p, q) => {
+    let x = nums[p]
+    let i = p + 1
+    let j = q
+    while (i < j){
+        while (i < j && nums[i] <= x) i++
+        while (i < j && nums[j] >= x) j--
+        if(i != j){
+            swap(nums, i, j)
+        }
+    }
+    if(i == j && nums[j] >= x) j--
+    swap(nums, p, j)
+    return j
+}
+
+var swap = (arr, i, j) => {
+    let temp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = temp
+}
+
+var randOne = (n, m) => n + Math.floor(Math.random(m - n + 1))
+
+var shuffle = (nums) => {
+    let n = nums.length
+    for (let i = 0; i < n; i++) {
+        let rand = randOne(i, n - 1)
+        swap(nums, i, rand)
+    }
+}
 
 let arr = [6,10,13,5,8,3,2,11,-1,-1,-100]
 console.log(sortArray(arr))

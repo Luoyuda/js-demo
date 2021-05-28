@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-22 14:17:45
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-27 16:49:15
+ * @LastEditTime: 2021-05-13 21:22:54
  * @FilePath: /js-demo/leetcode/常规题目/131.js
  */
 /**
@@ -85,5 +85,40 @@ var partition = function(s) {
     dfs(0)
     return res
 };
+
+/**
+ * @param {string} s
+ * @return {string[][]}
+ */
+var partition = function(s) {
+    let res = []
+    let dfs = (curr, i) => {
+        if(i == s.length){
+            res.push(curr)
+            return
+        }
+        for(let j = i; j < s.length; j++){
+            let str = s.slice(i, j + 1)
+            if(check(str)){
+                curr.push(str)
+                dfs(curr.slice(), j + 1)
+                curr.pop()
+            }
+        }
+    }
+    dfs([], 0)
+    return res
+};
+
+var check = function(s){
+    let i = 0
+    let j = s.length - 1
+    while(i < j){
+        if(s[i] != s[j]) return false
+        i++
+        j--
+    }
+    return true
+}
 
 console.log(partition('aab'))

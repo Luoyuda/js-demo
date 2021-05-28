@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-25 14:16:58
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-25 15:15:03
- * @FilePath: /js-demo/leetcode/offer.13.js
+ * @LastEditTime: 2021-05-20 21:23:18
+ * @FilePath: /js-demo/leetcode/offer/offer.13.js
  */
 /**
  * @param {number} m
@@ -55,4 +55,50 @@ var movingCount = function(m, n, k) {
     return dfs(0, 0, 0)
 };
 
+/**
+ * @param {number} m
+ * @param {number} n
+ * @param {number} k
+ * @return {number}
+ */
+var movingCount = function(m, n, k) {
+    let nums = {}
+    let len = Math.max(m, n)
+    let getNum = x => {
+        let res = 0
+        while(x != 0){
+            res += x % 10
+            x = Math.floor(x / 10)
+        }
+        return res
+    }
+    for(let i = 0; i < len; i++){
+        nums[i] = getNum(i)
+    }
+    let dx = [1, 0]
+    let dy = [0, 1]
+    let inArea = (x, y) => x >= 0 && y >= 0 && x < m && y < n
+    let grid = new Array(m).fill(0).map(() => new Array(n).fill(0))
+    let bfs = (x, y) => {
+        let q = [[x, y]]
+        let cnt = 1
+        grid[x][y] = 1
+        while(q.length){
+            let [x, y] = q.shift()
+            for(let i = 0; i < 4; i++){
+                let a = x + dx[i]
+                let b = y + dy[i]
+                if(inArea(a, b) && grid[a][b] == 0 && nums[a] + nums[b] <= k){
+                    cnt++
+                    grid[a][b] = 1
+                    q.push([a, b])
+                }
+            }
+        }
+        return cnt
+    }
+    return bfs(0, 0)
+};
+
 console.log(movingCount(11, 8, 16))
+// console.log(movingCount(3, 2, 17))

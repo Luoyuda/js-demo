@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-24 08:57:11
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-24 19:16:50
+ * @LastEditTime: 2021-05-11 22:01:30
  * @FilePath: /js-demo/leetcode/常规题目/456.js
  */
 /**
@@ -24,26 +24,22 @@
     输出: True
     解释: 序列中有 3 个132模式的的子序列: [-1, 3, 2], [-1, 3, 0] 和 [-1, 2, 0].
  */
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
 var find132pattern = function(nums) {
-    const n = nums.length;
-    const candidate_k = [nums[n - 1]];
-    let max_k = -Number.MAX_SAFE_INTEGER;
-
-    for (let i = n - 2; i >= 0; --i) {
-        if (nums[i] < max_k) {
-            return true;
+    let s3 = -Infinity
+    let stack = []
+    for(let i = nums.length - 1; i >= 0; i--){
+        if(nums[i] < s3) return true
+        while(stack.length && nums[stack[stack.length - 1]] < nums[i]){
+            s3 = Math.max(s3, nums[stack.pop()])
         }
-        while (candidate_k.length && nums[i] > candidate_k[candidate_k.length - 1]) {
-            max_k = candidate_k[candidate_k.length - 1];
-            candidate_k.pop();
-        }
-        if (nums[i] > max_k) {
-            candidate_k.push(nums[i]);
-        }
+        stack.push(i)
     }
-    return false;
+    return false
 };
-
 console.log(find132pattern([-1, 3, 2, 0]))
 console.log(find132pattern([1, 2, 3, 4]))
 console.log(find132pattern([3, 1, 4, 2]))

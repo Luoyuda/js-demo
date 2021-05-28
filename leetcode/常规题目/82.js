@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-17 14:07:21
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-17 15:58:31
+ * @LastEditTime: 2021-05-19 21:30:45
  * @FilePath: /js-demo/leetcode/常规题目/82.js
  */
 /*
@@ -53,6 +53,20 @@ var deleteDuplicates = function(head) {
         }
     }
     return newHead.next
+};
+
+var deleteDuplicates = function(head) {
+    let dummy = new ListNode(-1, head)
+    let p = dummy
+    while(p.next){
+        let q = p.next
+        while(q && q.val == p.next.val){
+            q = q.next
+        }
+        if(q == p.next.next) p = p.next
+        else p.next = q
+    }
+    return dummy.next
 };
 
 function ListNode(val, next) {

@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-23 11:07:25
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-23 11:13:14
- * @FilePath: /js-demo/leetcode/75.js
+ * @LastEditTime: 2021-05-14 20:25:59
+ * @FilePath: /js-demo/leetcode/常规题目/75.js
  */
 /**
  * @param {number[]} nums
@@ -55,5 +55,43 @@ var sortColors = function(nums) {
     }
     return nums
 };
+/**
+ * @param {[]number} nums 
+ * @return {void}
+ */
+var sortColors = function(nums){
+    let zero = -1
+    let two = nums.length
+    let one = 0
+    while(one < two){
+        // 当 1 指针对撞 2 指针 结束遍历
+        if(nums[one] == 1){
+            // 1 不作处理
+            one++
+        }else if(nums[one] == 0){
+            // 0 把当前值跟 0 指针的下一个元素交换
+            swap(nums, one++, ++zero)
+        }else{
+            // 2 把当前值跟 2 指针跟下一个元素交换
+            swap(nums, one, --two)
+        }
+    }
+    return nums
+}
+/**
+ * 
+ * @param {[]number} nums 
+ * @param {number} i 
+ * @param {number} j 
+ */
+var swap = function(nums, i, j){
+    let temp = nums[i]
+    nums[i] = nums[j]
+    nums[j] = temp
+}
 
 console.log(sortColors([2,0,2,1,1,0]))
+console.log(sortColors([2,0,1]))
+console.log(sortColors([1]))
+console.log(sortColors([0]))
+console.log(sortColors([2]))

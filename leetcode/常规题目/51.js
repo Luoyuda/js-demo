@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-22 12:16:34
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-02-22 14:16:33
- * @FilePath: /js-demo/leetcode/51.js
+ * @LastEditTime: 2021-05-15 10:13:54
+ * @FilePath: /js-demo/leetcode/常规题目/51.js
  */
 /**
  * @param {number} n
@@ -56,4 +56,44 @@ var solveNQueens = function(n) {
     return res;
 };
 
-console.log(solveNQueens(4))
+/**
+ * @param {number} n
+ * @return {string[][]}
+ */
+var solveNQueens = function(n) {
+    // 棋盘
+    let grid = new Array(n).fill(0).map(() => new Array(n).fill('.'))
+    // 是否同列
+    let column = {}
+    // 是否正对角线上存在
+    let main = {}
+    // 是否负对角线上存在
+    let sub = {}
+    // 记录路径
+    let path = []
+    // 剪枝方法
+    let check = (x, y) => column[y] || main[x + y] || sub[x - y]
+    // 深搜回溯
+    let dfs = t => {
+        // 如果到了第N行，证明找到一个解
+        if(t == n){
+            path.push(grid.map(item => item.join('')))
+            return 
+        }
+        for(let i = 0; i < n; i++){
+            // 每一行中都每一列尝试插入
+            if(check(t, i)) continue
+            // 记录状态
+            grid[t][i] = 'Q'
+            column[i] = main[t + i] = sub[t - i] = true
+            dfs(t + 1)
+            // 回溯
+            column[i] = main[t + i] = sub[t - i] = false
+            grid[t][i] = '.'
+        }
+    }
+    dfs(0)
+    return path
+};
+
+console.log(solveNQueens(9))

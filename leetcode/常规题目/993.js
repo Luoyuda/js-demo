@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-11 08:14:34
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-11 09:46:41
+ * @LastEditTime: 2021-05-17 08:52:01
  * @FilePath: /js-demo/leetcode/常规题目/993.js
  */
 /**
@@ -83,12 +83,12 @@ var isCousins = function(root, x, y){
     let depths = {}
     let parents = {}
     var dfs = function(root, parent) {
-        if(root) {
-            depths[root.val] = (root.val, parent ? depths[parent.val] + 1 : 0)
-            parents[root.val] = parent
-            dfs(root.left, root)
-            dfs(root.right, root)
-        }
+        if(!root) return
+        let val = root.val
+        depths[val] = parent ? depths[parent.val] + 1 : 0
+        parents[val] = parent
+        dfs(root.left, root)
+        dfs(root.right, root)
     }
     dfs(root, null)
     // console.log(depths)

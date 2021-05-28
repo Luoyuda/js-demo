@@ -2,8 +2,8 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-08 08:03:49
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-08 08:10:16
- * @FilePath: /js-demo/leetcode/offer.28.js
+ * @LastEditTime: 2021-05-22 17:37:50
+ * @FilePath: /js-demo/leetcode/offer/offer.28.js
  */
 /**
  * @param {TreeNode} root
@@ -37,6 +37,29 @@ var check = (L, R) => {
     if(L == null || R == null || L.val != R.val) return false
     return check(L.left, R.right) && check(L.right, R.left)
 }
+// 迭代
+var isSymmetric = function(root) {
+    if(!root) return true
+    let left = []
+    let right = []
+    let l = root.left
+    let r = root.right
+    while(l || r || left.length || right.length){
+        while(l && r){
+            left.push(l)
+            l = l.left
+            right.push(r)
+            r = r.right
+        }
+        if(l || r) return false
+        l = left.pop()
+        r = right.pop()
+        if(l.val != r.val) return false
+        l = l.right
+        r = r.left
+    } 
+    return true
+};
 
 function TreeNode(val) {
     this.val = val;

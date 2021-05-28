@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-11 10:08:00
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-11 10:46:58
+ * @LastEditTime: 2021-05-21 14:31:17
  * @FilePath: /js-demo/leetcode/常规题目/690.js
  */
 /**
@@ -44,6 +44,29 @@ var GetImportance = function(employees, id) {
         return sum
     }
     return dfs(hash[id])
+};
+var GetImportance = function(employees, id) {
+    let visited = []
+    let hash = {}
+    for(let em of employees){
+        hash[em.id] = em
+    }
+    let employee = hash[id]
+    let importance = 0
+    if(!employee) return importance
+    if(!employee.subordinates.length) return employee.importance
+    let q = [employee]
+    while(q.length){
+        let employee = q.shift()
+        importance += employee.importance
+        visited[employee.id] = true
+        for(let id of employee.subordinates){
+            if(!visited[id]){
+                q.push(hash[id])
+            }
+        }
+    }
+    return importance
 };
 function Employee(id, importance, subordinates) {
     this.id = id;

@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-17 08:41:48
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-17 08:45:35
+ * @LastEditTime: 2021-05-19 21:15:55
  * @FilePath: /js-demo/leetcode/常规题目/83.js
  */
 /**
@@ -39,6 +39,14 @@ var deleteDuplicates = function(head) {
     return head
 };
 
+var deleteDuplicates = function(head) {
+    let cur = head
+    while(cur){
+        while(cur.next && cur.next.val == cur.val) cur.next = cur.next.next
+        cur = cur.next
+    }
+    return head
+};
 function ListNode(val, next) {
     this.val = (val===undefined ? 0 : val)
     this.next = (next===undefined ? null : next)

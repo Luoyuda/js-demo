@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-13 20:27:30
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-24 20:14:20
+ * @LastEditTime: 2021-05-21 10:41:07
  * @FilePath: /js-demo/leetcode/常规题目/279.js
  */
 /**
@@ -55,6 +55,31 @@ var numSquares = function(n) {
     return 0
 };
 
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var numSquares = function(n) {
+    let q = [n]
+    let visited = []
+    let step = 1
+    while(q.length){
+        let size = q.length
+        while(size--){
+            let n = q.shift()
+            for(let i = 1; i * i <= n; i++){
+                if(i * i == n) return step
+                let next = n - i * i
+                if(!visited[i]){
+                    q.push(next)
+                    visited[next] = true
+                }
+            }
+        }
+        step++
+    }
+    return 0
+};
 
 // console.log(numSquares(3))
 console.log(numSquares(13))

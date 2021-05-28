@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-16 23:50:56
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-17 07:24:17
+ * @LastEditTime: 2021-05-21 08:14:12
  * @FilePath: /js-demo/leetcode/常规题目/148.js
  */
 /**
@@ -74,6 +74,59 @@ var toSortList = function(head, tail) {
     }
     let mid = slow
     return merge(toSortList(head, mid), toSortList(mid, tail))
+};
+
+/**
+ * O(1)空间解法
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var sortList = function(head) {
+    let dummy = new ListNode(-1)
+    dummy.next = head
+    let p = head
+    let n = 0
+    while(p){
+        p = p.next
+        n++
+    
+    for(let i = 1; i < n; i *= 2){
+        let cur = dummy
+        for(let j = 0; j + i < n; j += i * 2){
+            let left = cur.next
+            let right = cur.next
+            for(let k = 0; k < i; k++) right = right.next
+            let l = 0
+            let r = 0
+            while(l < i && r < i && right){
+                if(left.val <= right.val){
+                    cur.next = left
+                    cur = left
+                    left = left.next
+                    l++
+                }else{
+                    cur.next = right
+                    cur = right
+                    right = right.next
+                    r++
+                }
+            }
+            while(l < i){
+                cur.next = left
+                cur = left
+                left = left.next
+                l++
+            }
+            while(r < i && right){
+                cur.next = right
+                cur = right
+                right = right.next
+                r++
+            }
+            cur.next = right
+        }
+    }
+    return dummy.next
 };
 
 function ListNode(val, next) {

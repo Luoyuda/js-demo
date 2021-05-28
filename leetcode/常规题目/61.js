@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-16 20:45:39
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-20 23:51:45
+ * @LastEditTime: 2021-05-19 21:55:33
  * @FilePath: /js-demo/leetcode/常规题目/61.js
  */
 function ListNode(val, next) {
@@ -70,6 +70,29 @@ var rotateRight = function(head, k) {
     oldTail.next = head
     newTail.next = null
     return newHead
+};
+
+var rotateRight = function(head, k) {
+    if(!head) return head
+    let n = 0
+    let p = head
+    while(p){
+        p = p.next
+        n++
+    }
+    k %= n
+    if(!k) return head
+    let fast = head
+    let slow = head
+    while(k--) fast = fast.next
+    while(fast.next){
+        fast = fast.next
+        slow = slow.next
+    }
+    fast.next = head
+    head = slow.next
+    slow.next = null
+    return head
 };
 
 let root = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))))

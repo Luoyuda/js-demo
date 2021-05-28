@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-08 21:32:18
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-09 09:10:50
+ * @LastEditTime: 2021-05-13 14:40:46
  * @FilePath: /js-demo/leetcode/常规题目/559.js
  */
 
@@ -38,6 +38,20 @@ var maxDepth = function(root) {
         depth++
     }
     return depth
+};
+
+/**
+ * @param {Node} root
+ * @return {number}
+ */
+var maxDepth = function(root) {
+    if(!root) return 0
+    if(!root.children) return 1
+    let max = 0
+    for(let x of root.children){
+        max = Math.max(maxDepth(x), max)
+    }
+    return 1 + max
 };
 
 function Node(val,children) {

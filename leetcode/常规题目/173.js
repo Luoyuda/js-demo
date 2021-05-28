@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-26 19:22:10
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-26 19:32:23
+ * @LastEditTime: 2021-05-22 20:42:29
  * @FilePath: /js-demo/leetcode/常规题目/173.js
  */
 /**
@@ -52,6 +52,54 @@ BSTIterator.prototype.next = function() {
 BSTIterator.prototype.hasNext = function() {
     return this.index < this.res.length
 };
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ */
+var BSTIterator = function(root) {
+    this.stack = []
+    while(root){
+        this.stack.push(root)
+        root = root.left
+    }
+};
+
+/**
+ * @return {number}
+ */
+BSTIterator.prototype.next = function() {
+    let p = this.stack.pop()
+    let res = p.val
+    p = p.right
+    while(p){
+        this.stack.push(p)
+        p = p.left
+    }
+    return res
+};
+
+/**
+ * @return {boolean}
+ */
+BSTIterator.prototype.hasNext = function() {
+    return !!this.stack.length
+};
+
+/**
+ * Your BSTIterator object will be instantiated and called as such:
+ * var obj = new BSTIterator(root)
+ * var param_1 = obj.next()
+ * var param_2 = obj.hasNext()
+ */
+
 function TreeNode(val, left, right) {
     this.val = (val===undefined ? 0 : val)
     this.left = (left===undefined ? null : left)
@@ -72,4 +120,4 @@ console.log(iterator.next());    // 返回 15
 console.log(iterator.hasNext()); // 返回 true
 console.log(iterator.next());    // 返回 20
 console.log(iterator.hasNext()); // 返回 false
-console.log(iterator.next());    // 返回 20
+// console.log(iterator.next());    // 返回 20

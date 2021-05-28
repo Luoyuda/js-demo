@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-12 07:59:54
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-12 08:42:03
+ * @LastEditTime: 2021-05-27 13:20:51
  * @FilePath: /js-demo/leetcode/常规题目/71.js
  */
 /**
@@ -64,7 +64,31 @@ var simplifyPath = function(path) {
     // console.log(stack)
     return stack.length ? stack.join('') : '/'
 };
-
+/**
+ * @param {string} path
+ * @return {string}
+ */
+var simplifyPath = function(path) {
+    let stack = []
+    let j = -1
+    let n = path.length
+    for(let i = 0; i <= n; i++){
+        let c = path[i]
+        if((c == '/' && j >= 0) || i == n){
+            let s = path.substring(j, i)
+            if(s == '/..'){
+                stack.pop()
+            }else if(s == '/' || s == '/.'){
+            }else{
+                stack.push(s)
+            }
+            j = i
+        }else if(c == '/'){
+            j = i
+        }
+    }
+    return stack.length ? stack.join('') : '/'
+};
 let params = [
     "/home/",
     "/../",

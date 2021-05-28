@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-23 17:52:21
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-24 20:23:59
+ * @LastEditTime: 2021-05-20 20:59:07
  * @FilePath: /js-demo/leetcode/常规题目/733.js
  */
 /*
@@ -67,5 +67,38 @@ var floodFill = function(image, sr, sc, newColor){
     }
     return image
 }
+
+/**
+ * @param {number[][]} image
+ * @param {number} sr
+ * @param {number} sc
+ * @param {number} newColor
+ * @return {number[][]}
+ */
+var floodFill = function(image, sr, sc, newColor) {
+    let oColor = image[sr][sc]
+    if(oColor == newColor) return image
+    let dx = [-1, 0, 1, 0]
+    let dy = [0, -1, 0, 1]
+    let m = image.length
+    let n = image[0].length
+    let inArea = (x, y) => x >= 0 && y >= 0 && x < m && x < n
+    let bfs = (x, y) => {
+        let q = [[x, y]]
+        while(q.length){
+            let [x, y] = q.shift()
+            image[x][y] = newColor
+            for(let i = 0; i < 4; i++){
+                let a = x + dx[i]
+                let b = y + dy[i]
+                if(inArea(a, b) && image[a][b] == oColor){
+                    q.push([a, b])
+                }
+            }
+        }
+    }
+    bfs(sr, sc)
+    return image
+};
 console.log(floodFill([[1,1,1],[1,1,0],[1,0,1]], 1, 1, 2))
 console.log(floodFill([[0,0,0],[0,1,1]], 1, 1, 1))

@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-19 17:36:50
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-19 18:07:53
+ * @LastEditTime: 2021-05-25 15:34:07
  * @FilePath: /js-demo/leetcode/常规题目/25.js
  */
 /**
@@ -63,17 +63,15 @@ var reverseKGroup = function(head, k) {
                 return hair.next;
             }
         }
-        const nex = tail.next;
-        [head, tail] = myReverse(head, tail);
-        // 把子链表重新接回原链表
-        pre.next = head;
-        tail.next = nex;
-        pre = tail;
-        head = tail.next;
+        const next = tail.next;
+        [head, tail] = myReverse(head, tail)
+        pre.next = head
+        tail.next = next
+        pre = tail
+        head = tail.next
     }
     return hair.next;
 };
-
 
 function ListNode(val, next) {
     this.val = (val===undefined ? 0 : val)
