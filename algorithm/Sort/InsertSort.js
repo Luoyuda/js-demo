@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-29 12:12:23
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-29 13:14:58
+ * @LastEditTime: 2021-06-07 10:44:00
  * @FilePath: /js-demo/algorithm/Sort/InsertSort.js
  */
 var swap = (arr, i, j) => {
@@ -39,7 +39,7 @@ var InsertSort = function(arr){
     for (let i = 1; i < arr.length; i++) {
         let x = arr[i]
         let j = i - 1
-        while (i >= 0 && arr[j] > x){
+        while (j >= 0 && arr[j] > x){
             arr[j + 1] = arr[j]
             j--
         }
