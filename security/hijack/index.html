@@ -1,0 +1,66 @@
+<!--
+ * @Author: xiaohuolong
+ * @Date: 2021-06-17 11:02:35
+ * @LastEditors: xiaohuolong
+ * @LastEditTime: 2021-06-17 11:31:11
+ * @FilePath: /js-demo/security/hijack/index.html
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>防劫持代码测试</title>
+    <script>
+        var Tags = ['script', 'iframe']
+        var WhileList = ['http://127.0.0.1:5500/security/hijack/t.js']
+        // dom观察器
+        var mutationHandler = function (records) {
+            records.forEach(record => {
+                Array.prototype.slice.call(record.addedNodes).forEach(node => {
+                    if(node.tagName && Tags.indexOf(node.tagName.toLocaleLowerCase()) !== -1){
+                        if(WhileList.indexOf(node.src) === -1){
+                            node.remove()
+                        }
+                    }
+                })
+            });
+        };
+
+        // 核心 - MutationObserver 提供了监视对DOM树所做更改的能力
+        // 优点 - 动态监听是否有非法的 iframe 和 script 代码
+        // 缺点 - 无法查找头部直接插入的代码
+        var MutationObserver =
+            window.MutationObserver ||
+            window.WebKitMutationObserver ||
+            window.MozMutationObserver,
+            observeMutationSupport = !!MutationObserver;
+        var html = document.getElementsByTagName("html")[0];
+
+        if (observeMutationSupport) {
+            new MutationObserver(mutationHandler).observe(html, {
+                childList: true,
+                subtree: true,
+            });
+        }
+    </script>
+    <script>
+        console.log("劫持1");
+    </script>
+    </head>
+    <body>
+    <div>防劫持代码测试</div>
+    <div class="father">
+        <div class="bro">
+            <div class="xiongdei">
+                <script src="./t.js"></script>
+            </div>
+        </div>
+    </div>
+    <iframe src="./t.js" frameborder="0"></iframe>
+    <iframe src="./e.js" frameborder="0"></iframe>
+    <script src="./e.js"></script>
+    <script>
+        console.log("劫持....");
+    </script>
+    </body>
+</html>
