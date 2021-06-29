@@ -1,0 +1,97 @@
+<!--
+ * @Author: xiaohuolong
+ * @Date: 2021-06-29 14:56:30
+ * @LastEditors: xiaohuolong
+ * @LastEditTime: 2021-06-29 15:04:00
+ * @FilePath: /js-demo/css/q.3.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上下固定，中间滚动</title>
+</head>
+<body>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <!-- flex -->
+    <!-- <style>
+        body,html{
+            height: 100%;
+        }
+        .warp{
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .header, .footer{
+            height: 50px;
+            width: 100%;
+            background-color: #999;
+        }
+        .banner{
+            flex: 1;
+            overflow: auto;
+            background-color: red;
+        }
+        .inner{
+            height: 1000px;
+        }
+    </style>
+    <div class='warp'>
+        <div class='header'>header</div>
+        <div class='banner'>
+            <div class='inner'>inner</div>
+        </div>
+        <div class='footer'>footer</div>
+    </div> -->
+    <!-- position -->
+    <style>
+        body,html{
+            height: 100%;
+        }
+        .warp{
+            height: 100%;
+        }
+        .header, .footer{
+            position: absolute;
+            height: 50px;
+            width: 100%;
+            background-color: #999;
+        }
+        .header{
+            top: 0;
+            left: 0;
+        }
+        .footer{
+            bottom: 0;
+            left: 0;
+        }
+        .banner{
+            position: absolute;
+            top: 50px;
+            bottom: 50px;
+            left: 0;
+            right: 0;
+            overflow: auto;
+            background-color: red;
+        }
+        .inner{
+            height: 1000px;
+        }
+    </style>
+    <div class='warp'>
+        <div class='header'>header</div>
+        <div class='banner'>
+            <div class='inner'>inner</div>
+        </div>
+        <div class='footer'>footer</div>
+    </div>
+</body>
+</html>

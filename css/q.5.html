@@ -1,0 +1,180 @@
+<!--
+ * @Author: xiaohuolong
+ * @Date: 2021-06-29 17:09:20
+ * @LastEditors: xiaohuolong
+ * @LastEditTime: 2021-06-29 17:48:42
+ * @FilePath: /js-demo/css/q.5.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>左右固定100px,中间自适应</title>
+</head>
+<body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body,html{
+            width: 100%;
+            height: 100%;
+        }
+        .left{
+            width: 100px;
+            height: 100%;
+            background-color: #e2e2;
+        }
+        .right{
+            width: 100px;
+            height: 100%;
+            background-color: #e212;
+        }
+        .main{
+            background-color: #999;
+        }
+    </style>
+    <!-- 双飞翼 -->
+    <!-- <style>
+        .main{
+            width: 100%;
+            height: 100%;
+            float: left;
+        }
+        .middle{
+            margin: 0 100px;
+            height: 100%;
+        }
+        .left{
+            float: left;
+            margin-right: -100px;
+        }
+        .right{
+            float: right;
+            margin-left: -100px;
+        }
+    </style>
+    <div class='left'></div>
+    <div class='main'>
+        <div class='middle'></div>
+    </div>
+    <div class='right'></div>
+    -->
+    <!-- 圣杯 -->
+    <!-- <style>
+        body{
+            box-sizing: border-box;
+            padding: 0 100px;
+        }
+        .main {
+            width: 100%;
+            height: 100%;
+            float: left;
+        }
+        .left{
+            float: left;
+            position: relative;
+            left: -100px;
+            margin-right: -100px;
+        }
+        .right{
+            float: left;
+            position: relative;
+            right: -100px;
+            margin-left: -100px;
+        }
+    </style>
+    <div class='left'></div>
+    <div class='main'>
+        <div class='middle'></div>
+    </div>
+    <div class='right'></div>
+    -->
+    <!-- 浮动布局 -->
+    <!-- <style>
+        .main{
+            margin: 0 100px;
+            height: 100%;
+        }
+        .left{
+            float: left;
+        }
+        .right{
+            float: right;
+        }
+    </style>
+    <div class='left'></div>
+    <div class='right'></div>
+    <div class='main'>
+        <div class='middle'></div>
+    </div> -->
+    <!-- position -->
+    <!-- <style>
+        body{
+            position: relative;
+        }
+        .main{
+            margin: 0 100px;
+            height: 100%;
+        }
+        .left{
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .right{
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+    </style>
+    <div class='left'></div>
+    <div class='main'>
+        <div class='middle'></div>
+    </div>
+    <div class='right'></div> -->
+    <!-- flex -->
+    <!-- <style>
+        body{
+            display: flex;
+            flex-direction: row;
+        }
+        .main{
+            flex: 1;
+        }
+        .left{
+            
+        }
+        .right{
+            
+        }
+    </style>
+    <div class='left'></div>
+    <div class='main'>
+        <div class='middle'></div>
+    </div>
+    <div class='right'></div> -->
+    <!-- calc -->
+    <style>
+        .main{
+            width: calc(100% - 200px);
+            height: 100%;
+            float: left;
+        }
+        .left{
+            float: left;
+        }
+        .right{
+            float: left;
+        }
+    </style>
+    <div class='left'></div>
+    <div class='main'>
+        <div class='middle'></div>
+    </div>
+    <div class='right'></div>
+</body>
+</html>

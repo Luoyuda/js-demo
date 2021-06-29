@@ -1,0 +1,48 @@
+<!--
+ * @Author: xiaohuolong
+ * @Date: 2021-06-29 16:28:14
+ * @LastEditors: xiaohuolong
+ * @LastEditTime: 2021-06-29 16:31:21
+ * @FilePath: /js-demo/css/q.4.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>八个元素分两行</title>
+</head>
+<body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .warp{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-content: flex-start;
+        }
+        .item{
+            flex: 0 0 25%;
+            box-sizing: border-box;
+            background-color: red;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+        }
+    </style>
+    <div class="warp">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+        <div class="item">8</div>
+    </div>
+</body>
+</html>

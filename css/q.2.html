@@ -1,0 +1,65 @@
+<!--
+ * @Author: xiaohuolong
+ * @Date: 2021-06-29 13:08:02
+ * @LastEditors: xiaohuolong
+ * @LastEditTime: 2021-06-29 13:18:39
+ * @FilePath: /js-demo/css/q.2.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多列等高布局</title>
+</head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .item{
+            background-color: #999;
+            margin-right: 10px;
+        }
+    </style>
+<body>
+    <!-- flex -->
+    <!-- <style>
+        .warp{
+            display: flex;
+            align-items: stretch;
+        }
+        .item{
+            flex: 1;
+            background-color: #999;
+        }
+    </style> -->
+    <!-- table -->
+    <!-- <style>
+        .warp{
+            width: 100%;
+            display: table;
+        }
+        .item{
+            display: table-cell;
+        }
+    </style> -->
+    <!-- gird -->
+    <style>
+        .warp{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-auto-flow: column;
+        }
+    </style>
+    <div class='warp'>
+        <div class="item">item1</div>
+        <div class="item">item2</div>
+        <div class="item" style="height: 200px">
+            item3
+        </div>
+        <div class="item">item4</div>
+    </div>
+</body>
+</html>
