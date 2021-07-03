@@ -1,0 +1,44 @@
+<!--
+ * @Author: xiaohuolong
+ * @Date: 2021-06-30 10:42:39
+ * @LastEditors: xiaohuolong
+ * @LastEditTime: 2021-06-30 10:46:32
+ * @FilePath: /js-demo/js/question/q.1.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>q.1</title>
+</head>
+<body>
+    <script>
+        function createImg(url){
+            return new Promise((resolve, reject) => {
+                if(!url) return reject(new Error('empty'))
+                let img = new Image()
+                img.src = url
+                img.onload = () => {
+                    resolve(img)
+                }
+                img.onerror = reject
+            })
+        }
+        createImg('https://res.cdn.pikapika.live/kjliveH5/new.10/no.2.png').then(value => {
+            document.body.appendChild(value)
+        })
+        createImg('https://res.cdn.pikapika.live/kjliveH5/new.10/no22.2.png').then(value => {
+            document.body.appendChild(value)
+        }).catch(error => {
+            console.log(error)
+        })
+        createImg().then(value => {
+            document.body.appendChild(value)
+        }).catch(error => {
+            console.log(error)
+        })
+    </script>
+</body>
+</html>

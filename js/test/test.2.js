@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-06-08 18:12:50
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-06-10 18:45:42
+ * @LastEditTime: 2021-07-01 17:46:06
  * @FilePath: /js-demo/js/test/test.2.js
  */
 // 1.写一个 mySetInterVal(fn, a, b),每次间隔 a,a+b,a+2b 的时间
@@ -261,16 +261,13 @@
 // 这时就需要一个 get 函数，使用 get(a, 'b.c.d.e') 简单清晰，并且容错性提高了很多。
 (() => {
     function get(obj, path, defaultValue){
-        let data = obj
-        path = path.replace(/\[(\d+)\]/ig, ".$1").split('.')
-        for(let key of path){
-            if(data[key]){
-                data = data[key]
-            }else{
-                return defaultValue
-            }
+        const paths = path.replace(/\[(\d+)\]/ig, '.$1').split('.');
+        let result = obj
+        for (const p of paths) {
+            result = Object(result)[p]
+            if(result === undefined) return defaultValue
         }
-        return data
+        return result
     }
     // 测试用例
     console.log(get({ a: null }, "a.b.c", 3)); // output: 3
@@ -289,7 +286,7 @@
         let length = fn.length
         args = args || []
         return function(){
-            let _args = args.concat(Array.prototype.slice.call(arguments))
+            var _args = args.concat(Array.prototype.slice.call(arguments))
             if(_args.length < length){
                 return curry.call(this, fn, _args)
             }else{
@@ -826,4 +823,246 @@
         }
         return f
     }
-})();
+});
+
+
+(() => {
+    console.log(1)
+    setTimeout(() => {
+        console.log(2)
+        new Promise((resolve, reject) => {
+            console.log(3)
+            resolve()
+        }).then(() => {
+            console.log(4)
+        })
+    },0)
+    setImmediate(() => {
+        console.log(5)
+        new Promise((resolve, reject) => {
+            console.log(6)
+            resolve()
+        }).then(() => {
+            console.log(7)
+        })
+    })
+    setTimeout(() => {
+        console.log(8)
+        new Promise((resolve, reject) => {
+            console.log(9)
+            resolve()
+        }).then(() => {
+            console.log(10)
+        })
+    })
+    console.log(11)
+});
+
+
+(() => {
+    String.prototype.trim = function(){
+        if(!(this instanceof String)) return new Error()
+        var s = this.toString()
+        var length = s.length
+        var j = length - 1
+        var i = 0;
+        while(i < length && s[i] === ' '){
+            i++
+        }
+        while(j >= i && s[j] === ' '){
+            j--
+        }
+        return s.substring(i, j + 1)
+    }
+    let test = [
+        [' 121 ', '121'],
+        [' 2 2', '2 2'],
+        [' 2       22', '2       22'],
+        ['      ', ''],
+        ['2 ', '2']
+    ]
+    test.forEach(([args, res]) => {
+        if(args.trim() !== res){
+            console.log(args)
+        }
+    })
+});
+
+(() => {
+    function Animal(name,color){
+        this.name = name;
+        this.color = color;
+    }
+    Animal.prototype.say = function(){
+        return `I'm a ${this.color}${this.name}`;
+    }
+    Function.prototype.bind = function(context, arg){
+        var name = arg
+        var callFn = this
+        function F(){}
+        F.prototype = Object.create(callFn.prototype)
+        function bind(color){
+            context = this instanceof bind ? this : context
+            return callFn.call(context, name, color)
+        }
+        bind.prototype = new F()
+        bind.prototype.say = function(){
+            return `I'm ${this.color} ${this.name}`;
+        }
+        return bind
+    }
+    const Cat = Animal.bind(null,'cat');
+    console.log(Cat)
+    const cat = new Cat('white');
+    console.log(cat.say())
+    console.log(cat instanceof Cat)
+    console.log(cat instanceof Animal)
+    if(cat.say() === "I'm white cat" && cat instanceof Cat && cat instanceof Animal){
+        console.log('sunccess');
+    }
+});
+
+// for-in keys
+(() => {
+    var obj = {
+        a: 1,
+        b: 2,
+        c: 3
+    }
+    Object.defineProperty(obj, 'a', {
+        enumerable: false,
+        value: 1
+    })
+    console.log(obj)
+    console.log(Object.keys(obj))
+    console.log(Object.values(obj))
+    console.log(Object.entries(obj))
+    for (const key in obj) {
+        console.log(key)
+    }
+});
+
+(() => {
+    function Person(name) {
+        return new _Person(name)
+    }
+    function _Person(name){
+        this.name = name
+        setTimeout(() => {
+            this.next()
+        })
+        this.task = []
+        this.task.push(this.say)
+        return this
+    }
+    _Person.prototype.say = function(){
+        console.log('Hi This is ' + this.name)
+        this.next()
+        return this
+    }
+    _Person.prototype.next = function(){
+        if(this.task.length){
+            this.task.shift().call(this)
+        }
+        return this
+    }
+    _Person.prototype.sleep = function (time){
+        this.task.push(() => {
+            setTimeout(() => {
+                console.log(`等待${time}秒.`)
+                console.log(`Wake up after ${time}`)
+                this.next()
+            }, time * 1000)
+        })
+        return this
+    }
+    _Person.prototype.eat = function (some){
+        this.task.push(() => {
+            console.log(`Eat ${some}~`)
+            this.next()
+        })
+        return this
+    }
+    _Person.prototype.sleepFirst = function (time){
+        this.task.unshift(() => {
+            setTimeout(() => {
+                console.log(`等待${time}秒.`)
+                console.log(`Wake up after ${time}`)
+                this.next()
+            }, time * 1000)
+        })
+        return this
+    }
+    // Person("Li");
+    // 输出： Hi! This is Li!
+    
+    // Person("Dan").sleep(10).eat("dinner");
+    // 输出：
+    // Hi! This is Dan!
+    // 等待10秒..
+    // Wake up after 10
+    // Eat dinner~
+    
+    // Person("Jerry").eat("dinner").eat("supper");
+    // 输出：
+    // Hi This is Jerry!
+    // Eat dinner~
+    // Eat supper~
+    
+    // Person("Smith").sleepFirst(5).eat("supper");
+    // 输出：
+    // 等待5秒
+    // Wake up after 5
+    // Hi This is Smith!
+    // Eat supper
+});
+
+
+(() => {
+    let urls = new Array(10).fill(0).map((v, k) => k)
+    let batchNum = 3
+    let timeout = 1000
+    console.log(urls)
+    function batchGet(urls, batchNum = 3, timeout = 3000) {
+        return new Promise((resolve, reject) => {
+            let result = new Array(urls.length).fill(0).map((v, k) => {
+                return {
+                    status: 'pending'
+                }
+            })
+            index = 0
+            function request(i){
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve(i)
+                    }, timeout + (Math.random() > 0.8 ? 100 : -100))
+                    setTimeout(() => {
+                        reject(i)
+                    }, timeout)
+                })
+            }
+            function run(){
+                for(let i = 0; i < batchNum; i++){
+                    request(index).then(i => {
+                        result[i].status = 'fulfilled'
+                    }).catch((i)=> {
+                        result[i].status = 'rejected'
+                    })
+                    index++
+                    if(index >= urls.length) break
+                }
+                setTimeout(() => {
+                    if(index >= urls.length){
+                        resolve(result)
+                    }else{
+                        run()
+                    }
+                }, timeout)
+            }
+            run()
+        })
+    }
+    batchGet(urls, batchNum, timeout).then((response) => {
+        console.log(response)
+    })
+});

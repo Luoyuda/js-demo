@@ -1,0 +1,82 @@
+<!--
+ * @Author: xiaohuolong
+ * @Date: 2021-07-02 17:37:51
+ * @LastEditors: xiaohuolong
+ * @LastEditTime: 2021-07-02 17:56:38
+ * @FilePath: /js-demo/js/test/q.2.html
+-->
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    .move-container{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100%;
+    }
+    .move{
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #999;
+        width: 100px;
+        height: 100px;
+    }
+    .target{
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50%;
+        height: 100%;
+    }
+</style>
+<div class='move-container'>
+    <div class='move' id='move' draggable='true'></div>
+</div>
+<div class='target' id='target'>
+</div>
+<script>
+    window.onload = function(){
+    //     var elem = document.getElementById('move')
+    //     var dragging = false
+    //     var tarns, portrait
+    //     document.addEventListener('mousedown', function(e) {
+    //         if(e.target == elem){
+    //             dragging = true
+    //             var elemRect = elem.getBoundingClientRect()
+    //             trans = e.clientX - elemRect.left
+    //             portrait = e.clientY - elemRect.top
+    //         }
+    //     })
+    //     document.addEventListener('mouseup', function(e) {
+    //         dragging = false
+    //     })
+    //     document.addEventListener('mousemove', function(e) {
+    //         if(dragging){
+    //             var moveX = e.clientX - trans
+    //             var moveY = e.clientY - portrait
+    //             elem.style.left = moveX + 'px'
+    //             elem.style.top = moveY + 'px'
+    //         }
+    //     })
+        var target = document.getElementById('target')
+        target.ondragenter = function(){
+            console.log('dragenter')
+        }
+        target.ondragleave = function(){
+            console.log('ondragleave')
+        }
+        target.ondragover = function(){
+            console.log('ondragover')
+        }
+        target.ondrop = function(){
+            console.log('ondrop')
+        }
+        target.ondragstart = function(){
+            console.log('ondragstart')
+        }
+    }
+</script>

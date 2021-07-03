@@ -1,0 +1,52 @@
+<!--
+ * @Author: xiaohuolong
+ * @Date: 2021-06-30 17:49:49
+ * @LastEditors: xiaohuolong
+ * @LastEditTime: 2021-06-30 18:05:12
+ * @FilePath: /js-demo/js/question/q.8.html
+-->
+<script>
+    var fetch = function(options){
+        var type = options.type ? options.type.toLocaleUpperCase() : 'GET'
+        var query = Object.entries(options.query || {}).map(([key, val]) => key + '=' + val).join('&')
+        var url = options.url || ''
+        var xhr = new XMLHttpRequest()
+        if(query) url += '?' + query
+        xhr.open(type, url)
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        xhr.setRequestHeader('Accept', 'application/json')
+        xhr.onreadystatechange = function(){
+            if(this.readyState !== 4) return
+            if(this.status === 200){
+                console.log(this.responseText)
+            }else{
+                console.error(this.statusText)
+            }
+        }
+        xhr.onerror = function(){
+            console.error(this.statusText)
+        }
+        var data = null
+        if(type === 'POST'){
+            data = new FormData()
+            Object.entries(options.data || {}).forEach(([key, val]) => {
+                data.append(key, val)
+            })
+        }
+        xhr.send(data)
+    }
+    fetch({
+        url: 'https://www.baidu.com',
+        query: {
+            a: 1
+        },
+        type: 'get'
+    })
+    fetch({
+        url: 'https://www.baidu.com',
+        data: {
+            a: 1
+        },
+        type: 'post'
+    })
+</script>
