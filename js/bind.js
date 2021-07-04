@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-05-30 08:23:28
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-06-01 08:58:52
+ * @LastEditTime: 2021-07-03 20:32:16
  * @FilePath: /js-demo/js/bind.js
  */
 /*

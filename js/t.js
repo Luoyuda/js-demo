@@ -1,3 +1,10 @@
+/*
+ * @Author: xiaohuolong
+ * @Date: 2021-05-30 10:58:39
+ * @LastEditors: xiaohuolong
+ * @LastEditTime: 2021-07-03 20:46:45
+ * @FilePath: /js-demo/js/t.js
+ */
 function New(){
     var obj = new Object();
     var Constructor = Array.prototype.shift.call(arguments)

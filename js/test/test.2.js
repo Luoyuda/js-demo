@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-06-08 18:12:50
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-07-01 17:46:06
+ * @LastEditTime: 2021-07-04 20:16:50
  * @FilePath: /js-demo/js/test/test.2.js
  */
 // 1.写一个 mySetInterVal(fn, a, b),每次间隔 a,a+b,a+2b 的时间

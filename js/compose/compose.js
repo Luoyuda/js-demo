@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-06-03 15:39:15
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-06-03 16:40:00
+ * @LastEditTime: 2021-07-04 11:26:32
  * @FilePath: /js-demo/js/compose/compose.js
  */
 function compose(){

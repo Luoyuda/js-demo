@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-05-30 08:23:43
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-06-03 08:44:17
+ * @LastEditTime: 2021-07-03 20:43:45
  * @FilePath: /js-demo/js/new.js
  */
 /*
@@ -20,6 +20,7 @@ function New(){
     let ret =Constructor.apply(obj, arguments)
     return typeof ret === 'object' ? ret : obj
 }
+
 function A(a, b){
     return {a, b, c: 3}
 }

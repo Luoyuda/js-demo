@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-07-01 17:53:16
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-07-03 13:28:39
+ * @LastEditTime: 2021-07-03 18:13:13
  * @FilePath: /js-demo/js/test/test.3.js
  */
 // 抽奖
@@ -589,7 +589,7 @@ function TreeNode(val, left, right){
     console.log(setter(n, 'a.b.c', 2))
     console.log(setter(n, 'e.f', 3))
     console.log(setter(n, 'g.i', 4))
-    console.log(n)
+    console.log(n)  
 });
 // promiseify
 (() => {
@@ -618,3 +618,19 @@ function TreeNode(val, left, right){
         console.log(err)
     })
 });
+// namespace
+(() => {
+    function namespace(oNamespace, sPackage) {
+        var keys = sPackage.split('.')
+        var nNamespace = oNamespace
+        keys.reduce((prev, item) => {
+            if(typeof prev[item] !== 'object') prev[item] = {}
+            prev = prev[item]
+            return prev
+        }, nNamespace)
+        return oNamespace
+    }
+    var obj = {a: {test: 1, b: 2}}
+    namespace(obj, 'a.b.c.d')
+    console.log(JSON.stringify(obj))
+})();

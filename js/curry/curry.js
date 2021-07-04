@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-06-01 18:00:06
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-06-03 08:30:01
+ * @LastEditTime: 2021-07-04 09:28:19
  * @FilePath: /js-demo/js/curry/curry.js
  */
 function curryHelper(fn){

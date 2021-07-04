@@ -2,8 +2,15 @@
  * @Author: xiaohuolong
  * @Date: 2021-06-01 10:48:32
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-06-01 23:57:46
+ * @LastEditTime: 2021-07-04 11:35:44
  * @FilePath: /js-demo/js/unique/unique.js
+ */
+/**
+ * 去重
+ * @param {[]} array 待去重数组
+ * @param {Boolean} isSorted 是否排序
+ * @param {function} iteratee 比较函数
+ * @param {object} context 作用域
  */
 function unique(array, isSorted, iteratee, context){
     if(typeof isSorted !== 'boolean'){
@@ -12,7 +19,7 @@ function unique(array, isSorted, iteratee, context){
         isSorted = false
     }
     if(isSorted == true){
-        iteratee = function(value){ return value}
+        iteratee = function(value){ return value }
     }else if(typeof iteratee !== 'function'){
         iteratee = function(value){
             value = value instanceof RegExp ? value.toString() : value
@@ -24,13 +31,13 @@ function unique(array, isSorted, iteratee, context){
     }
     iteratee = iteratee.bind(context || {})
     var result = []
-    var seen
-    for(let i = 0; i < array.length; i++){
+    var last
+    for(var i = 0; i < array.length; i++){
         var value = array[i]
         var computed = iteratee(value, i, array)
         if(isSorted){
-            if(!i || seen !== computed) result.push(value)
-            seen = value
+            if(!i || last !== computed) result.push(value)
+            last = value
         }else{
             if(computed) result.push(value)
         }
