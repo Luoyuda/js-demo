@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-07-03 20:47:31
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-07-04 09:00:19
+ * @LastEditTime: 2021-07-05 17:09:43
  * @FilePath: /js-demo/js/promise/p2.js
  */
 const PENDING = 'pending'
@@ -15,24 +15,22 @@ class MyPromise {
     onFulfilled = []
     onRejected = []
     constructor(executor){
-        this.resolve = this.resolve.bind(this)
-        this.reject = this.reject.bind(this)
         try {
-            executor(this.resolve, this.reject)            
+            executor(this.resolve, this.reject)
         } catch (error) {
             this.reject(error)
         }
     }
-    resolve(value){
+    resolve = value => {
         if(this.status === PENDING){
-            this.status = FULFILLED
             this.value = value
+            this.status = FULFILLED
             while(this.onFulfilled.length){
                 this.onFulfilled.shift()(this.value)
             }
         }
     }
-    reject(reason){
+    reject = reason => {
         if(this.status === PENDING){
             this.reason = reason
             this.status = REJECTED
@@ -48,7 +46,7 @@ class MyPromise {
             let f = () => {
                 queueMicrotask(() => {
                     try {
-                        let x = onFulfilled(this.value);
+                        let x = onFulfilled(this.value)
                         resolvePromise(promise, x, resolve, reject)
                     } catch (error) {
                         reject(error)
@@ -89,7 +87,7 @@ function resolvePromise(promise, x, resolve, reject){
         try {
             then = x.then
         } catch (error) {
-            reject(error)            
+            reject(error)
         }
         if(typeof then === 'function'){
             let caller = false
@@ -99,7 +97,7 @@ function resolvePromise(promise, x, resolve, reject){
                     caller = true
                     resolvePromise(promise, y, resolve, reject)
                 }, r => {
-                    if(caller) return 
+                    if(caller) return
                     caller = true
                     reject(r)
                 })
