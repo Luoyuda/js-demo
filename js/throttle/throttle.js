@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-05-31 10:50:18
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-07-04 09:20:01
+ * @LastEditTime: 2021-07-05 16:57:33
  * @FilePath: /js-demo/js/throttle/throttle.js
  */
 /*
@@ -85,21 +85,17 @@
  * @param {配置} options leading：是否允许立即执行 trailing：是否允许最后一次执行
  * @returns 
  */
-function throttle(fn, wait, options) {
+function throttle(fn, wait, options){
+    var timeout, result, prev = 0
     options = options || {}
-    var result, context, args, timeout
-    var prev = 0
-    var later = function(){
-        prev = options.leading === false ? 0 : +new Date()
-        timeout = null
-        result =fn.apply(context, args)
-    }
-    var t = function(){
+    var leading = options.leading
+    var trailing = options.trailing
+    function throttled(){
         var now = +new Date()
-        prev = !prev && options.leading === false ? now : prev
+        prev = prev == 0 && leading === false ? now : prev
         var r = wait - (now - prev)
-        context = this
-        args = arguments
+        var context = this
+        var args = arguments
         if(r > wait || r <= 0){
             if(timeout){
                 clearTimeout(timeout)
@@ -107,17 +103,21 @@ function throttle(fn, wait, options) {
             }
             prev = now
             result = fn.apply(context, args)
-        }else if(!timeout && options.trailing !== false){
-            timeout = setTimeout(later, r)
+        }else if(!timeout && trailing !== false){
+            timeout = setTimeout(function(){
+                prev = leading === false ? 0 : +new Date()
+                timeout = null
+                result = fn.apply(context, args)
+            }, r)
         }
         return result
     }
-    t.cancel = function(){
-        clearTimeout(timeout)
+    throttled.cancel = function() {
+        if(timeout) clearTimeout(timeout)
         timeout = null
         prev = 0
     }
-    return t
+    return throttled
 }
 
 module.exports = {
