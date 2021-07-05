@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-06-01 10:48:32
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-07-04 11:35:44
+ * @LastEditTime: 2021-07-05 17:25:47
  * @FilePath: /js-demo/js/unique/unique.js
  */
 /**
@@ -18,9 +18,9 @@ function unique(array, isSorted, iteratee, context){
         iteratee = isSorted
         isSorted = false
     }
-    if(isSorted == true){
+    if(isSorted === true){
         iteratee = function(value){ return value }
-    }else if(typeof iteratee !== 'function'){
+    }else if(typeof iteratee !== "function"){
         iteratee = function(value){
             value = value instanceof RegExp ? value.toString() : value
             var key = (typeof value) + JSON.stringify(value)
@@ -36,7 +36,7 @@ function unique(array, isSorted, iteratee, context){
         var value = array[i]
         var computed = iteratee(value, i, array)
         if(isSorted){
-            if(!i || last !== computed) result.push(value)
+            if(!i || computed !== last) result.push(value)
             last = value
         }else{
             if(computed) result.push(value)
