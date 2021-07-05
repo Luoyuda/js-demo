@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-05-30 08:23:28
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-07-03 20:32:16
+ * @LastEditTime: 2021-07-05 09:56:18
  * @FilePath: /js-demo/js/bind.js
  */
 /*
@@ -28,6 +28,7 @@ Function.prototype.newBind = function(){
     }
     F.prototype = this.prototype
     bind.prototype = new F()
+    bind.prototype.constructor = bind
     return bind
 }
 

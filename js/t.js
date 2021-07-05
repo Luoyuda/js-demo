@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-05-30 10:58:39
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-07-03 20:46:45
+ * @LastEditTime: 2021-07-05 09:56:57
  * @FilePath: /js-demo/js/t.js
  */
 function New(){
@@ -12,7 +12,6 @@ function New(){
     var ret = Constructor.apply(obj, arguments)
     return typeof ret === 'object' ? ret : obj
 }
-
 Function.prototype.newCall = function(){
     var context = arguments[0] || window
     context.fn = this

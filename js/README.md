@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-07-04 15:11:22
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-07-04 17:19:12
+ * @LastEditTime: 2021-07-05 09:56:49
  * @FilePath: /js-demo/js/README.md
 -->
 # js代码整理
@@ -72,6 +72,7 @@ Function.prototype.newBind = function(){
     var F = function(){}
     F.prototype = this.prototype
     bind.prototype = new F()
+    bind.prototype.constructor = bind
     return bind
 }
 ```

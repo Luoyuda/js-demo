@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-06-01 15:32:20
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-07-04 19:59:49
+ * @LastEditTime: 2021-07-05 07:50:15
  * @FilePath: /js-demo/js/eq/eq.js
  */
 function eq1(a, b, aStack, bStack) {
@@ -96,19 +96,19 @@ function deepEq(a, b, aStack, bStack){
         case '[object Number]':
             if(+a !== +a) return +b !== +b
             return +a === +b && 1 / a === 1 / b
+        case '[object RegExp]':
+        case '[object String]':
+            return '' + a === '' + b
         case '[object Date]':
         case '[object Boolean]':
             return +a === +b
-        case '[object String]':
-        case '[object RexExp]':
-            return '' + a === '' + b
         case '[object Symbol]':
             return Symbol.prototype.valueOf.call(a) === Symbol.prototype.valueOf.call(b)
         default:
             break;
     }
-    var areArray = type === '[object Array]'
-    if(!areArray){
+    var areArrays = type === '[object Array]'
+    if(!areArrays){
         if(typeof a !== 'object' && typeof b !== 'object') return false
         var aCtor = a.constructor
         var bCtor = b.constructor
@@ -124,7 +124,7 @@ function deepEq(a, b, aStack, bStack){
     while(length--) if(aStack[length] === a) return bStack[length] === b
     aStack.push(a)
     bStack.push(b)
-    if(areArray){
+    if(areArrays){
         length = a.length
         if(length !== b.length) return false
         while(length--) if(!eq(a[length], b[length], aStack, bStack)) return false
