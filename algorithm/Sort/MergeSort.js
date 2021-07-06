@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-30 21:18:06
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-05-01 00:37:04
+ * @LastEditTime: 2021-07-06 20:05:24
  * @FilePath: /js-demo/algorithm/Sort/MergeSort.js
  */
 /**
@@ -94,7 +94,6 @@ var merge = function(arr, start, end, result) {
 
     let index1 = start
     let index2 = start2
-
     while(index1 <= end1 && index2 <= end2) {
         result[index1 + index2 - start2] = arr[index1] <= arr[index2] ? arr[index1++] : arr[index2++]
     }
@@ -110,7 +109,47 @@ var merge = function(arr, start, end, result) {
     return arr
 }
 
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var sortArray = function(nums) {
+    if(!nums.length) return nums
+    let result = new Array(nums.length)
+    margeArray(nums, 0, nums.length - 1, result)
+    return nums
+};
 
+var margeArray = function(nums, start, end, result){
+    if(start >= end) return nums
+    let mid = (start + end) >> 1
+    margeArray(nums, start, mid, result)
+    margeArray(nums, mid + 1, end, result)
+    marge(nums, start, end, result)
+}
+
+var marge = function(nums, start, end, result){
+    let end1 = (start + end) >> 1
+    let start2 = end1 + 1
+    let index1 = start
+    let index2 = start2
+    let end2 = end
+    console.log(index1, end1, index2, end2)
+    while(index1 <= end1 && index2 <= end2){
+        result[index1 + index2 - start2] = nums[index1] <= nums[index2] ? nums[index1++] : nums[index2++]
+    }
+    while(index1 <= end1){
+        result[index1 + index2 - start2] = nums[index1++]
+    }
+    while(index2 <= end2){
+        result[index1 + index2 - start2] =nums[index2++]
+    }
+    console.log(result)
+    while(start <= end){
+        nums[start] = result[start++]
+    }
+    return nums
+}
 let arr = [6,10,13,5,8,3,2,11,-1,-1,-100]
-console.log(MergeSort(arr))
+console.log(sortArray(arr))
 // console.log(merge([1, 2, 3], []))

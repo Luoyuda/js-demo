@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-05-06 11:33:06
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-05-09 17:30:01
+ * @LastEditTime: 2021-07-06 21:22:00
  * @FilePath: /js-demo/algorithm/BinarySearch/tpl.js
  */
 /* 
@@ -40,6 +40,7 @@ var binarySearch = (nums, target) => {
     // End Condition: left > right
     return -1
 }
+console.log(binarySearch([0,1,1,1,10], 1))
 /*
 模板 #2 
     是二分查找的高级模板。它用于查找需要访问数组中当前索引及其直接右邻居索引的元素或条件。
@@ -77,6 +78,7 @@ var binarySearch = (nums, target) => {
     if(left != nums.length && nums[left] == target) return left
     return -1
 }
+console.log(binarySearch([0,1,1,1,10], 1))
 /*
 模板 #3 
     是二分查找的另一种独特形式。 它用于搜索需要访问当前索引及其在数组中的直接左右邻居索引的元素或条件。
@@ -115,6 +117,7 @@ var binarySearch = (nums, target) => {
     if(nums[right] == target) return right
     return -1
 }
+console.log(binarySearch([0,1,1,1,10], 1))
 
 /*
 二分解题步骤
@@ -140,7 +143,7 @@ var binarySearch = (nums, target) => {
     }
     return nums[l] == target ? l : -1
 }
-
+console.log(binarySearch([0,1,1,1,10], 1))
 /**
  * yxc模版2
  * @param {[]number} nums 
@@ -158,6 +161,6 @@ var binarySearch = (nums, target) => {
     }
     return nums[l] == target ? l : -1
 }
-
+console.log(binarySearch([0,1,1,1,10], 1))
 
 console.log(binarySearch([0,1,2,3,4,5,6,7,8,9,10], 11))
