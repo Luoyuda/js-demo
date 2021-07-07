@@ -1,0 +1,44 @@
+<!--
+ * @Author: xiaohuolong
+ * @Date: 2021-07-07 14:28:43
+ * @LastEditors: xiaohuolong
+ * @LastEditTime: 2021-07-07 14:33:12
+ * @FilePath: /js-demo/upload/single.html
+-->
+<input type="file" name="" id="uploadFile">
+<button id='upload'>upload</button>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    const uploadFileEle = document.querySelector("#uploadFile");
+    const uploadEle = document.querySelector("#upload");
+
+    const request = axios.create({
+        baseURL: "http://localhost:3000/upload",
+        timeout: 60000, 
+    });
+
+    async function uploadFile() {
+        if (!uploadFileEle.files.length) return;
+        const file = uploadFileEle.files[0]; // 获取单个文件
+        // 省略文件的校验过程，比如文件类型、大小校验
+        upload({
+            url: "/single",
+            file,
+        });
+    }
+
+    function upload({ url, file, fieldName = "file" }) {
+        let formData = new FormData();
+        formData.set(fieldName, file);
+        request.post(url, formData, {
+            // 监听上传进度
+            onUploadProgress: function (progressEvent) {
+            const percentCompleted = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total
+            );
+            console.log(percentCompleted);
+            },
+        });
+    }
+    uploadEle.addEventListener('click', uploadFile)
+</script>

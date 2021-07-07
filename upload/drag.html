@@ -1,0 +1,112 @@
+<!--
+ * @Author: xiaohuolong
+ * @Date: 2021-07-07 15:55:38
+ * @LastEditors: xiaohuolong
+ * @LastEditTime: 2021-07-07 16:06:18
+ * @FilePath: /js-demo/upload/drag.html
+-->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<style>
+    #dropArea {
+        width: 300px;
+        height: 300px;
+        border: 1px dashed gray;
+        margin-bottom: 20px;
+    }
+    #dropArea p {
+        text-align: center;
+        color: #999;
+    }
+    #dropArea.highlighted {
+        background-color: #ddd;
+    }
+    #imagePreview {
+        max-height: 250px;
+        overflow-y: scroll;
+    }
+    #imagePreview img {
+        width: 100%;
+        display: block;
+        margin: auto;
+    }
+</style>
+<div id="dropArea">
+    <p>拖拽上传文件</p>
+    <div id="imagePreview"></div>
+</div>
+<script>
+    const dropAreaEle = document.querySelector("#dropArea");
+    const imgPreviewEle = document.querySelector("#imagePreview");
+    const IMAGE_MIME_REGEX = /^image\/(jpe?g|gif|png)$/i;
+
+    ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+        dropAreaEle.addEventListener(eventName, preventDefaults, false);
+        document.body.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    ["dragenter", "dragover"].forEach((eventName) => {
+        dropAreaEle.addEventListener(eventName, highlight, false);
+    });
+    ["dragleave", "drop"].forEach((eventName) => {
+        dropAreaEle.addEventListener(eventName, unhighlight, false);
+    });
+
+    // 添加高亮样式
+    function highlight(e) {
+        dropAreaEle.classList.add("highlighted");
+    }
+
+    // 移除高亮样式
+    function unhighlight(e) {
+        dropAreaEle.classList.remove("highlighted");
+    }
+    dropAreaEle.addEventListener("drop", handleDrop, false);
+
+    function previewImage(file, container) {
+        if (IMAGE_MIME_REGEX.test(file.type)) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                let img = document.createElement("img");
+                img.src = e.target.result;
+                container.append(img);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = [...dt.files];
+        // 省略图片预览代码
+        files.forEach((file) => {
+            previewImage(file, imgPreviewEle);
+            upload({
+                url: "/single",
+                file,
+            });
+        });
+    }
+
+    const request = axios.create({
+        baseURL: "http://localhost:3000/upload",
+        timeout: 60000,
+    });
+
+    function upload({ url, file, fieldName = "file" }) {
+    let formData = new FormData();
+        formData.set(fieldName, file);
+        request.post(url, formData, {
+            // 监听上传进度
+            onUploadProgress: function (progressEvent) {
+            const percentCompleted = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total
+            );
+            console.log(percentCompleted);
+            },
+        });
+    }
+
+</script>
