@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-06-04 15:59:10
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-06-04 18:15:09
+ * @LastEditTime: 2021-07-08 10:04:43
  * @FilePath: /js-demo/js/instance.js
  */
 function instanceOf(l, r){

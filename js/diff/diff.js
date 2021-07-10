@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-06-19 12:59:16
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-06-24 15:34:25
+ * @LastEditTime: 2021-07-09 12:23:54
  * @FilePath: /js-demo/js/diff/diff.js
  */
 const { eq } = require('../eq/eq.js')
@@ -101,6 +101,9 @@ function remove(node, container){
         }
     }
     return container
+}
+function isSame (o, n){
+    return o.key ===n.key
 }
 // react
 function diff1(prev, next){
