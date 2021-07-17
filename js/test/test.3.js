@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-07-01 17:53:16
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-07-03 18:13:13
+ * @LastEditTime: 2021-07-14 09:25:32
  * @FilePath: /js-demo/js/test/test.3.js
  */
 // 抽奖
@@ -633,4 +633,34 @@ function TreeNode(val, left, right){
     var obj = {a: {test: 1, b: 2}}
     namespace(obj, 'a.b.c.d')
     console.log(JSON.stringify(obj))
-})();
+});
+
+(() => {
+    let arr = [
+        {id: 1, name: '部门1', pid: 0},
+        {id: 2, name: '部门2', pid: 1},
+        {id: 3, name: '部门3', pid: 1},
+        {id: 4, name: '部门4', pid: 3},
+        {id: 5, name: '部门5', pid: 4},
+    ]
+    function transform(arr) {
+        let list = []
+        let prev = new Map()
+        for (const item of arr) {
+            let target = item
+            if(!prev.has(item.id)){
+                item.children = []
+                prev.set(item.id, target)
+            }
+            if(item.pid === 0){
+                list.push(target)
+            }else if(prev.has(item.pid)){
+                prev.get(item.pid).children.push(prev.get(item.id))
+            }
+            return prev
+        }
+        // arr.reduce((prev, item) => {
+        // }, prev)
+        return list
+    }
+});

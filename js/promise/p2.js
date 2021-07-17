@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-07-03 20:47:31
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-07-09 12:36:48
+ * @LastEditTime: 2021-07-17 18:04:33
  * @FilePath: /js-demo/js/promise/p2.js
  */
 const PENDING = 'pending'
@@ -23,15 +23,15 @@ class MyPromise {
     }
     resolve = value => {
         if(this.status === PENDING){
-            this.value = value
             this.status = FULFILLED
-            while (this.onFulfilled.length) this.onFulfilled.shift()(this.value)
+            this.value = value
+            while(this.onFulfilled.length) this.onFulfilled.shift()(this.value)
         }
     }
     reject = reason => {
         if(this.status === PENDING){
-            this.reason = reason
             this.status = REJECTED
+            this.reason = reason
             while(this.onRejected.length) this.onRejected.shift()(this.reason)
         }
     }
@@ -74,7 +74,6 @@ class MyPromise {
         return this.then(null, onRejected)
     }
 }
-
 function resolvePromise(promise, x, resolve, reject){
     if(promise === x) return reject(new TypeError('promise'))
     if(typeof x === 'object' || typeof x === 'function'){
@@ -109,7 +108,6 @@ function resolvePromise(promise, x, resolve, reject){
         resolve(x)
     }
 }
-
 // 测试用
 MyPromise.deferred = function(){
 	var result = {}
