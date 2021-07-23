@@ -51,6 +51,7 @@
             return prev
         }, '')
     }
+    // .replace(/\B(?=(\d{3})+\b)/g, ',')
     console.log(format1(a))
 });
 function eq(a, b){
