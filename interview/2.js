@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-07-17 08:12:40
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-07-17 08:35:14
+ * @LastEditTime: 2021-07-18 12:39:14
  * @FilePath: /js-demo/interview/2.js
  */
 // 生成N个button 打印 i
@@ -91,4 +91,22 @@
 6. 绘制页面（重绘）
 7. TCP 连接，四次挥手
  */
+});
+(() => {
+    var arr = [1,3,2,4,5,6]
+    function getFirst(nums){
+        let max = 0
+        for(let n of nums){
+            max = Math.max(max, n)
+        }
+        let res = new Array(max).fill(0)
+        for (let n of nums) {
+            res[n - 1] = 1
+        }
+        for (let i = 0; i < res.length; i++) {
+            if(res[i] === 0) return i + 1
+        }
+        return -1
+    }
+    console.log(getFirst(arr))
 });
