@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-02-27 09:48:21
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-28 12:56:15
+ * @LastEditTime: 2021-07-24 12:24:30
  * @FilePath: /js-demo/leetcode/常规题目/283.js
  */
 /**
@@ -50,5 +50,17 @@ var moveZeroes = function(nums) {
         right++
     }
     return nums
+};
+// 双指针解法
+var moveZeroes = function(nums) {
+    let i = j = 0
+    let n = nums.length
+    while(i < n){
+        if(nums[i] !== 0){
+            nums[j++] = nums[i]
+        }
+        i++
+    }
+    while(j < n) nums[j++] = 0
 };
 console.log(moveZeroes([0,1,0,3,12]))
