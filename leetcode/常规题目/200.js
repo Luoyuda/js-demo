@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-21 21:39:31
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-05-20 15:45:36
+ * @LastEditTime: 2021-08-02 12:26:07
  * @FilePath: /js-demo/leetcode/常规题目/200.js
  */
 /*
@@ -119,6 +119,70 @@ var numIslands = function(grid) {
     }
     return count
 };
+/**
+ * @param {character[][]} grid
+ * @return {number}
+ */
+var numIslands = function(grid) {
+    let m = grid.length
+    let n = grid[0].length
+    let uf = new UnionFind(grid)
+    for(let i = 0; i < m; i++){
+        for(let j = 0; j < n; j++){
+            if(grid[i][j] == '1'){
+                grid[i][j] = '0'
+                for(let z = 0; z < 4; z++){
+                    let x = dx[z] + i
+                    let y = dy[z] + j
+                    if(x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == '1'){
+                        uf.union(i * n + j, x * n + y)
+                    }
+                }
+            }
+        }
+    }
+    return uf.count
+};
+class UnionFind {
+    constructor(grid){
+        this.count = 0
+        let m = grid.length
+        let n = grid[0].length
+        let size = m * n
+        this.root = new Array(size).fill(0)
+        this.rank = new Array(size).fill(0)
+        for(let i = 0; i < m; i++){
+            for(let j = 0; j < n; j++){
+                if(grid[i][j] == '1'){
+                    let z = i * n + j
+                    this.root[z] = z
+                    this.count++
+                }
+            }
+        }
+    }
+    find(x){
+        if(x === this.root[x]) return x
+        return this.root[x] = this.find(this.root[x])
+    }
+    union(x, y){
+        let rootX = this.find(x)
+        let rootY = this.find(y)
+        if(rootX !== rootY){
+            let rankX = this.rank[rootX]
+            let rankY = this.rank[rootY]
+            if(rankX > rankY){
+                this.root[rootY] = rootX
+            }else if(rankX < rankY){
+                this.root[rootX] = rootY
+            }else{
+                this.root[rootY] = rootX
+                this.rank[rootX]++
+            }
+            this.count--
+        }
+    }
+}
 console.log(numIslands([
     ["1","1","0","0","0"],
     ["1","1","0","0","0"],

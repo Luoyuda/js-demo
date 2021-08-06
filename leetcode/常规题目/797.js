@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-25 16:44:43
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-25 17:12:13
+ * @LastEditTime: 2021-08-02 13:13:57
  * @FilePath: /js-demo/leetcode/常规题目/797.js
  */
 /* 
@@ -30,6 +30,7 @@
     结点的数量会在范围 [2, 15] 内。
     你可以把路径以任意顺序输出，但在路径内的结点的顺序必须保证。
 */
+// dfs
 /**
  * @param {number[][]} graph
  * @return {number[][]}
@@ -53,7 +54,31 @@ var allPathsSourceTarget = function(graph) {
     dfs(0, t)
     return res
 };
-
+// bfs
+/**
+ * @param {number[][]} graph
+ * @return {number[][]}
+ */
+var allPathsSourceTarget = function(graph) {
+    let n = graph.length
+    let path = [0]
+    let q = [path]
+    let res = []
+    while(q.length){
+        let p = q.shift()
+        let list = graph[p[p.length -1]]
+        for(let x of list){
+            let tempPath = p.slice()
+            tempPath.push(x)
+            if(x === n - 1){
+                res.push(tempPath)
+            }else{
+                q.push(tempPath)
+            }
+        }
+    }
+    return res
+};
 console.log(allPathsSourceTarget([[4,3,1],[3,2,4],[],[4],[]]))
 // console.log(allPathsSourceTarget([[2],[],[1]]))
 // [[0,4],[0,3,4],[0,1,3,4],[0,1,4]]
