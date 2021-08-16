@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-03-29 21:15:26
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-03-29 22:57:22
+ * @LastEditTime: 2021-08-12 16:53:36
  * @FilePath: /js-demo/leetcode/面试金典/03.01.js
  */
 /**
@@ -26,12 +26,14 @@
 输出：
     [null, null, null, null, 2, 1, -1, -1]
  */
+/**
+ * @param {number} stackSize
+ */
 var TripleInOne = function(stackSize) {
-    this.stack = []
-    this.stack0 = -1
-    this.stack1 = stackSize - 1
-    this.stack2 = stackSize + stackSize - 1
-    this.stackSize = stackSize
+    const n = 3
+    this.size = stackSize
+    this.stack = new Array(this.size * n)
+    this.location = new Array(n).fill(0).map((j, i) => i * this.size)
 };
 
 /** 
@@ -40,14 +42,11 @@ var TripleInOne = function(stackSize) {
  * @return {void}
  */
 TripleInOne.prototype.push = function(stackNum, value) {
-    let stackKey = `stack${stackNum}`
-    let nowTop = this[stackKey]
-    let top = this.stackSize * (stackNum + 1)
-    let bottom = this.stackSize * (stackNum)
-    if(nowTop+1 >= top) return null
-    this.stack[++nowTop] = value
-    this[stackKey] = nowTop
-    return null
+    let idx = this.location[stackNum]
+    if(idx < (stackNum + 1) * this.size){
+        this.stack[idx] = value
+        this.location[stackNum]++
+    }
 };
 
 /** 
@@ -55,14 +54,10 @@ TripleInOne.prototype.push = function(stackNum, value) {
  * @return {number}
  */
 TripleInOne.prototype.pop = function(stackNum) {
-    let stackKey = `stack${stackNum}`
-    let nowTop = this[stackKey]
-    let bottom = this.stackSize * (stackNum)
-    if(nowTop < bottom) return -1
-    let val = this.stack[nowTop]
-    this.stack[nowTop] = null
-    this[stackKey] -= 1
-    return val
+    let idx = this.location[stackNum]
+    if(idx <= stackNum * this.size) return -1
+    this.location[stackNum]--
+    return this.stack[idx - 1]
 };
 
 /** 
@@ -70,11 +65,9 @@ TripleInOne.prototype.pop = function(stackNum) {
  * @return {number}
  */
 TripleInOne.prototype.peek = function(stackNum) {
-    let stackKey = `stack${stackNum}`
-    let nowTop = this[stackKey]
-    let bottom = this.stackSize * (stackNum)
-    if(nowTop < bottom) return -1
-    return this.stack[nowTop]
+    let idx = this.location[stackNum]
+    if(idx <= stackNum * this.size) return -1
+    return this.stack[idx - 1]
 };
 
 /** 
@@ -82,10 +75,9 @@ TripleInOne.prototype.peek = function(stackNum) {
  * @return {boolean}
  */
 TripleInOne.prototype.isEmpty = function(stackNum) {
-    let stackKey = `stack${stackNum}`
-    let nowTop = this[stackKey]
-    let bottom = this.stackSize * (stackNum)
-    return nowTop < bottom
+    let idx = this.location[stackNum]
+    if(idx > stackNum * this.size) return false
+    return true
 };
 var obj = new TripleInOne(18)
 // var obj = new TripleInOne(2)

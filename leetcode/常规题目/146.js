@@ -2,7 +2,7 @@
  * @Author: xiaohuolong
  * @Date: 2021-04-12 22:11:49
  * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-12 22:41:58
+ * @LastEditTime: 2021-08-13 22:40:16
  * @FilePath: /js-demo/leetcode/常规题目/146.js
  */
 /**
@@ -84,6 +84,79 @@ LRUCache.prototype.put = function(key, value) {
     }
     this.queue.unshift(key)
     this.hash[key] = value
+};
+
+var Node = function(k, v, l, r){
+    this.l = l
+    this.r = r
+    this.k = k
+    this.v = v
+}
+/**
+ * @param {number} capacity
+ */
+var LRUCache = function(capacity) {
+    this.n = capacity
+    this.map = new Map()
+    this.head = new Node(-1, -1)
+    this.tail = new Node(-1, -1)
+    this.head.r = this.tail
+    this.tail.l = this.head
+};
+
+/** 
+ * @param {number} key
+ * @return {number}
+ */
+LRUCache.prototype.get = function(key) {
+    if(this.map.has(key)){
+        let node = this.map.get(key)
+        this.update(node)
+        return node.v
+    }
+    return -1
+};
+
+/** 
+ * @param {Node} node
+ * @return {void}
+ */
+LRUCache.prototype.update = function(node) {
+    this.delete(node)
+    node.r = this.head.r
+    node.l = this.head
+    this.head.r.l = node
+    this.head.r = node
+};
+
+LRUCache.prototype.delete = function(node) {
+    if(node.l){
+        let l = node.l
+        l.r = node.r
+        node.r.l = l
+    }
+};
+
+/** 
+ * @param {number} key 
+ * @param {number} value
+ * @return {void}
+ */
+LRUCache.prototype.put = function(key, value) {
+    let node
+    if(this.map.has(key)){
+        node = this.map.get(key)
+        node.v = value
+    }else{
+        if(this.map.size === this.n){
+            let del = this.tail.l
+            this.map.delete(del.k)
+            this.delete(del)
+        }
+        node = new Node(key, value)
+        this.map.set(key, node)
+    }
+    this.update(node)
 };
 
 var funcs = ["put", "put", "get", "put", "get", "put", "get", "get", "get"]
