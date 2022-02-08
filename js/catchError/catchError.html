@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>错误捕获</title>
+  <link rel="stylesheet" href="b.css">
+</head>
+<body>
+  <script src="a.js"></script>
+  <script>
+    var e = window.onerror
+    window.addEventListener("error", (...args) => {
+      console.log("Error: ", ...args)
+    })
+    window.addEventListener("unhandledrejection", (...args) => {
+      console.log("unhandledrejection Error: ", ...args)
+    })
+    Promise.reject('form Promise is rejected')
+    new Promise(() => {
+      console.log(abc)
+    })
+    console.log(abc)
+  </script>
+</body>
+</html>
