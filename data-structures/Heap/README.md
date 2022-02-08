@@ -1,10 +1,3 @@
-<!--
- * @Author: xiaohuolong
- * @Date: 2021-04-29 17:03:43
- * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-04-30 14:43:23
- * @FilePath: /js-demo/data-structures/Heap/README.md
--->
 # 堆
 
 堆 是一种特别的二叉树，满足以下条件的二叉树，可以称之为堆

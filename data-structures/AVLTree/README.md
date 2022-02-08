@@ -1,10 +1,3 @@
-<!--
- * @Author: xiaohuolong
- * @Date: 2020-07-15 23:01:06
- * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-07-15 23:13:43
- * @FilePath: /js-demo/data-structures/AVLTree/README.md
---> 
 # 平衡二叉树
 
 二叉排序树，每个节点的左子树和右子树的高度至多等于1，左子树和右子树都是平衡二叉树，而且左子树和右子树的深度差的绝对值不超过1。我们将二叉树上节点的左子树深度减去右子树深度的值称为平衡因子 BF (Balance Factor)，值只能是 -1，0，1

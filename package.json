@@ -1,7 +1,7 @@
 {
   "name": "js-demo",
   "version": "1.0.0",
-  "description": "<!--  * @Author: xiaohuolong  * @Date: 2020-06-06 20:46:21  * @LastEditors: xiaohuolong  * @LastEditTime: 2020-06-26 12:52:38  * @FilePath: /js-demo/README.md -->  # javascript",
+  "description": "javascript",
   "main": "index.js",
   "scripts": {
     "watch": "onchange --await-write-finish 500 -i \"**/*.js\" -- cross-env change='{{changed}}' node scripts/change.js"

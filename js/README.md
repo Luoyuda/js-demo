@@ -1,10 +1,3 @@
-<!--
- * @Author: xiaohuolong
- * @Date: 2021-07-04 15:11:22
- * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-07-05 09:56:49
- * @FilePath: /js-demo/js/README.md
--->
 # js代码整理
 
 ## call apply bind new 模拟实现

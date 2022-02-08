@@ -1,10 +1,3 @@
-<!--
- * @Author: xiaohuolong
- * @Date: 2021-07-04 20:01:12
- * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-07-04 20:17:50
- * @FilePath: /js-demo/js/test/README.md
--->
 # js代码整理(2)
 
 ## setTimeout 模拟实现 setInterval(带清除定时器的版本)

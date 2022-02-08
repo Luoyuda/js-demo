@@ -1,10 +1,3 @@
-<!--
- * @Author: xiaohuolong
- * @Date: 2021-01-07 16:44:13
- * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-01-14 15:22:50
- * @FilePath: /javascript/src/createObject/README.md
--->
 # 创建对象
 
 ## 工厂模式

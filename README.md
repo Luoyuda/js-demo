@@ -1,10 +1,3 @@
-<!--
- * @Author: xiaohuolong
- * @Date: 2020-06-06 20:46:21
- * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-06-26 12:52:38
- * @FilePath: /js-demo/README.md
---> 
 # javascript
 
 ## 数据结构与算法

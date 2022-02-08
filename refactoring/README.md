@@ -1,10 +1,3 @@
-<!--
- * @Author: xiaohuolong
- * @Date: 2021-08-06 08:41:18
- * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-08-11 15:48:18
- * @FilePath: /js-demo/refactoring/README.md
--->
 # 重构(改善既有代码的设计)
 
 重构的第一步：确保重构代码有一组可靠的测试！
@@ -1516,7 +1509,7 @@
     function renderPhoto(aPhoto){
         return [...emitPhotoData(person.photo)].slice(1).join('/n')
     }
-    ```    
+    ```
 
     ```js
     function renderPerson(person){
@@ -1851,7 +1844,7 @@
     将不符合语义的字段名改为更加贴切的名字
      ```js
     const organization = { name: 'Acme', country: 'GB' }
-    ```
+     ```
 
     ```js
     class Organization {

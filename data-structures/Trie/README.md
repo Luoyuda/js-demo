@@ -1,10 +1,3 @@
-<!--
- * @Author: xiaohuolong
- * @Date: 2021-08-11 17:22:42
- * @LastEditors: xiaohuolong
- * @LastEditTime: 2021-08-12 15:38:03
- * @FilePath: /js-demo/data-structures/Trie/README.md
--->
 # 前缀树
 
 是N叉树的一种特殊形式，用来存储字符串的，每一个节点代表一个字符串。每个节点会有多个子节点，通往不同子节点的路径上有着不同的字符。子节点代表的字符串是由节点本身的原始字符串，以及通往该子节点路径上所有的字符组成的。

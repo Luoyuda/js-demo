@@ -1,10 +1,3 @@
-<!--
- * @Author: xiaohuolong
- * @Date: 2020-07-14 22:06:45
- * @LastEditors: xiaohuolong
- * @LastEditTime: 2020-07-14 22:09:11
- * @FilePath: /js-demo/data-structures/BinarySearchTree/README.md
---> 
 # 二叉搜索树
 
 二叉搜索树
