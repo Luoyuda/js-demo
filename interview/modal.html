@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用单例模式实现一个模态框</title>
+  <style>
+    .modal{
+      position: fixed;
+      width: 100px;
+      height: 100px;
+      background-color: #ddd;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+  <button id="open">open</button>
+  <button id="close">close</button>
+  <script>
+    window.onload = function() {
+      var createModal = (function() {
+        var modal = null;
+        return function() {
+          if(!modal){
+            modal = document.createElement('div');
+            modal.innerHTML = '我是一个模态框'
+            modal.id = 'modal';
+            modal.style.display = 'none'
+            document.body.appendChild(modal);
+          }
+          return modal
+        }
+      } ())
+      document.getElementById('open').addEventListener('click', function(){
+        var modal = createModal();
+        modal.style.display = 'block'
+      })
+      document.getElementById('close').addEventListener('click', function(){
+        var modal = createModal();
+        modal.style.display = 'none'
+      })
+    }
+  </script>
+</body>
+</html>
