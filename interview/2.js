@@ -110,3 +110,146 @@
     }
     console.log(getFirst(arr))
 });
+
+
+(() => {
+	function getId(count){
+		let res = ''
+		while (count){
+			res += parseInt(Math.random() * 10)
+			count -= 1
+		}
+		return res
+	}
+	function random(fn, len){
+		let count = 0;
+		let res = ''
+		do{
+			res = getId(len)
+			count += 1
+		}while (!fn(res))
+		fn(res)
+		return { res, count }
+	}
+	function getShinyPokemon() {
+		return parseInt(Math.random()*(4096-1+1)+1,10) === 4095
+	}
+	// 回文
+	function v1(target){
+		let arr = target.split('').map(item => parseInt(item, 10))
+		if(target ===arr.reverse().join('')) return true
+	}
+	// 顺子
+	function v2(target){
+		let arr = target.split('').map(item => parseInt(item, 10))
+		let gap = 1
+		let len = arr.length - 1
+		while(gap === 1 && len > 0){
+			gap = arr[len] - arr[len - 1]
+			len -= 1
+		}
+		// 正顺子id
+		if(gap === 1) return true
+	}
+	// 顺子(逆)
+	function v3(target){
+		let arr = target.split('').map(item => parseInt(item, 10))
+		let gap = 1
+		let len = 0
+		while(gap === 1 && len < arr.length - 1){
+			gap = arr[len] - arr[len + 1]
+			len += 1
+		}
+		if(gap === 1) return true
+	}
+	// aabbcc
+	function v4(target){
+		let arr = target.split('').map(item => parseInt(item, 10))
+		let map = new Map()
+		arr.forEach(item => {
+			map.set(item, (map.get(item) || 0) + 1)
+		})
+		// 112233 / 332211
+		if(map.size === 3){
+			if([...map.entries()].every(([,val]) => val === 2) 
+			&& arr[0] === arr[1] && arr[2] === arr[3] && arr[4] === arr[5]
+			&& ((arr[0] + 1 === arr[2] && arr[2] + 1 === arr[4]) || (arr[0] - 1 === arr[2] && arr[2] - 1 === arr[4]))){
+				return true
+			}
+		}
+	}
+	// aaabbb
+	function v5(target){
+		let arr = target.split('').map(item => parseInt(item, 10))
+		let map = new Map()
+		arr.forEach(item => {
+			map.set(item, (map.get(item) || 0) + 1)
+		})
+		// 111222
+		if(map.size === 2){
+			if([...map.entries()].every(([,val]) => val === 3) 
+			&& arr[0] === arr[1] && arr[0] === arr[2] && arr[3] === arr[4] && arr[4] === arr[5]
+			&& ((arr[0] + 1 === arr[3]) || (arr[0] - 1 === arr[3]))){
+				return true
+			}
+		}
+	}
+	// aaaaaa
+	function v6(target){
+		let arr = target.split('').map(item => parseInt(item, 10))
+		if(arr.every(item => item === arr[0])) return true
+	}
+	const valid = [
+		{
+			name: '刷出 abccba 类型训练师id',
+			v: v1
+		},
+		{
+			name: '刷出 123456 类型训练师id',
+			v: v2
+		},
+		{
+			name: '刷出 654321 类型训练师id',
+			v: v3
+		},
+		{
+			name: '刷出 112233/332211 类型训练师id',
+			v: v4
+		},
+		{
+			name: '刷出 111222/222111 类型训练师id',
+			v: v5
+		},
+		{
+			name: '刷出 666666 类型训练师id',
+			v: v6
+		},
+		{
+			name: '刷出初始闪',
+			v: getShinyPokemon
+		}
+	]
+	function print( { res, count }){
+		var time = count * 25 / 60
+		if(time > 24){
+			time = parseInt(time / 24) + '天'
+		}else{
+			time = parseInt(time) + '小时'
+		}
+		console.log(`花费${count}次 ${time}后 ${res}`)
+	}
+	const count = 1
+	console.log(`各自执行${count}次的平均值`)
+	valid.forEach(({ name, v }) => {
+		// console.log(`== ${name} ==`)
+		const list = (new Array(count).fill(0)).map((item, index) => {
+			return random(v, 6)
+		})
+		// list.forEach(print)
+		const avgCount = parseInt(list.reduce((prev, { count }) => {
+			return prev + count
+		}, 0) / list.length)
+		// console.log(`===== 平均 =====`)
+		print({ res:name, count: avgCount })
+	})
+});

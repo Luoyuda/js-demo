@@ -27,5 +27,8 @@
     "onchange": "^7.0.2",
     "shelljs": "^0.8.4"
   },
-  "homepage": "https://github.com/Luoyuda/js-demo#readme"
+  "homepage": "https://github.com/Luoyuda/js-demo#readme",
+  "dependencies": {
+    "underscore": "^1.13.2"
+  }
 }
