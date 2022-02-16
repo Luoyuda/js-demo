@@ -5,7 +5,8 @@
   "main": "Promise.js",
   "scripts": {
     "test": "promises-aplus-tests promise",
-    "mytest": "promises-aplus-tests my-promise"
+    "mytest": "promises-aplus-tests my-promise",
+    "p3": "promises-aplus-tests p3"
   },
   "keywords": [],
   "author": "",
