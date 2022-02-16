@@ -210,7 +210,48 @@
     }
 
     light()
+
 });
+
+(() => {
+    function light(color, second) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                console.log(color)
+                resolve()
+            }, second)
+        })
+    }
+
+    function orderLight(list){
+        let promise = Promise.resolve()
+        list.forEach(item => {
+            promise = promise.then(() => {
+                return light(item.color, item.second)
+            })
+        })
+        promise.then(() => {
+            return orderLight(list)
+        })
+    }
+
+    orderLight([
+        {
+            color: 'red',
+            second: 3000,
+        },
+        {
+            color: 'yellow',
+            second: 2000,
+        },
+        
+        {
+            color: 'green',
+            second: 1000,
+        }
+    ])
+});
+
 // 取key
 (() => {
     var obj = {
@@ -664,3 +705,32 @@ function TreeNode(val, left, right){
         return list
     }
 });
+
+(() => {
+    async function async1 (){
+        console.log(1)
+        console.log(await async2())
+        console.log(2)
+    }
+    async function async2 (){
+        console.log(3)
+        return 0
+    }
+    setTimeout(() => {
+        console.log(4)
+        new Promise((resolve) => {
+            console.log(5)
+            resolve()
+        }).then(() => {
+            console.log(6)
+        })
+    });
+    async1()
+    new Promise((resolve) => {
+        console.log(7)
+        resolve()
+    }).then(() => {
+        console.log(8)
+    })
+    console.log(9)
+})();
