@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/Luoyuda/js-demo#readme",
   "dependencies": {
-    "underscore": "^1.13.2"
+    "underscore": "^1.13.2",
+    "vue-router": "^4.0.12"
   }
 }
