@@ -29,6 +29,9 @@
   },
   "homepage": "https://github.com/Luoyuda/js-demo#readme",
   "dependencies": {
+    "commander": "^9.0.0",
+    "node-fetch": "^3.2.0",
+    "puppeteer": "^13.4.0",
     "underscore": "^1.13.2",
     "vue-router": "^4.0.12"
   }
