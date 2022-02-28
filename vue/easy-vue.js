@@ -1,47 +1,6 @@
 let active
-let effect = (fn, options = {}) => {
-  let effect = (...args) => {
-    try {
-      active = effect
-      return fn(...args)
-    } catch (error) {
-      active = null
-    }
-  }
-  effect.options = options
-  effect.deps = []
-  return effect
-}
-let watchEffect = function(cb){
-  let runner = effect(cb)
-  runner()
-  return () => {
-    cleanUpEffect(runner)
-  }
-}
-let cleanUpEffect = effect => {
-  const { deps } = effect
-  if(deps.length){
-    for (let i = 0; i < deps.length; i++) {
-      deps[i].delete(effect)
-    }
-  }
-}
 let queue = []
 let nextTick = cb => Promise.resolve().then(cb)
-let queueJob = job => {
-  if(!queue.includes(job)){
-    queue.push(job)
-    nextTick(flushJobs)
-  }
-}
-let flushJobs = () => {
-  let job
-  while((job = queue.shift()) !== undefined){
-    job()
-  }
-}
-// 依赖收集
 class Dep{
   deps = new Set()
   depend(){
@@ -81,6 +40,46 @@ let createReactive = (target, prop, initValue) => {
   })
 }
 let set = (target, prop, value) => createReactive(target, prop, value)
+let effect = (fn, options = {}) => {
+  let effect = (...args) => {
+    try {
+      active = effect
+      return fn(...args)
+    } catch (error) {
+      active = null
+    }
+  }
+  effect.options = options
+  effect.deps = []
+  return effect
+}
+let watchEffect = function(cb){
+  let runner = effect(cb)
+  runner()
+  return () => {
+    cleanUpEffect(runner)
+  }
+}
+let cleanUpEffect = effect => {
+  const { deps } = effect
+  if(deps.length){
+    for (let i = 0; i < deps.length; i++) {
+      deps[i].delete(effect)
+    }
+  }
+}
+let queueJob = job => {
+  if(!queue.includes(job)){
+    queue.push(job)
+    nextTick(flushJobs)
+  }
+}
+let flushJobs = () => {
+  let job
+  while((job = queue.shift()) !== undefined){
+    job()
+  }
+}
 let computed = fn => {
   let value
   let dirty = true
