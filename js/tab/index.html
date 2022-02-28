@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index</title>
+</head>
+<body>
+  <p id="value">index</p>
+  <script>
+
+    let value = document.getElementById('value')
+    window.addEventListener('storage', (event) => {
+      const { key, newValue } = event
+      value.innerHTML = `update storage ${key}: ${newValue}`;
+    }, false);
+    const bc = new BroadcastChannel('BroadcastChannel');
+    bc.onmessage =(event) => {
+      const { data } = event
+      value.innerHTML = `update BroadcastChannel ${data}`;
+    };
+  </script>
+</body>
+</html>

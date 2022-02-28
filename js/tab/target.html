@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>target</title>
+</head>
+<body>
+  <input type="text" id="input">
+  <button id="submitStorage">submit Storage</button>
+  <button id="submitBroadcastChannel">submitBroadcastChannel</button>
+  <script>
+    window.onload = function(){
+      let input = document.getElementById('input')
+      document.getElementById('submitStorage').addEventListener('click', () => {
+        console.log(input.value)
+        window.localStorage.setItem('input', input.value)
+      })
+      const bc = new BroadcastChannel('BroadcastChannel');
+      document.getElementById('submitBroadcastChannel').addEventListener('click', () => {
+        bc.postMessage(input.value)
+      })
+    }
+  </script>
+</body>
+</html>
