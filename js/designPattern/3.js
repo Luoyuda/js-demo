@@ -343,4 +343,31 @@
     })()
     Play.exec('up move 5 move 10 left jump 1 right jump 10 down left jump 10')
     //向上移动5移动10向左跳1向右跳10向下向左跳10
-})()
+})();
+
+(() => {
+    var Light = function() {
+        this.state = 'off' // 电灯初始状态 off
+        this.button = null // 电灯开关按钮
+    }
+    Light.prototype.init = function () {
+        var button = document.createElement('button'),self = this;
+        button.innerHTML = '开关';
+        this.button = document.body.appendChild(button);
+        this.button.onclick = function () {
+            self.buttonWasPressed();
+        }
+    };
+    Light.prototype.buttonWasPressed = function () {
+        if (this.state === 'off') {
+            console.log('开灯');
+            this.state = 'on';
+        } else if (this.state === 'on') {
+            console.log('关灯');
+            this.state = 'off';
+        }
+    };
+    var light = new Light();
+    light.init();
+    
+})();
