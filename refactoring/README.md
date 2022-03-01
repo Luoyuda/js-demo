@@ -2616,7 +2616,7 @@
     function alertForMiscreant(people) {
         if(findMiscreant(people) !== '') setOffAlarms()
     }
-    function findMiscreant(people) {// find }
+    function findMiscreant(people) { } // find
     ```
 
     做法
