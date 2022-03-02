@@ -41,23 +41,17 @@ var partition = (arr, p, q) => {
     // 相遇时退出循环
     while (i < j){
         // 找到第一个大于基数的位置
-        // console.log(arr.join(','), i, j);
         while (i < j && arr[i] <= pivot) i++
-        // console.log(i, arr[i], pivot);
         if(i != j){
             // 交换到右分区，使得左边分区都小于或等于基数，右边分区大于或等于基数
             swap(arr, i, j)
             j--
         }
     }
-    // console.log('while-end')
-    // console.log(arr.join(','))
     // 如果两个指针相等，单独比较 arr[j] pivot
-    if(i == j && arr[j] > pivot) j--
+    if(arr[j] > pivot) j--
     // 将基数和中间树交换
-    // console.log(j, p, arr[p], arr[j]);
     if(j != p) swap(arr, p, j)
-    // console.log(arr.join(','))
     // 返回中间的下标
     return j
 }
@@ -79,10 +73,8 @@ var partition = (arr, p, q) => {
     // 相遇时退出循环
     while (i < j){
         // 找到第一个大于基数的位置
-        // console.log(arr.join(','), i, j);
         while (i < j && arr[i] <= pivot) i++
         while (i < j && arr[j] >= pivot) j--
-        // console.log(i, arr[i], arr[j], pivot);
         if(i < j){
             // 交换到右分区，使得左边分区都小于或等于基数，右边分区大于或等于基数
             swap(arr, i, j)
@@ -90,13 +82,10 @@ var partition = (arr, p, q) => {
             j--
         }
     }
-    // console.log('while-end')
-    // console.log(arr.join(','))
     // 如果两个指针相等，单独比较 arr[j] pivot
-    if(i == j && arr[j] > pivot) j--
+    if(arr[j] > pivot) j--
     // 将基数和中间树交换
     swap(arr, p, j)
-    // console.log(arr.join(','))
     // 返回中间的下标
     return j
 }
@@ -192,7 +181,6 @@ var QuickSort = (nums, p, q) => {
     }
     return nums
 }
-
 var partition = (nums, p, q) => {
     let x = nums[p]
     let i = p + 1
@@ -208,15 +196,12 @@ var partition = (nums, p, q) => {
     swap(nums, p, j)
     return j
 }
-
 var swap = (arr, i, j) => {
     let temp = arr[i]
     arr[i] = arr[j]
     arr[j] = temp
 }
-
-var randOne = (n, m) => n + Math.floor(Math.random(m - n + 1))
-
+var randOne = (n, m) => n + Math.floor(Math.random() * (m - n + 1))
 var shuffle = (nums) => {
     let n = nums.length
     for (let i = 0; i < n; i++) {
