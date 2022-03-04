@@ -1,0 +1,11 @@
+a = 2
+console.log(a)
+const b = require('./b')
+console.log(a)
+const c = require('./c')
+console.log(b)
+console.log(b.get())
+console.log(c.get())
+b.set(2)
+console.log(b.get())
+console.log(c.get())

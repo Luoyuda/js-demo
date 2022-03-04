@@ -1,105 +1,120 @@
 const PENDING = 'pending'
 const FULFILLED = 'fulfilled'
 const REJECTED = 'rejected'
-class MyPromise {
+class MyPromise{
 	status = PENDING
 	value = null
 	reason = null
-	onfulfilled = []
-	onrejected = []
-	constructor(executor){
-		this.resolve = this.resolve.bind(this)
-		this.reject = this.reject.bind(this)
+	onFulfilled = []
+	onRejected = []
+	constructor(exec){
 		try {
-			executor(this.resolve, this.reject)
+			exec(v => {
+				resolvePromise(this, v)
+			}, r => {
+				rejectedPromise(this, r)
+			})
 		} catch (error) {
-			this.reject(error)
+			rejectedPromise(this, error)
 		}
 	}
-	resolve(value){
-		if(this.status === PENDING){
-			this.status = FULFILLED
-			this.value = value
-			while(this.onfulfilled.length) this.onfulfilled.shift()(this.value)
+	then(onFulfilled, onRejected){
+		onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v
+		onRejected = typeof onRejected === 'function' ? onRejected : r => { throw r }
+		const p1 = this
+		const p2 = new MyPromise(() => {})
+		const f = () => {
+			queueMicrotask(() => {
+				try {
+					const x = onFulfilled(p1.value)
+					resolvePromise(p2, x)
+				} catch (error) {
+					rejectedPromise(p2, error)
+				}
+			})
 		}
-	}
-	reject(reason){
-		if(this.status === PENDING){
-			this.status = REJECTED
-			this.reason = reason
-			while(this.onrejected.length) this.onrejected.shift()(this.reason)
+		const r = () => {
+			queueMicrotask(() => {
+				try {
+					const x = onRejected(p1.reason)
+					resolvePromise(p2, x)
+				} catch (error) {
+					rejectedPromise(p2, error)
+				}
+			})
 		}
+		if(p1.status === FULFILLED){
+			f()
+		}else if(p1.status === REJECTED){
+			r()
+		}else{
+			p1.onFulfilled.push(f)
+			p1.onRejected.push(r)
+		}
+		return p2
 	}
 	catch(onRejected){
 		return this.then(null, onRejected)
 	}
-	then(onfulfilled, onrejected){
-		onfulfilled = typeof onfulfilled === 'function' ? onfulfilled : val => val
-		onrejected = typeof onrejected === 'function' ? onrejected : reason => { throw reason }
-		const promise = new MyPromise((resolve, reject) => {
-			const f  = () => {
-				queueMicrotask(() => {
-					try {
-						const x = onfulfilled(this.value);
-						resolvePromise(promise, x, resolve, reject)
-					} catch (error) {
-						reject(error)
-					}
-				})
-			}
-			const r  = () => {
-				queueMicrotask(() => {
-					try {
-						const x = onrejected(this.reason);
-						resolvePromise(promise, x, resolve, reject)
-					} catch (error) {
-						reject(error)
-					}
-				})
-			}
-			if(this.status === FULFILLED){
-				f()
-			}else if(this.status === REJECTED){
-				r()
-			}else{
-				this.onfulfilled.push(f)
-				this.onrejected.push(r)
-			}
-		})
-		return promise
-	}
 }
-function resolvePromise(promise, x, resolve, reject) {
-	if(promise === x) return reject(new TypeError('promise'))
-	if(x && (typeof x === 'object' || typeof x === 'function')){
+function runCbs(cbs, x){
+	cbs.forEach(cb => cb(x))
+}
+function fulfilledPromise(p, v){
+	if(p.status !== PENDING) return
+	p.status = FULFILLED
+	p.value = v
+	runCbs(p.onFulfilled, v)
+}
+function rejectedPromise(p, r){
+	if(p.status !== PENDING) return
+	p.status = REJECTED
+	p.reason = r
+	runCbs(p.onRejected, r)
+}
+function resolvePromise(p, x){
+	if(p === x) return rejectedPromise(p, new TypeError(''))
+	if(x instanceof MyPromise){
+		if(x.status === FULFILLED){
+			fulfilledPromise(p, x.value)
+		}else if(x.status === REJECTED){
+			rejectedPromise(p, x.reason)
+		}else{
+			x.then(() => {
+				resolvePromise(p, x.value)
+			}, () => {
+				rejectedPromise(p, x.reason)
+			})
+		}
+	}else if(x && (typeof x === 'object' || typeof x === 'function')){
 		let then
 		try {
 			then = x.then
 		} catch (error) {
-			return reject(error)
+			rejectedPromise(p, error)
 		}
 		if(typeof then === 'function'){
-			let caller = false
+			let done = false
 			try {
 				then.call(x, y => {
-					if(caller) return
-					caller = true
-					resolvePromise(promise, y, resolve, reject)
+					if(done) return
+					done = true
+					resolvePromise(p, y)
 				}, r => {
-					if(caller) return
-					caller = true
-					reject(r)
+					if(done) return
+					done = true
+					rejectedPromise(p, r)
 				})
 			} catch (error) {
-				if(caller) return
-				caller = true
-				reject(error)
+				if(done) return
+				done = true
+				rejectedPromise(p, error)
 			}
 		}else{
-			resolve(x)
+			fulfilledPromise(p, x)
 		}
 	}else{
-		resolve(x)
+		fulfilledPromise(p, x)
 	}
 }
 // 测试用

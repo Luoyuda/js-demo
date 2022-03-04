@@ -44,7 +44,7 @@
     function format1(num){
         let i = 0
         return num.toString().split('').reverse().reduce((prev, item) => {
-            if(item == '.') i = -1
+            if(item === '.'  || item === '-') i = -1
             if(i != 0 && i % 3 === 0) item = item + ','
             i++
             prev = item + prev
