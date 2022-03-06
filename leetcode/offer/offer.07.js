@@ -45,6 +45,29 @@ var buildTree = function(preorder, inorder) {
     return build(preorder, inorder, 0, n - 1, 0, n - 1)
 };
 
+/**
+ * @param {number[]} preorder
+ * @param {number[]} inorder
+ * @return {TreeNode}
+ */
+var buildTree = function(preorder, inorder) {
+    var build = (pL, pR, iL, iR) => {
+        if(pL > pR) return null
+        let rootVal = preorder[pL]
+        let iRoot = indexMap[rootVal]
+        let root = new TreeNode(rootVal)
+        let leftSize = iRoot - iL
+        root.left = build(pL + 1, pL + leftSize, iL, iRoot - 1)
+        root.right = build(pL + leftSize + 1, pR, iRoot + 1, iR)
+        return root
+    }
+    let n = preorder.length
+    const indexMap = {}
+    for(let i = 0; i < n; i++){
+        indexMap[inorder[i]] = i
+    }
+    return build(0, n - 1, 0, n - 1)
+};
 function TreeNode(val) {
     this.val = val;
     this.left = this.right = null;
