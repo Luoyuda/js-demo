@@ -29,6 +29,10 @@
   },
   "homepage": "https://github.com/Luoyuda/js-demo#readme",
   "dependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/parser": "^7.17.3",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/traverse": "^7.17.3",
     "commander": "^9.0.0",
     "node-fetch": "^3.2.0",
     "puppeteer": "^13.4.0",
