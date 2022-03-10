@@ -1,4 +1,4 @@
 const b = require('./b')
-exports.get = () => {
-  return b.get()
+exports.getB = () => {
+  return b
 }

@@ -1,5 +1,3 @@
-var b = 1
-a = 1222
 function set(val){
   b = val
 }
@@ -10,4 +8,3 @@ exports = {}
 exports.set = set
 exports.get = get
 module.exports = exports
-console.log(exports)
