@@ -1,0 +1,32 @@
+<div id="style">
+  <style>
+    .box {
+      background-color: red;
+      overflow: hidden;
+    }
+    .inner-box{
+      width: 50px;
+      height: 50px;
+      margin: 50px 0;
+    }
+    .inner-box-1{
+      background-color: green;
+    }
+    .inner-box-2{
+      background-color: yellow;
+    }
+  </style>
+  <div class="box box-1">
+    <div class="inner-box inner-box-1">box1</div>
+    <div class="inner-box inner-box-2">box2</div>
+    <div class="inner-text">文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字</div>
+  </div>
+</div>
+<pre>
+  <code id="code"></code>
+</pre>
+<script>
+  window.onload = () => {
+    document.getElementById('code').innerText = document.getElementById('style').innerHTML
+  }
+</script>
