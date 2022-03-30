@@ -3,12 +3,15 @@ title: Generator 与 Co 模块理解（ES6）
 tags: 
  - ES6
  - JavaScript
+ - 异步处理
 categories:
  - 技术
 comments: true
 date: 2022-03-20 19:23
 updated: 2022-03-20 19:23
 ---
+
+[源码地址](https://github.com/Luoyuda/js-demo/tree/master/js/ES6/generator)
 
 # 是什么
 
@@ -223,24 +226,24 @@ Thunk 函数的定义，它是“传名调用”的一种实现策略，用来�
 
 ```js
 function asyncFn(x, callback){
-	setTimeout(() => {
-		callback(x + 1)
-	})
+  setTimeout(() => {
+    callback(x + 1)
+  })
 }
 function callback(x){
-	console.log(`by callback: ${x}`)
+  console.log(`by callback: ${x}`)
 }
 // 普通的调用方式
 asyncFn(1, callback)
 
 function Thunk(fn){
-	return function(){
-		const args = Array.prototype.slice.call(arguments)
-		return function(callback){
-			args.push(callback)
-			return fn.apply(this, args)
-		}
-	}
+  return function(){
+    const args = Array.prototype.slice.call(arguments)
+    return function(callback){
+      args.push(callback)
+      return fn.apply(this, args)
+    }
+  }
 }
 const thunkAsync = Thunk(asyncFn)
 // thunkify
@@ -251,23 +254,23 @@ thunkAsync(1)(callback)
 
 ```js
 function co(genF){
-	var gen = genF()
-	function next(){
-		var args = Array.prototype.slice.call(arguments)
-		var res = gen.next.apply(gen, args)
-		if(res.done) return res.value
-		// 传入 next 作为 callback， 这就是实现 co 自动执行的关键！
-		// next 被触发时，异步任务已经得到结果，并执行下一个 gen.next ！
-		// 这也是为什么 co 是需要后面跟 Thunk 函数的原因！
-		res.value(next)
-	}
-	next()
+  var gen = genF()
+  function next(){
+    var args = Array.prototype.slice.call(arguments)
+    var res = gen.next.apply(gen, args)
+    if(res.done) return res.value
+    // 传入 next 作为 callback， 这就是实现 co 自动执行的关键！
+    // next 被触发时，异步任务已经得到结果，并执行下一个 gen.next ！
+    // 这也是为什么 co 是需要后面跟 Thunk 函数的原因！
+    res.value(next)
+  }
+  next()
 }
 function* genF(){
-	var i = yield thunkAsync(1) // 这里进行传参，执行后是需要传入 callback 才开始执行异步
-	var j = yield thunkAsync(2)
-	console.log(i, j)
-	return i + j
+  var i = yield thunkAsync(1) // 这里进行传参，执行后是需要传入 callback 才开始执行异步
+  var j = yield thunkAsync(2)
+  console.log(i, j)
+  return i + j
 }
 co(genF)
 ```
@@ -275,30 +278,29 @@ co(genF)
 如果理解了这个，下面这个 Promise 版本就很容易理解了
 
 ```js
-
 function asyncFn(x){
-	return new Promise((resolve, reject) => {
-		setTimeout(() => {
-			resolve(x + 1)
-		})
-	})
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(x + 1)
+    })
+  })
 }
 function* genF(){
-	var i = yield asyncFn(1)
-	var j = yield asyncFn(2)
-	console.log(i, j)
-	return i + j
+  var i = yield asyncFn(1)
+  var j = yield asyncFn(2)
+  console.log(i, j)
+  return i + j
 }
 function co(genF){
-	return new Promise((resolve) => {
-		var gen = genF()
-		function step(next){
-			let res = next();
-			if(res.done) return resolve(res.value)
-			Promise.resolve(res.value).then(v => step(() => gen.next(v)))
-		}
-		step(() => gen.next())
-	})
+  return new Promise((resolve) => {
+    var gen = genF()
+    function step(next){
+      let res = next();
+      if(res.done) return resolve(res.value)
+      Promise.resolve(res.value).then(v => step(() => gen.next(v)))
+    }
+    step(() => gen.next())
+  })
 }
 co(genF)
 ```
