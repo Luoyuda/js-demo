@@ -6,7 +6,8 @@
   "scripts": {
     "test": "promises-aplus-tests promise",
     "mytest": "promises-aplus-tests my-promise",
-    "p3": "promises-aplus-tests p3"
+    "p3": "promises-aplus-tests p3",
+    "index": "promises-aplus-tests index"
   },
   "keywords": [],
   "author": "",
