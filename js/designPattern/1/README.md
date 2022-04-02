@@ -1,5 +1,5 @@
 ---
-title: 设计模式 - 创造型设计模式 （JavaScript实现）
+title: 设计模式 - 笔记 - 创造型设计模式 （JavaScript实现）
 tags: 
  - 创造型设计模式
  - JavaScript
@@ -293,6 +293,6 @@ const LazySingle = (function (){
 })()
 ```
 
-[源码地址](https://github.com/Luoyuda/js-demo/tree/master/js/designPattern)
+[源码地址](https://github.com/Luoyuda/js-demo/tree/master/js/designPattern/1)
 
 ![创造型设计模式.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4f08297cb98846e7862a921184079a0b~tplv-k3u1fbpfcp-watermark.image?)
