@@ -16,6 +16,14 @@
       })
     }) 
   }
+  // ES6
+  Promise.prototype.finally = function (fn) {
+    return this.then(value => {
+      return Promise.resolve(fn()).then(() => value)
+    }, reason => {
+      return Promise.reject(fn()).then(() => reason)
+    })
+  }
   var load = false
   new Promise(function (resolve, reject) {
     load = true
@@ -68,6 +76,13 @@
       }
     })
   }
+  // ES6
+  Promise.reject = function (reason) {
+    return new Promise((resolve, reject) => {
+      const fn = () => reject(reason)
+      reason instanceof Promise ? reason.then(fn, fn) : fn()
+    })
+  }
   Promise.reject(new Promise(res => {
     console.log('in promise') // in promise
     res(2)
@@ -86,6 +101,11 @@
     return new Promise(function(resolve, reject){
       resolve(value)
     })
+  }
+  // ES6
+  Promise.resolve = function (value) {
+    return value instanceof Promise ? value :
+      new Promise(resolve => resolve(value))
   }
   Promise.resolve(new Promise((res, rej) => {
     console.log('in promise') // in promise
@@ -118,18 +138,35 @@
       while (true){
         res = iteratee.next()
         if(res.done) break
-        len++
-        var val = res.value
-        if(!(val instanceof Promise)){
-          val = Promise.resolve(val)
-        }
-        val.then(function(value){
-          result[i++] = value
-          if(len === i && res.done) resolve(result)
-        }, function(reason){
-          reject(reason)
-        })
+        !(function(j){
+          len++
+          var val = !(res.value instanceof Promise) ?  Promise.resolve(res.value) : res.value
+          val.then(function(value){
+            result[j] = value
+            i++
+            if(len === i && res.done) resolve(result)
+          }, function(reason){
+            reject(reason)
+          })
+        })(len)
       }
+    })
+  };
+  // ES6
+  Promise.all = function (iterable) {
+    return new Promise((resolve, reject) => {
+      const promiseList = [...iterable] // 转换可迭代对象为数组
+      const result = []
+      let j = 0
+      let len = promiseList.length
+      promiseList.forEach((val, i) => {
+        val = !(val instanceof Promise) ? Promise.resolve(val) : val
+        val.then(value => {
+          result[i] = value
+          j++
+          if(len <= j) resolve(result)
+        }, reason => reject(reason))
+      })
     })
   };
   [
@@ -167,10 +204,7 @@
         res = iteratee.next()
         if(res.done) break
         len++
-        var val = res.value
-        if(!(val instanceof Promise)){
-          val = Promise.resolve(val)
-        }
+        var val = !(res.value instanceof Promise) ? Promise.resolve(res.value) : res.value
         val.then(function(value){
           i++
           resolve(value)
@@ -181,6 +215,26 @@
           }
         })
       }
+    })
+  };
+  // ES6
+  Promise.any = function (iterable) {
+    return new Promise((resolve, reject) => {
+      const promiseList = [...iterable]
+      const len = promiseList.length
+      let i = 0
+      promiseList.forEach(val => {
+        val = !(val instanceof Promise) ? Promise.resolve(val) : val
+        val.then(value => {
+          i++
+          resolve(value)
+        }, reason => {
+          i++ 
+          if(i >= len){
+            reject(reason)
+          }
+        })
+      })
     })
   };
   [
@@ -216,10 +270,7 @@
       while (true){
         res = iteratee.next()
         if(res.done) break
-        var val = res.value
-        if(!(val instanceof Promise)){
-          val = Promise.resolve(val)
-        }
+        var val = !(res.value instanceof Promise) ? Promise.resolve(res.value) : res.value
         val.then(function(value){
           if(done) return
           done = true
@@ -230,6 +281,24 @@
           reject(reason)
         })
       }
+    })
+  };
+  Promise.race = function (iterable) {
+    return new Promise(function(resolve, reject){
+      const promiseList = [...iterable]
+      let done = false
+      promiseList.forEach(val => {
+        val = !(val instanceof Promise) ? Promise.resolve(val) : val
+        val.then(value => {
+          if(done) return
+          done = true
+          resolve(value)
+        }, reason => {
+          if(done) return
+          done = true
+          reject(reason)
+        })
+      })
     })
   };
   [
@@ -246,7 +315,7 @@
       console.log('in catch ' + r)
     })
   })
-});  
+});
 
 (() => {
   /**
@@ -257,7 +326,7 @@
    * @returns promise
    */
   Promise.allSettled = function (iterable) {
-    return new Promise(function(resolve, reject){
+    return new Promise(function(resolve){
       var iteratee = iterable[Symbol.iterator]()
       var res = null
       var i = 0
@@ -271,10 +340,7 @@
         res = iteratee.next()
         if(res.done) break
         !(function(j){
-          var val = res.value
-          if(!(val instanceof Promise)){
-            val = Promise.resolve(val)
-          }
+          var val = !(res.value instanceof Promise) ? Promise.resolve(res.value) : res.value
           val.then(function(value){
             result[j] = {
               value: value,
@@ -293,6 +359,31 @@
       }
     })
   };
+  Promise.allSettled = function (iterable) {
+    return new Promise(resolve => {
+      const promiseList = [...iterable]
+      const result = []
+      const len = promiseList.length
+      let j = 0
+      var allSettled = () => len <= ++j && resolve(result)
+      promiseList.forEach((val, i) => {
+        var val = !(val instanceof Promise) ? Promise.resolve(val) : val
+        val.then(value => {
+          result[i] = {
+            value: value,
+            status: 'fulfilled'
+          }
+          allSettled()
+        }, reason => {
+          result[i] = {
+            reason: reason,
+            status: 'rejected'
+          }
+          allSettled()
+        })
+      })
+    })
+  };
   [
     new Map([[Promise.resolve(1), Promise.resolve(2)]]),
     new Set([Promise.resolve(1), Promise.resolve(2)]), 
@@ -307,4 +398,4 @@
       console.log('in catch ' + r)
     })
   })
-})();
+});
