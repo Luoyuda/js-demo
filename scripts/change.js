@@ -28,7 +28,6 @@ if(change && change != 'scripts/change.js'){
       console.log(chalk.red(`==== 执行 jest ${path} ====`))
       exec(`jest ${path}`)
     } catch (error) {
-      console.log(error)
       console.log(chalk.red(`==== 执行 node ${change} ====`))
       exec(`node ${change}`)
     }
