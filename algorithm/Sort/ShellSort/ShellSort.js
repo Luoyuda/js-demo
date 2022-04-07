@@ -5,6 +5,7 @@
  * @LastEditTime: 2021-04-29 14:43:49
  * @FilePath: /js-demo/algorithm/Sort/ShellSort.js
  */
+let arr = [6,10,13,5,8,3,2,11,-1,-1,-100]
 /**
  * 希尔排序:本质上是对插入排序的一种优化，它利用了插入排序的简单，
  * 又克服了插入排序每次只交换相邻两个元素的缺点。它的基本思想是：
@@ -19,23 +20,39 @@
  * @param {[Number]} arr 待排序数组
  */
 var ShellSort = arr => {
-    let maxGap = 1
-    let n = arr.length
-    while (maxGap <= n / 3){
-        maxGap = maxGap * 3 + 1
+  let n = arr.length
+  for (let gap = n >> 1; gap > 0; gap >>= 1) {
+    for (let i = gap; i < n; i++) {
+      let x = arr[i]
+      let j = i - gap
+      while (j >= 0 && x < arr[j]){
+        arr[j + gap] = arr[j]
+        j -= gap
+      }
+      arr[j + gap] = x
     }
-    for (let gap = maxGap; gap > 0; gap = (gap - 1) / 3) {
-        for (let i = gap; i < n; i++) {
-            let curr = arr[i]
-            let preIndex = i - gap
-            while (preIndex >= 0 && curr < arr[preIndex]){
-                arr[preIndex + gap] = arr[preIndex]
-                preIndex -= gap
-            }
-            arr[preIndex + gap] = curr
-        }
-    }
-    return arr
+  }
+  return arr
 }
-let arr = [6,10,13,5,8,3,2,11,-1,-1,-100]
-console.log(ShellSort(arr))
+console.log(ShellSort([...arr]))
+
+var ShellSort = arr => {
+  let n = arr.length
+  let maxGap = 1;
+  while (maxGap <= n / 3) {
+      maxGap = maxGap * 3 + 1;
+  }
+  for (let gap = maxGap; gap > 0; gap = (gap - 1) / 3) {
+    for (let i = gap; i < n; i++) {
+      let x = arr[i]
+      let j = i - gap
+      while (j >= 0 && x < arr[j]){
+        arr[j + gap] = arr[j]
+        j -= gap
+      }
+      arr[j + gap] = x
+    }
+  }
+  return arr
+}
+console.log(ShellSort([...arr]))
