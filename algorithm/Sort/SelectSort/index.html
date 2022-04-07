@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>sort show</title>
+  <style>
+    .app {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      margin: 120px 10px;
+    }
+    .box{
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      margin-top: 10px;
+      position: relative;
+      width: 100%;
+    }
+    .line{
+      background-color: rgb(173, 216, 230);
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      transition: all 0.2s;
+      margin: 0 10px;
+    }
+    .handle{
+      background-color: rgb(0, 128, 0);
+    }
+    .complete{
+      background-color: rgb(255, 165, 0);
+    }
+    .focus{
+      background-color: rgb(255, 0, 0);
+    }
+  </style>
+</head>
+<body>
+  <script>
+    window.onload = function(){
+      class SortAnimation {
+        static id = 0
+        constructor({ list=[], wait=1000, speed=5, el='app' }){
+          this.move = this.move.bind(this)
+          this.moveY = this.moveY.bind(this)
+          this.handled = this.handled.bind(this)
+          this.unhandled = this.unhandled.bind(this)
+          this.completed = this.completed.bind(this)
+          this.focused = this.focused.bind(this)
+          this.key = ++SortAnimation.id
+          this.el = document.createElement('div')
+          this.el.className = 'app'
+          document.body.appendChild(this.el)
+          this.cbs = []
+          this.i = 0
+          this.wait = wait
+          this.speed = speed
+          this.list = [...list]
+          this.done = false
+          this.resetting = false
+          this.createControls()
+          this.createLines()
+          setTimeout(() => {
+            this.run()
+          }, 100)
+        }
+        createLine(line, i){
+          const width = 40
+          let el = document.createElement('span')
+          el.id = `${this.key}-${line}`
+          el.className = 'line'
+          el.style.height = (line * 2) + 'px'
+          el.style.width = (width) + 'px'
+          el.innerHTML = line
+          return el
+        }
+        createSpeedControl(){
+          const input = document.createElement('input')
+          input.type = 'range'
+          input.setAttribute('value', this.speed)
+          input.setAttribute('min', 1)
+          input.setAttribute('max', 5)
+          input.setAttribute('step', 1)
+          input.addEventListener('change', e => {
+            this.speed = e.target.value
+          })
+          return input
+        }
+        createRunControl(){
+          const button = document.createElement('button')
+          this.button = button
+          this.button.innerHTML = 'run'
+          button.addEventListener('click', () => this.toggle())
+          return button
+        }
+        createResetControl(){
+          const button = document.createElement('button')
+          button.innerHTML = 'reset'
+          button.addEventListener('click', () => this.reset())
+          return button
+        }
+        createBoard(){
+          const span = document.createElement('span')
+          this.board = span
+          return span
+        }
+        createLines(){
+          let box = document.createElement('div')
+          box.className = 'box'
+          this.boxEl = box
+          box.appendChild(this.list.reduce((fragment, line, i) => {
+            fragment.append(this.createLine(line, i))
+            return fragment
+          }, document.createDocumentFragment()))
+          this.el.appendChild(box)
+          return this
+        }
+        createControls(){
+          let box = document.createElement('div')
+          box.className = 'control'
+          box.appendChild(this.createSpeedControl())
+          box.appendChild(this.createRunControl())
+          box.appendChild(this.createResetControl())
+          box.appendChild(this.createBoard())
+          this.el.appendChild(box)
+          return this
+        }
+        getEl(el){
+          return typeof el === 'string' || typeof el === 'number' ? document.getElementById(`${this.key}-${el}`) : el
+        }
+        handled(el){
+          this.getEl(el).className = 'line handle'
+        }
+        unhandled(el){
+          this.getEl(el).className = 'line'
+        }
+        completed(el){
+          this.getEl(el).className = 'line complete'
+        }
+        focused(el){
+          this.getEl(el).className = 'line focus'
+        }
+        move(line1, line2){
+          let el1 = this.getEl(line1)
+          let el2 = this.getEl(line2)
+          let [x1] = this.getRect(el1)
+          let [x2] = this.getRect(el2)
+          let diff = Math.abs(x1 - x2)
+          let [translateX1, translateY1] = this.getTranslate(el1)
+          let [translateX2, translateY2] = this.getTranslate(el2)
+          let dir1 = x1 > x2 ? -1 : 1
+          let dir2 = dir1 * -1
+          setTranslateX(el1, dir1, diff, translateX1, translateY1)
+          setTranslateX(el2, dir2, diff, translateX2, translateY2)
+
+          function setTranslateX(el, dir, diff, translateX, translateY) {
+            el.style.transform = `translate(${dir * diff + translateX}px, ${translateY}px)`
+          }
+          function getX(el){
+            return el.getBoundingClientRect().x || 0
+          }
+        }
+        getRect(el){
+          const rect = el.getBoundingClientRect()
+          return [rect.x || 0, rect.y || 0]
+        }
+        getTranslate(el){
+          let style = getComputedStyle(el)
+          if(style['transform'] === 'none') return [0, 0]
+          let split = style['transform'].split(',')
+          return [parseInt(split[split.length - 2] || 0), parseInt(split[split.length - 1] || 0)]
+        }
+        moveY(line){
+          let el = this.getEl(line)
+          let [x, y] = this.getRect(el)
+          let [translateX, translateY] = this.getTranslate(el)
+          setTranslateX(translateX, translateY > 0 ? 0 : 120)
+
+          function setTranslateX(translateX, translateY) {
+            el.style.transform = `translate(${translateX}px, ${translateY}px)`
+          }
+        }
+        asyncCb(args, cb){
+          this.cbs.push(() => {
+            cb(...args)
+          })
+          return this
+        }
+        asyncMove(x, y){
+          return this.asyncCb([x, y], this.move)
+        }
+        asyncMoveY(x){
+          return this.asyncCb([x], this.moveY)
+        }
+        asyncHandle(x){
+          return this.asyncCb([x], this.handled)
+        }
+        asyncUnHandle(x){
+          return this.asyncCb([x], this.unhandled)
+        }
+        asyncCompleted(x){
+          if(this.getEl(x).className.indexOf('completed') !== -1) return this
+          return this.asyncCb([x], this.completed)
+        }
+        asyncFocused(x){
+          if(this.getEl(x).className.indexOf('focus') !== -1) return this
+          return this.asyncCb([x], this.focused)
+        }
+        _run() {
+          if(!this.done) return
+          if(this.i >= this.cbs.length){
+            this.stop()
+            return
+          }
+          this.createAsync(this.cbs[this.i++]).then(() => this._run())
+        }
+        reset(){
+          this.stop()
+          this.resetting = true
+          setTimeout(() => {
+            this.el.removeChild(this.boxEl)
+          })
+          setTimeout(() => {
+            this.i = 0
+            this.createLines();
+            setTimeout(() => {
+              [...this.boxEl.children].forEach(this.unhandled)
+              this.resetting = false
+              this.run()
+            });
+          }, 500)
+        }
+        toggle(){
+          if(this.done) return this.stop()
+          return this.run()
+        }
+        stop(){
+          this.done = false
+          this.button.innerHTML = 'run'
+          return this
+        }
+        run(){
+          this.done = true
+          this.button.innerHTML = 'stop'
+          this._run()
+          return this
+        }
+        createAsync(cb){
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              if(this.resetting) return reject()
+              cb()
+              resolve()
+            }, this.wait / this.speed)
+          })
+        }
+      }
+      let Target = null
+      var swap = (arr, i, j) => {
+        Target.asyncMove(arr[i], arr[j])
+        let temp = arr[i]
+        arr[i] = arr[j]
+        arr[j] = temp
+      }
+      const tests = [18, 35, 50, 31, 30, 28, 9, 34, 26]
+
+      var SelectSort = (arr) => {
+        const sortAnimation = Target = new SortAnimation({ list: arr })
+        let n = arr.length
+        let min
+        for (let i = 0; i < n - 1; i++) {
+          min = i
+          sortAnimation.asyncFocused(arr[min])
+          for (let j = i + 1; j < n; j++) {
+            let x = arr[j]
+            sortAnimation.asyncHandle(x)
+            if(x < arr[min]) {
+              sortAnimation.asyncUnHandle(arr[min])
+              min = j
+              sortAnimation.asyncFocused(arr[min])
+            }else{
+              sortAnimation.asyncUnHandle(x)
+            }
+          }
+          swap(arr, i, min)
+          sortAnimation.asyncCompleted(arr[i])
+        }
+        sortAnimation.asyncCompleted(arr[n - 1])
+        return arr
+      }
+      SelectSort([...tests])
+
+      var SelectSort = (arr) => {
+        let n = arr.length
+        const sortAnimation = Target = new SortAnimation({ list: arr })
+        for (let i = 0; i < n >> 1; i++) {
+          let min = i
+          let max = i
+          sortAnimation.asyncFocused(arr[min])
+          for (let j = i + 1; j < n - i; j++) {
+            sortAnimation.asyncHandle(arr[j])
+            if(arr[j] < arr[min]) {
+              sortAnimation.asyncUnHandle(arr[min])
+              min = j
+            }
+            if(arr[j] > arr[max]) {
+              sortAnimation.asyncUnHandle(arr[max])
+              max = j
+            }
+            sortAnimation.asyncUnHandle(arr[j])
+            sortAnimation.asyncFocused(arr[min])
+            sortAnimation.asyncCompleted(arr[max])
+          }
+          if(arr[min] == arr[max]) {
+            sortAnimation.asyncCompleted(arr[min])
+            break
+          }
+          swap(arr, i, min)
+          sortAnimation.asyncCompleted(arr[i])
+          // 如果最大值的下标刚好是 i，
+          // 由于 arr[i] 和 arr[min] 已经交换了，所以这里要更新 max 的值。
+          if(i == max) max = min
+          swap(arr, max, n - i - 1)
+          sortAnimation.asyncCompleted(arr[n - i - 1])
+        }
+        for (let i = (n >> 1) - 1; i < n; i++) {
+          sortAnimation.asyncCompleted(arr[i])
+        }
+        return arr
+      }
+      SelectSort([...tests])
+    }
+  </script>
+</body>
+</html>
