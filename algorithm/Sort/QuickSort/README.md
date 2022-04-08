@@ -298,6 +298,35 @@ var shuffle = (arr) => {
 }
 ```
 
+### 再补一个三路快排
+
+```js
+// 3路快排 [l,...lt, .. i, ... gt, r]
+var QuickSort = (arr, l, r) => {
+  if(l >= r) return arr
+  let x = arr[l]
+  let lt = l
+  let gt = r + 1
+  let i = l + 1
+  while(i < gt){
+    if(arr[i] < x){
+      swap(arr, i, lt + 1)
+      lt++
+      i++
+    }else if(arr[i] > x){
+      swap(arr, i, gt - 1)
+      gt--
+    }else{
+      i++
+    }
+  }
+  swap(arr, lt, l)
+  QuickSort(arr, l, lt -1)
+  QuickSort(arr, gt, r)
+  return arr
+}
+```
+
 ## 算法复杂度
 
 平均时间复杂度 | 最好情况 | 最坏情况 | 空间复杂度 | 排序方式 | 稳定性

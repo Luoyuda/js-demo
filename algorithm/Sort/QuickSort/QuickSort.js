@@ -206,3 +206,29 @@ var shuffle = (arr) => {
 let arr = [6,10,13,5,8,3,2,11,-1,-1,-100]
 console.log(sortArray(arr))
 
+
+// 3路快排 [l,...lt, .. i, ... gt, r]
+
+var QuickSort = (arr, l, r) => {
+  if(l >= r) return arr
+  let x = arr[l]
+  let lt = l
+  let gt = r + 1
+  let i = l + 1
+  while(i < gt){
+    if(arr[i] < x){
+      swap(arr, i, lt + 1)
+      lt++
+      i++
+    }else if(arr[i] > x){
+      swap(arr, i, gt - 1)
+      gt--
+    }else{
+      i++
+    }
+  }
+  swap(arr, lt, l)
+  QuickSort(arr, l, lt -1)
+  QuickSort(arr, gt, r)
+  return arr
+}
