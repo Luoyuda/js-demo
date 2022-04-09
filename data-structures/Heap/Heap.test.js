@@ -5,27 +5,28 @@
  * @LastEditTime: 2020-07-09 18:37:25
  * @FilePath: /js-demo/data-structures/Heap/Heap.test.js
  */ 
-
 const { MinHeap, MaxHeap } = require('./Heap')
-const { expect } = require('chai')
-
-describe('Heap', () => {
-    it('MinHeap', () => {
-        const minHeap = new MinHeap([10,9,1,2,3,4,15,3])
-        expect(minHeap.heapPeek()).to.eql(1)
-        expect(minHeap.heapPop()).to.eql(1)
-        expect(minHeap.heapPeek()).to.eql(2)
-        expect(minHeap.heapPop()).to.eql(2)
-        expect(minHeap.heapPush(1).heapPeek()).to.eql(1)
-        expect(minHeap.heapPush(0).heapPeek()).to.eql(0)
-    })
-    it('MaxHeap', () => {
-        const minHeap = new MaxHeap([10,9,1,2,3,4,15,3])
-        expect(minHeap.heapPeek()).to.eql(15)
-        expect(minHeap.heapPop()).to.eql(15)
-        expect(minHeap.heapPeek()).to.eql(10)
-        expect(minHeap.heapPop()).to.eql(10)
-        expect(minHeap.heapPush(10).heapPeek()).to.eql(10)
-        expect(minHeap.heapPush(11).heapPeek()).to.eql(11)
-    })
+describe('Heap', function() {
+  test(`minHeap`, () => {
+    const test = [10,9,1,2,3,4,15,3]
+    const minHeap = new MinHeap(test.length)
+    test.forEach(el => minHeap.add(el))
+    expect(minHeap.peek()).toEqual(1)
+    expect(minHeap.pop()).toEqual(1)
+    expect(minHeap.peek()).toEqual(2)
+    expect(minHeap.pop()).toEqual(2)
+    expect(minHeap.add(1).peek()).toEqual(1)
+    expect(minHeap.add(0).peek()).toEqual(0)
+  });
+  test(`minHeap`, () => {
+    const test = [10,9,1,2,3,4,15,3]
+    const minHeap = new MaxHeap(test.length)
+    test.forEach(el => minHeap.add(el))
+    expect(minHeap.peek()).toEqual(15)
+    expect(minHeap.pop()).toEqual(15)
+    expect(minHeap.peek()).toEqual(10)
+    expect(minHeap.pop()).toEqual(10)
+    expect(minHeap.add(10).peek()).toEqual(10)
+    expect(minHeap.add(11).peek()).toEqual(11)
+  });
 })

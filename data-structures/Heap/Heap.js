@@ -5,126 +5,93 @@
  * @LastEditTime: 2021-04-30 14:56:43
  * @FilePath: /js-demo/data-structures/Heap/Heap.js
  */ 
+const helper = {
+  swap(arr, i, j){
+    let temp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = temp
+  },
+  parent(i){
+    return i >> 1
+  },
+  left(i){
+    return i * 2
+  },
+  right(i){
+    return i * 2 + 1
+  }
+}
 class Heap {
-    constructor(list, maxLength, type){
-        // this.heapList = [...list]
-        this.heapList = []
-        this.handle = this[type] || this.max
-        this.maxLength = maxLength
-        list.map(item => this.heapPush(item))
-        this.heapify()
+  constructor(size){
+    // 开辟数组空间 heap[0] 表示堆的个数
+    this.heap = new Array(size + 1);
+    this.heap[0] = 0
+  }
+  get size() { return this.heap[0] }
+  handle(i, j){
+    return this.heap[i] < this.heap[j]
+  }
+  // 添加元素
+  add(el){
+    if(this.size >= this.heap.length) return -1
+    // 往尾部插入元素后进行上浮操作
+    this.heap[0] += 1
+    this.heap[this.size] = el
+    this.up()
+    return this
+  }
+  // 弹出元素
+  pop(){
+    if(!this.size) return -1
+    // 弹出堆顶后将最后一个元素放置到堆顶，然后执行下沉操作
+    let el = this.peek()
+    helper.swap(this.heap, 1, this.size)
+    this.heap[this.size] = undefined
+    this.heap[0] -= 1
+    this.down()
+    return el
+  }
+  // 上浮
+  up(){
+    let i = this.size
+    let j = helper.parent(i)
+    while (this.handle(i, j) && i > 1){
+      helper.swap(this.heap, i, j)
+      i = j
+      j = helper.parent(i)
     }
-    getLeftChildIndex(parentIndex){
-        return (parentIndex * 2) + 1
+  }
+  // 下沉
+  down(){
+    let i = 1
+    while(i < this.size && i <= this.size / 2){
+      let l = helper.left(i)
+      let r = helper.right(i)
+      if(this.handle(r, i) || this.handle(l, i)){
+        let j = this.handle(r, l) ? r : l
+        helper.swap(this.heap, i, j)
+        i = j
+      }else{
+        break
+      }
     }
-    getRightChildIndex(parentIndex){
-        return (parentIndex * 2) + 2
-    }
-    getParentIndex(childIndex){
-        return Math.floor((childIndex - 1) / 2)
-    }
-    hasParent(childIndex){
-        return this.getParentIndex(childIndex) >= 0
-    }
-    hasLeftChild(childIndex){
-        return this.getLeftChildIndex(childIndex) < this.heapList.length
-    }
-    hasRightChild(childIndex){
-        return this.getRightChildIndex(childIndex) < this.heapList.length
-    }
-    leftChild(parentIndex){
-        return this.heapList[this.getLeftChildIndex(parentIndex)]
-    }
-    rightChild(parentIndex){
-        return this.heapList[this.getRightChildIndex(parentIndex)]
-    }
-    parent(childIndex){
-        return this.heapList[this.getParentIndex(childIndex)]
-    }
-    max(a, b){
-        return a >= b
-    }
-    min(a, b){
-        return a < b
-    }
-    // 堆上浮操作
-    heapUp(childIndex = this.heapList.length - 1){
-        let temp = this.heapList[childIndex]
-        let parentIndex = this.getParentIndex(childIndex)
-        while (childIndex >= 0 && this.handle(temp, this.heapList[parentIndex])){
-            this.heapList[childIndex] = this.heapList[parentIndex]
-            childIndex = parentIndex
-            parentIndex = this.getParentIndex(parentIndex)
-        }
-        this.heapList[childIndex] = temp
-        return this;
-    }
-    // 堆下沉操作
-    heapDown(parentIndex = 0){
-        let childIndex = this.getLeftChildIndex(parentIndex)
-        let temp = this.heapList[parentIndex]
-        while (childIndex < this.heapList.length){
-            if(this.hasRightChild(parentIndex) && this.handle(this.rightChild(parentIndex), this.leftChild(parentIndex))){
-                childIndex ++ 
-            }
-            if(this.handle(temp, this.heapList[childIndex])) break
-            this.heapList[parentIndex] = this.heapList[childIndex]
-            parentIndex = childIndex
-            childIndex = this.getLeftChildIndex(parentIndex)
-        }
-        this.heapList[parentIndex] = temp
-        return this;
-    }
-    // 获取堆顶元素
-    heapPeek(){
-        return this.heapList[0]
-    }
-    // 删除堆顶节点
-    heapPop(){
-        if(this.heapList.length === 0) return null
-        if(this.heapList.length === 1) return this.heapList.pop()
-        const temp = this.heapList[0]
-        this.heapList[0] = this.heapList.pop()
-        this.heapDown()
-        return temp
-    }
-    heapPush(item) {
-        if(this.maxLength != undefined){
-            if(this.heapList.length >= this.maxLength){
-                if(this.handle(this.heapPeek(), item)){
-                    this.heapPop()
-                    this.heapList.push(item);
-                    this.heapUp();
-                }
-            }else{
-                this.heapList.push(item);
-                this.heapUp();
-            }
-        }else{
-            this.heapList.push(item);
-            this.heapUp();
-        }
-        return this;
-    }
-    heapify() {
-        for (let i = Math.floor((this.heapList.length-2)/2); i >= 0 ; i--){
-            this.heapDown(i)
-        }
-        return this;
-    }
+  }
+  // 获取堆顶元素
+  peek(){
+    return this.heap[1]
+  }
 }
-
-class MinHeap extends Heap {
-    constructor(list, max){
-        super(list, max, 'min')
-    }
-}
-
 class MaxHeap extends Heap {
-    constructor(list, max){
-        super(list, max, 'max')
-    }
+  handle(i, j){
+    return this.heap[i] > this.heap[j]
+  }
 }
+class MinHeap extends Heap {
+  handle(i, j){
+    return this.heap[i] < this.heap[j]
+  }
+}
+
 
 module.exports = {
     Heap,
