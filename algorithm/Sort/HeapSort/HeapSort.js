@@ -129,16 +129,7 @@
 //         return a < b
 //     }
 // }
-// var sortArray = function(arr){
-//     let n = arr.length
-//     let heap = new MinHeap(n)
-//     // let heap = new MaxHeap(n)
-//     heap.heapify(arr)
-//     for (let i = 0; i < n; i++) {
-//         arr[i] = heap.pop()
-//     }
-//     return arr
-// }
+
 // console.log(sortArray([5,2,3,1,0,-5]))
 const helper = {
   swap(arr, i, j){
@@ -226,22 +217,18 @@ class MinHeap extends Heap {
     return this.heap[i] < this.heap[j]
   }
 }
-
-var list = [3,5,1,6,2,7]
-var h = new MinHeap(list.length)
-list.forEach(item => {
-  h.add(item)
-})
-
-console.log(h.heap)
-console.log(h.pop())
-console.log(h.heap)
-console.log(h.pop())
-console.log(h.heap)
-console.log(h.pop())
-console.log(h.heap)
-console.log(h.pop())
-console.log(h.heap)
+var sortArray = function(arr){
+  let n = arr.length
+  let heap = new MinHeap(n)
+  for (let i = 0; i < n; i++) {
+    heap.add(arr[i])
+  }
+  for (let i = 0; i < n; i++) {
+    arr[i] = heap.pop()
+  }
+  return arr
+}
+console.log(sortArray([3,5,1,6,2,7]))
 
 /**
  * @param {number[]} arr
