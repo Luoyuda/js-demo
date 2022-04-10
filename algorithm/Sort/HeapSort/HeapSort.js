@@ -132,34 +132,36 @@
 
 // console.log(sortArray([5,2,3,1,0,-5]))
 const helper = {
-  swap(arr, i, j){
+  swap(arr, i, j) {
     let temp = arr[i]
     arr[i] = arr[j]
     arr[j] = temp
   },
-  parent(i){
+  parent(i) {
     return i >> 1
   },
-  left(i){
+  left(i) {
     return i * 2
   },
-  right(i){
+  right(i) {
     return i * 2 + 1
-  }
+  },
 }
 class Heap {
-  constructor(size){
+  constructor(size) {
     // 开辟数组空间 heap[0] 表示堆的个数
-    this.heap = new Array(size + 1);
+    this.heap = new Array(size + 1)
     this.heap[0] = 0
   }
-  get size() { return this.heap[0] }
-  handle(i, j){
+  get size() {
+    return this.heap[0]
+  }
+  handle(i, j) {
     return this.heap[i] < this.heap[j]
   }
   // 添加元素
-  add(el){
-    if(this.size >= this.heap.length) return -1
+  add(el) {
+    if (this.size >= this.heap.length) return -1
     // 往尾部插入元素后进行上浮操作
     this.heap[0] += 1
     this.heap[this.size] = el
@@ -167,8 +169,8 @@ class Heap {
     return el
   }
   // 弹出元素
-  pop(){
-    if(!this.size) return -1
+  pop() {
+    if (!this.size) return -1
     // 弹出堆顶后将最后一个元素放置到堆顶，然后执行下沉操作
     let el = this.peek()
     helper.swap(this.heap, 1, this.size)
@@ -178,46 +180,46 @@ class Heap {
     return el
   }
   // 上浮
-  up(){
+  up() {
     let i = this.size
     let j = helper.parent(i)
-    while (this.handle(i, j) && i > 1){
+    while (this.handle(i, j) && i > 1) {
       helper.swap(this.heap, i, j)
       i = j
       j = helper.parent(i)
     }
   }
   // 下沉
-  down(){
+  down() {
     let i = 1
-    while(i < this.size && i <= this.size / 2){
+    while (i < this.size && i <= this.size / 2) {
       let l = helper.left(i)
       let r = helper.right(i)
-      if(this.handle(r, i) || this.handle(l, i)){
+      if (this.handle(r, i) || this.handle(l, i)) {
         let j = this.handle(r, l) ? r : l
         helper.swap(this.heap, i, j)
         i = j
-      }else{
+      } else {
         break
       }
     }
   }
   // 获取堆顶元素
-  peek(){
+  peek() {
     return this.heap[1]
   }
 }
 class MaxHeap extends Heap {
-  handle(i, j){
+  handle(i, j) {
     return this.heap[i] > this.heap[j]
   }
 }
 class MinHeap extends Heap {
-  handle(i, j){
+  handle(i, j) {
     return this.heap[i] < this.heap[j]
   }
 }
-var sortArray = function(arr){
+var sortArray = function (arr) {
   let n = arr.length
   let heap = new MinHeap(n)
   for (let i = 0; i < n; i++) {
@@ -228,21 +230,21 @@ var sortArray = function(arr){
   }
   return arr
 }
-console.log(sortArray([3,5,1,6,2,7]))
+console.log(sortArray([3, 5, 1, 6, 2, 7]))
 
 /**
  * @param {number[]} arr
  * @param {number} k
  * @return {number[]}
  */
-var getLeastNumbers = function(arr, k) {
+var getLeastNumbers = function (arr, k) {
   let n = arr.length
   let heap = new MaxHeap(k)
   for (let i = 0; i < k; i++) {
     heap.add(arr[i])
   }
   for (let i = k; i < n; i++) {
-    if(heap.peek() > arr[i]){
+    if (heap.peek() > arr[i]) {
       heap.pop()
       heap.add(arr[i])
     }
@@ -252,6 +254,6 @@ var getLeastNumbers = function(arr, k) {
     res[i] = heap.pop()
   }
   return res
-};
+}
 
-getLeastNumbers([3,2,1], 2)
+getLeastNumbers([3, 2, 1], 2)
