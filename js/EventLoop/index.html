@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    let logs = []
+    let log = (v) => logs.push(v)
+    requestAnimationFrame(() => log('raf'))
+    setTimeout(() => {
+      log('timer - 1')
+      new Promise((resolve) => {
+        log('sync - 1')
+        resolve()
+      }).then(() => {
+        log('then - 1')
+      })
+    })
+    new Promise((resolve) => {
+      log('sync - 2')
+      setTimeout(() => {
+        log('timer - 2')
+        new Promise((resolve) => {
+          log('sync - 3')
+          resolve()
+        }).then(() => {
+          log('then - 3')
+        })
+      })
+      resolve()
+    }).then(() => {
+      log('then - 2')
+    })
+    console.log(logs)
+  </script>
+</html>
