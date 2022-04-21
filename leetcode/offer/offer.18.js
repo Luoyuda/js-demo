@@ -32,25 +32,23 @@
         题目保证链表中节点的值互不相同
         若使用 C 或 C++ 语言，你不需要 free 或 delete 被删除的节点
  */
-var deleteNode = function(head, val) {
-    let p = new ListNode(null, head)
-    let curr = p.next
-    let pre = p
-    while(curr){
-        if(curr.val == val){
-            pre.next = curr.next
-            curr = pre.next
-            break
-        }else{
-            pre = curr
-            curr = curr.next
-        }
+var deleteNode = function (head, val) {
+  const dummy = new ListNode(-1)
+  dummy.next = head
+  let cur = dummy.next
+  let prev = dummy
+  while (cur) {
+    if (cur.val === val) {
+      prev.next = cur.next
     }
-    return p.next
-};
+    prev = cur
+    cur = cur.next
+  }
+  return dummy.next
+}
 function ListNode(val, next) {
-    this.val = (val===undefined ? 0 : val)
-    this.next = (next===undefined ? null : next)
+  this.val = val === undefined ? 0 : val
+  this.next = next === undefined ? null : next
 }
 let l1 = new ListNode(1)
 l1.next = new ListNode(2)
@@ -60,12 +58,12 @@ l1.next.next.next.next = new ListNode(5)
 l1.next.next.next.next.next = new ListNode(6)
 l1.next.next.next.next.next.next = new ListNode(6)
 let L1 = l1
-while(L1){
-    console.log(L1.val)
-    L1 = L1.next
+while (L1) {
+  console.log(L1.val)
+  L1 = L1.next
 }
 let l3 = deleteNode(l1, 6)
-while(l3){
-    console.log(l3.val)
-    l3 = l3.next
+while (l3) {
+  console.log(l3.val)
+  l3 = l3.next
 }

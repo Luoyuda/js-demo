@@ -25,25 +25,21 @@
  * @param {string} b
  * @return {string}
  */
-var addBinary = function(a, b) {
-    let carry = 0
-    let i = a.length - 1
-    let j = b.length - 1
-    let res = ''
-    while (i >= 0 || j >= 0) {
-        let c = i >= 0 ? Number(a[i]) : 0
-        let d = j >= 0 ? Number(b[j]) : 0
-        let sum = c + d + carry
-        carry = Math.floor(sum / 2)
-        sum %= 2
-        // console.log(c, d, carry, sum)
-        res = String(sum) + res
-        i--
-        j--
-    }
-    if(carry) res = '1' + res
-    return res
-};
+var addBinary = function (a, b) {
+  let carry = 0
+  let i = a.length - 1
+  let j = b.length - 1
+  let res = ''
+  while (i >= 0 || j >= 0 || carry) {
+    let sum = carry
+    if (i >= 0) sum += a[i--] - 0
+    if (j >= 0) sum += b[j--] - 0
+    carry = Math.floor(sum / 2)
+    sum %= 2
+    res = `${sum}${res}`
+  }
+  return res
+}
 
 console.log(addBinary('11', '1'))
 console.log(addBinary('1010', '1011'))

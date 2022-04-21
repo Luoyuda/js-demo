@@ -26,48 +26,42 @@
         输入：(7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4)
         输出：7 -> 8 -> 0 -> 7
  */
-var addTwoNumbers = function(l1, l2) {
-    let stack1 = []
-    let stack2 = []
-    let curr1 = l1
-    while(curr1){
-        stack1.push(curr1)
-        curr1 = curr1.next
+var addTwoNumbers = function (l1, l2) {
+  const s1 = getList(l1)
+  const s2 = getList(l2)
+  let head = null
+  let carry = 0
+  while (s1.length || s2.length || carry != 0) {
+    const n1 = s1.length ? s1.pop().val : 0
+    const n2 = s2.length ? s2.pop().val : 0
+    let sum = n1 + n2 + carry
+    carry = Math.floor(sum / 10)
+    sum %= 10
+    const cur = new ListNode(sum, head)
+    head = cur
+  }
+  return head
+  function getList(head) {
+    const list = []
+    while (head) {
+      list.push(head)
+      head = head.next
     }
-    let curr2 = l2
-    while(curr2){
-        stack2.push(curr2)
-        curr2 = curr2.next
-    }
-    // console.log(stack1, stack2)
-    let carry = 0
-    let head = null
-    while(stack1.length || stack2.length || carry != 0){
-        let val1 = stack1.length ? stack1.pop().val : 0
-        let val2 = stack2.length ? stack2.pop().val : 0
-        let sum = (val1 + val2 + carry)
-        carry = parseInt(sum / 10)
-        sum %= 10
-        let curr = new ListNode(sum)
-        curr.next = head
-        head = curr
-        // console.log(sum, val1, val2)
-    }
-    return head
-};
-
+    return list
+  }
+}
 function ListNode(val, next) {
-    this.val = (val===undefined ? 0 : val)
-    this.next = (next===undefined ? null : next)
+  this.val = val === undefined ? 0 : val
+  this.next = next === undefined ? null : next
 }
 var printList = (head) => {
-    let curr = head;
-    let res = []
-    while (curr){
-        res.push(curr.val)
-        curr = curr.next
-    }
-    console.log(res.join('>'))
+  let curr = head
+  let res = []
+  while (curr) {
+    res.push(curr.val)
+    curr = curr.next
+  }
+  console.log(res.join('>'))
 }
 let root1 = new ListNode(7, new ListNode(2, new ListNode(4, new ListNode(3))))
 let root2 = new ListNode(5, new ListNode(6, new ListNode(4)))

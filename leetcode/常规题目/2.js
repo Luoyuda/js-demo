@@ -4,7 +4,7 @@
  * @LastEditors: xiaohuolong
  * @LastEditTime: 2021-02-24 14:35:26
  * @FilePath: /js-demo/leetcode/2.js
- */ 
+ */
 /**
     2. 两数相加
         给你两个 非空 的链表，表示两个非负的整数。
@@ -27,54 +27,34 @@
         题目数据保证列表表示的数字不含前导零
  */
 function ListNode(val) {
-    this.val = val;
-    this.next = null;
+  this.val = val
+  this.next = null
 }
 /**
  * @param {ListNode} l1
  * @param {ListNode} l2
  * @return {ListNode}
  */
-var addTwoNumbers = function(l1, l2) {
-    let curr_l1 = l1
-    let curr_l2 = l2
-    let head = new ListNode('head')
-    let curr = head
-    let temp = 0
-    while (curr_l1 || curr_l2){
-        let val1 = curr_l1 ? curr_l1.val : 0
-        let val2 = curr_l2 ? curr_l2.val : 0
-        let sum = val1 + val2 + temp
-        temp = parseInt(sum / 10)
-        let node = new ListNode(sum % 10)
-        curr.next = node
-        curr = node
-        curr_l1 = curr_l1 && curr_l1.next
-        curr_l2 = curr_l2 && curr_l2.next
+var addTwoNumbers = function (l1, l2) {
+  let head = new ListNode(-1)
+  let cur = head
+  let carry = 0
+  while (l1 || l2 || carry) {
+    let sum = carry
+    if (l1) {
+      sum += l1.val
+      l1 = l1.next
     }
-    if(temp){
-        let node = new ListNode(temp)
-        curr.next = node
+    if (l2) {
+      sum += l2.val
+      l2 = l2.next
     }
-    return head.next
-};
-
-var addTwoNumbers = function(l1, l2){
-    let L1 = l1
-    let L2 = l2
-    let head = new ListNode(null)
-    let cut = 0
-    let curr = head
-    while(L1 || L2){
-        let sum = (L1 && L1.val || 0) + (L2 && L2.val || 0) + cut
-        cut = sum >= 10 ? 1 : 0
-        curr.next = new ListNode(sum % 10)
-        curr = curr.next
-        L1 = L1 && L1.next
-        L2 = L2 && L2.next
-    }
-    if(cut) curr.next = new ListNode(cut)
-    return head.next
+    carry = parseInt(sum / 10)
+    sum %= 10
+    cur.next = new ListNode(sum)
+    cur = cur.next
+  }
+  return head.next
 }
 
 let l1 = new ListNode(8)
@@ -84,7 +64,7 @@ let l2 = new ListNode(4)
 l2.next = new ListNode(6)
 l2.next.next = new ListNode(5)
 let l3 = addTwoNumbers(l1, l2)
-while(l3){
-    console.log(l3.val)
-    l3 = l3.next
+while (l3) {
+  console.log(l3.val)
+  l3 = l3.next
 }

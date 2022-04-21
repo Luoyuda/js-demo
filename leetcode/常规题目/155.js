@@ -31,58 +31,59 @@
     提示：
         pop、top 和 getMin 操作总是在 非空栈 上调用。
  */
-var MinStack = function() {
-    this.stack = []
-    this.minStack = []
-};
+var MinStack = function () {
+  this.min = []
+  this.stack = []
+}
 
-/** 
- * @param {number} x
+/**
+ * @param {number} val
  * @return {void}
  */
-MinStack.prototype.push = function(x) {
-    this.stack.push(x)
-    if(!this.minStack.length) {
-        this.minStack.push(x)
-    }else{
-        let min = this.minStack[this.minStack.length - 1]
-        if(x > min){
-            this.minStack.push(min)
-        }else{
-            this.minStack.push(x)
-        }
-    }
-};
+MinStack.prototype.push = function (val) {
+  const min = this.getMin()
+  this.min.push(val > min ? min : val)
+  this.stack.push(val)
+}
 
 /**
  * @return {void}
  */
-MinStack.prototype.pop = function() {
-    this.stack.pop()
-    this.minStack.pop()
-};
+MinStack.prototype.pop = function () {
+  this.min.pop()
+  this.stack.pop()
+}
 
 /**
  * @return {number}
  */
-MinStack.prototype.top = function() {
-    return this.stack[this.stack.length - 1]
-};
+MinStack.prototype.top = function () {
+  return this.stack[this.stack.length - 1]
+}
 
 /**
  * @return {number}
  */
-MinStack.prototype.getMin = function() {
-    return this.minStack[this.stack.length - 1]
-};
+MinStack.prototype.getMin = function () {
+  return this.min[this.min.length - 1]
+}
 
-let minStack = new MinStack();
-console.log(minStack.push(-2));
-console.log(minStack.push(0));
-console.log(minStack.push(-3));
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * var obj = new MinStack()
+ * obj.push(val)
+ * obj.pop()
+ * var param_3 = obj.top()
+ * var param_4 = obj.getMin()
+ */
+
+let minStack = new MinStack()
+console.log(minStack.push(-2))
+console.log(minStack.push(0))
+console.log(minStack.push(-3))
 console.log(minStack)
-console.log(minStack.getMin());  //  --> 返回 -3.
-console.log(minStack.pop());
-console.log(minStack.top());  //  --> 返回 0.
-console.log(minStack.getMin());  //  --> 返回 -2.
+console.log(minStack.getMin()) //  --> 返回 -3.
+console.log(minStack.pop())
+console.log(minStack.top()) //  --> 返回 0.
+console.log(minStack.getMin()) //  --> 返回 -2.
 console.log(minStack)

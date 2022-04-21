@@ -28,18 +28,18 @@
  * @param {number[]} nums
  * @return {boolean}
  */
-var find132pattern = function(nums) {
-    let s3 = -Infinity
-    let stack = []
-    for(let i = nums.length - 1; i >= 0; i--){
-        if(nums[i] < s3) return true
-        while(stack.length && nums[stack[stack.length - 1]] < nums[i]){
-            s3 = Math.max(s3, nums[stack.pop()])
-        }
-        stack.push(i)
+var find132pattern = function (nums) {
+  let s3 = Number.MIN_SAFE_INTEGER
+  let stack = []
+  for (let i = nums.length - 1; i >= 0; i--) {
+    if (nums[i] < s3) return true
+    while (stack.length && nums[stack[stack.length - 1]] < nums[i]) {
+      s3 = Math.max(s3, nums[stack.pop()])
     }
-    return false
-};
+    stack.push(i)
+  }
+  return false
+}
 console.log(find132pattern([-1, 3, 2, 0]))
 console.log(find132pattern([1, 2, 3, 4]))
 console.log(find132pattern([3, 1, 4, 2]))

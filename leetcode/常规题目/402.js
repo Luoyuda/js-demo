@@ -27,63 +27,28 @@
     输出: "0"
     解释: 从原数字移除所有的数字，剩余为空就是0。
  */
-var removeKdigits = function(num, k) {
-    let stack = []
-    for (let i = 0; i < num.length; i++) {
-        const d = num[i];
-        while (k && stack[stack.length - 1] > d){
-            stack.pop()
-            k--
-        }
-        stack.push(d)
+/**
+ * @param {string} num
+ * @param {number} k
+ * @return {string}
+ */
+var removeKdigits = function (num, k) {
+  const stack = []
+  for (const x of num) {
+    while (stack.length && stack[stack.length - 1] > x && k) {
+      k--
+      stack.pop()
     }
-    // console.log(stack)
-    let res = stack.slice(0, stack.length-k)
-    let j = 0
-    let prev = '0'
-    for (let i = 0; i < res.length; i++) {
-        if(res[i] == '0' && prev == '0'){
-            j++
-        }else{
-            break
-        }
-        prev = res[i]
-    }
-    // console.log(j, res)
-    return res.slice(j).join('')
-};
-var removeKdigits = function(num, k) {
-    let res = []
-    for (const c of num) {
-        while (res.length && res[res.length - 1] > c && k){
-            res.pop()
-            k--
-        }
-        res.push(c)
-    }
-    while (k--) res.pop()
-    let i = 0
-    while (i < res.length && res[i] == '0') i++
-    if(i == res.length) return '0'
-    return res.slice(i).join('')
-};
-var removeKdigits = function(num, k) {
-    let stack = []
-    let n = num.length
-    for(let x of num){
-        while(stack.length && stack[stack.length - 1] > x && k){
-            k--
-            stack.pop()
-        }
-        stack.push(x)
-    }
-    while(k--)stack.pop()
-    let i = 0
-    n = stack.length
-    while(i < n && stack[i] == '0') i++
-    if(i == n)return '0'
-    return stack.slice(i).join('')
-};
+    stack.push(x)
+  }
+  while (k--) {
+    stack.pop()
+  }
+  let i = 0
+  while (i < stack.length && stack[i] === '0') i++
+  if (i >= stack.length) return '0'
+  return stack.slice(i).join('')
+}
 
-console.log(removeKdigits('1000001112', 1)) 
-console.log(removeKdigits('1432219', 3)) 
+console.log(removeKdigits('1000001112', 1))
+console.log(removeKdigits('1432219', 3))

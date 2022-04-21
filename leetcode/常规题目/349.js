@@ -6,9 +6,6 @@
  * @FilePath: /js-demo/leetcode/常规题目/349.js
  */
 /**
- * @param {number[]} nums1
- * @param {number[]} nums2
- * @return {number[]}
 349. 两个数组的交集
     给定两个数组，编写一个函数来计算它们的交集。
 示例 1：
@@ -21,25 +18,31 @@
     输出结果中的每个元素一定是唯一的。
     我们可以不考虑输出结果的顺序。
  */
-var intersection = function(nums1, nums2) {
-    nums1.sort((x, y) => x - y);
-    nums2.sort((x, y) => x - y);
-    let i = 0
-    let j = 0
-    let res = []
-    while(i < nums1.length && j < nums2.length){
-        if(nums1[i] == nums2[j]){
-            if(nums1[i] != res[res.length - 1]) res.push(nums1[i])
-            i++
-            j++
-        }else if(nums1[i] < nums2[j]){
-            i++
-        }else{
-            j++
-        }
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersection = function (nums1, nums2) {
+  nums1.sort((a, b) => a - b)
+  nums2.sort((a, b) => a - b)
+  let i = 0
+  let j = 0
+  let res = []
+  while (i < nums1.length && j < nums2.length) {
+    if (nums1[i] === nums2[j]) {
+      let x = nums1[i]
+      res.push(x)
+      while (nums1[i] === x) i++
+      while (nums2[j] === x) j++
+    } else if (nums1[i] < nums2[j]) {
+      i++
+    } else {
+      j++
     }
-    return res
-};
+  }
+  return res
+}
 
-console.log(intersection([1,2,2,1], [2,2]))
-console.log(intersection([4,9,5], [9,4,9,8,4]))
+console.log(intersection([1, 2, 2, 1], [2, 2]))
+console.log(intersection([4, 9, 5], [9, 4, 9, 8, 4]))

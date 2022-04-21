@@ -26,79 +26,84 @@
     输入：s = "abc3[cd]xyz"
     输出："abccdcdcdxyz"
  */
-var decodeString = function(s) {
-    let Str = ''
-    let stack = []
-    let add = 0
-    for (let i = 0; i < s.length; i++) {
-        const ch = s[i];
-        if(ch == '['){
-            stack.push(ch)
-            add = 0
-        }else if(ch == ']'){
-            let str = ''
-            let temp = ''
-            // console.log(stack)
-            while(stack[stack.length - 1] != '['){
-                temp += stack.pop()
-            }
-            stack.pop()
-            let count = stack.pop()
-            // console.log(str, count)
-            if(!isNaN(Number(count))){
-                for (let i = 0; i < count; i++) {
-                    str += temp
-                }
-                // console.log(str, count)
-            }else{
-                str = count + str
-            }
-            // console.log(stack, str)
-            while(stack.length > 0 && stack[stack.length - 1] != '['){
-                str = stack.pop() + str
-            }
-            // console.log(stack, str)
-            stack.push(str)
-            add = 1
-        }else if(isNaN(Number(ch))){
-            stack.push(add == 1 ? stack.pop() + ch : '' + ch)
-            add = 1
-        }else{
-            stack.push(add == 2 ? stack.pop() + ch : '' + ch)
-            add = 2
+var decodeString = function (s) {
+  let Str = ''
+  let stack = []
+  let add = 0
+  for (let i = 0; i < s.length; i++) {
+    const ch = s[i]
+    if (ch == '[') {
+      stack.push(ch)
+      add = 0
+    } else if (ch == ']') {
+      let str = ''
+      let temp = ''
+      // console.log(stack)
+      while (stack[stack.length - 1] != '[') {
+        temp += stack.pop()
+      }
+      stack.pop()
+      let count = stack.pop()
+      // console.log(str, count)
+      if (!isNaN(Number(count))) {
+        for (let i = 0; i < count; i++) {
+          str += temp
         }
+        // console.log(str, count)
+      } else {
+        str = count + str
+      }
+      // console.log(stack, str)
+      while (stack.length > 0 && stack[stack.length - 1] != '[') {
+        str = stack.pop() + str
+      }
+      // console.log(stack, str)
+      stack.push(str)
+      add = 1
+    } else if (isNaN(Number(ch))) {
+      stack.push(add == 1 ? stack.pop() + ch : '' + ch)
+      add = 1
+    } else {
+      stack.push(add == 2 ? stack.pop() + ch : '' + ch)
+      add = 2
     }
-    return stack.reduce((prev, item) => prev + item,'')
-};
+  }
+  return stack.reduce((prev, item) => prev + item, '')
+}
 
-var decodeString = function(s) {
-    let res = ''
-    for (let i = 0; i < s.length;) {
-        if(isNaN(Number(s[i]))) res += s[i++]
-        else{
-            let k = 0
-            while (!isNaN(Number(s[i]))) k = k * 10 + (s[i++] - 0)
-            let j = i + 1
-            let sum = 1
-            while (sum > 0){
-                if(s[j] == '[') sum++
-                if(s[j] == ']') sum--
-                j++
-            }
-            let r = decodeString(s.substr(i + 1, j - i - 2))
-            while (k--) res += r
-            i = j
-        }
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var decodeString = function (s) {
+  let res = ''
+  for (let i = 0; i < s.length; ) {
+    if (isNaN(s[i])) {
+      res += s[i++]
+    } else {
+      let k = 0
+      while (!isNaN(s[i])) {
+        k = k * 10 + (s[i++] - 0)
+      }
+      let j = i + 1
+      let sum = 1
+      while (sum > 0) {
+        if (s[j] === '[') sum++
+        if (s[j] === ']') sum--
+        j++
+      }
+      const r = decodeString(s.substring(i + 1, j - 1))
+      while (k--) res += r
+      i = j
     }
-    return res
+  }
+  return res
 }
 
 console.log(decodeString('3[a2[c]]') == 'accaccacc')
 console.log(decodeString('abc3[cd]xyz') == 'abccdcdcdxyz')
 console.log(decodeString('2[abc]3[cd]ef') == 'abcabccdcdcdef')
 console.log(decodeString('3[a]2[bc]') == 'aaabcbc')
-console.log(decodeString("sd2[f2[e]g]i"))
+console.log(decodeString('sd2[f2[e]g]i'))
 
-console.log(decodeString("sd2[f2[e]g]i") == "sdfeegfeegi")
-
-
+console.log(decodeString('sd2[f2[e]g]i') == 'sdfeegfeegi')

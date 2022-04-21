@@ -24,43 +24,38 @@
     1 <= push_back,pop_front,max_value的总操作数 <= 10000
     1 <= value <= 10^5
  */
-var MaxQueue = function() {
-    this.queue = []
-    this.deque = []
-};
+var MaxQueue = function () {
+  this.q = []
+  this.d = []
+}
 
 /**
  * @return {number}
  */
-MaxQueue.prototype.max_value = function() {
-    return this.deque.length ? this.deque[0] : -1
-};
+MaxQueue.prototype.max_value = function () {
+  return this.d.length ? this.d[0] : -1
+}
 
-/** 
+/**
  * @param {number} value
  * @return {void}
  */
-MaxQueue.prototype.push_back = function(value) {
-    this.queue.push(value)
-    if(!this.deque.length) this.deque.push(value)
-    else{
-        while(this.deque.length && this.deque[this.deque.length - 1] < value){
-            this.deque.pop()
-        }
-        this.deque.push(value)
-    }
-};
+MaxQueue.prototype.push_back = function (value) {
+  this.q.push(value)
+  while (this.d.length && this.d[this.d.length - 1] < value) {
+    this.d.pop()
+  }
+  this.d.push(value)
+}
 
 /**
  * @return {number}
  */
-MaxQueue.prototype.pop_front = function() {
-    if(!this.queue.length) return -1
-    if(this.queue[0] == this.deque[0]){
-        this.deque.shift()
-    }
-    return this.queue.shift()
-};
+MaxQueue.prototype.pop_front = function () {
+  if (!this.q.length) return -1
+  if (this.q[0] === this.d[0]) this.d.shift()
+  return this.q.shift()
+}
 
 var obj = new MaxQueue()
 console.log(obj.max_value())

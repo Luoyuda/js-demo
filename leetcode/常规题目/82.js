@@ -31,58 +31,72 @@
         输入: 1->1->1->2->3
         输出: 2->3
  */
-var deleteDuplicates = function(head) {
-    if(!head) return null
-    let newHead = new ListNode()
-    let p1 = head
-    let p2 = newHead
-    while (p1){
-        let flag = false
-        while (p1.next && p1.val == p1.next.val){
-            p1 = p1.next
-            flag = true
-        }
-        // console.log(p1.val, flag)
-        if(flag){
-            // 重复，已经走到下一个数
-            p1 = p1.next
-        }else{
-            p2.next = new ListNode(p1.val)
-            p2 = p2.next
-            p1 = p1.next
-        }
+var deleteDuplicates = function (head) {
+  if (!head) return null
+  let newHead = new ListNode()
+  let p1 = head
+  let p2 = newHead
+  while (p1) {
+    let flag = false
+    while (p1.next && p1.val == p1.next.val) {
+      p1 = p1.next
+      flag = true
     }
-    return newHead.next
-};
-
-var deleteDuplicates = function(head) {
-    let dummy = new ListNode(-1, head)
-    let p = dummy
-    while(p.next){
-        let q = p.next
-        while(q && q.val == p.next.val){
-            q = q.next
-        }
-        if(q == p.next.next) p = p.next
-        else p.next = q
+    // console.log(p1.val, flag)
+    if (flag) {
+      // 重复，已经走到下一个数
+      p1 = p1.next
+    } else {
+      p2.next = new ListNode(p1.val)
+      p2 = p2.next
+      p1 = p1.next
     }
-    return dummy.next
-};
-
+  }
+  return newHead.next
+}
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var deleteDuplicates = function (head) {
+  const dummy = new ListNode(null, head)
+  let p = dummy
+  while (p.next) {
+    let q = p.next
+    while (q && q.val == p.next.val) {
+      q = q.next
+    }
+    if (q === p.next.next) p = p.next
+    else p.next = q
+  }
+  return dummy.next
+}
 function ListNode(val, next) {
-    this.val = (val===undefined ? 0 : val)
-    this.next = (next===undefined ? null : next)
+  this.val = val === undefined ? 0 : val
+  this.next = next === undefined ? null : next
 }
 var printList = (head) => {
-    let curr = head;
-    let res = []
-    while (curr){
-        res.push(curr.val)
-        curr = curr.next
-    }
-    console.log(res.join('>'))
+  let curr = head
+  let res = []
+  while (curr) {
+    res.push(curr.val)
+    curr = curr.next
+  }
+  console.log(res.join('>'))
 }
-let root1 = new ListNode(1, new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3, new ListNode(4, new ListNode(4, new ListNode(4))))))))
+let root1 = new ListNode(
+  1,
+  new ListNode(
+    1,
+    new ListNode(
+      2,
+      new ListNode(
+        3,
+        new ListNode(3, new ListNode(4, new ListNode(4, new ListNode(4))))
+      )
+    )
+  )
+)
 // printList(root1)
 let root = deleteDuplicates(root1)
 printList(root)

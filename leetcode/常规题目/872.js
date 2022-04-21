@@ -33,46 +33,51 @@
     给定的两棵树可能会有 1 到 200 个结点。
     给定的两棵树上的值介于 0 到 200 之间。
  */
-var leafSimilar = function(root1, root2) {
-    let list1 = []
-    let list2 = []
-    dfs(root1, list1)
-    dfs(root2, list2)
-    if(list1.length != list2.length) return false
-    for (let i = 0; i < list1.length; i++) {
-        if(list1[i] != list2[i]) return false
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * O(n + m) O(n + m)
+ * @param {TreeNode} root1
+ * @param {TreeNode} root2
+ * @return {boolean}
+ */
+var leafSimilar = function (root1, root2) {
+  const dfs = (root, result) => {
+    if (!root) return result
+    if (!root.left && !root.right) {
+      result.push(root.val)
     }
-    return true
-};
-var dfs = (root, list) => {
-    if(!root) return
-    if(!root.left && !root.right) return list.push(root.val)
-    dfs(root.left, list)
-    dfs(root.right, list)
+    dfs(root.left, result)
+    dfs(root.right, result)
+    return result
+  }
+  return dfs(root1, []).toString() === dfs(root2, []).toString()
 }
 
 function TreeNode(val, left, right) {
-    this.val = (val===undefined ? 0 : val)
-    this.left = (left===undefined ? null : left)
-    this.right = (right===undefined ? null : right)
+  this.val = val === undefined ? 0 : val
+  this.left = left === undefined ? null : left
+  this.right = right === undefined ? null : right
 }
 
-let root = new TreeNode(3, 
-    new TreeNode(9, 
-        // new TreeNode(0), 
-        // new TreeNode(1)
-    ), 
-    new TreeNode(20,
-        new TreeNode(15), 
-        new TreeNode(7)
-    ) 
+let root = new TreeNode(
+  3,
+  new TreeNode(
+    9
+    // new TreeNode(0),
+    // new TreeNode(1)
+  ),
+  new TreeNode(20, new TreeNode(15), new TreeNode(7))
 )
-let root2 = new TreeNode(3, 
-    new TreeNode(9, 
-    ), 
-    new TreeNode(22,
-        new TreeNode(11), 
-        new TreeNode(7)
-    ) 
+let root2 = new TreeNode(
+  3,
+  new TreeNode(9),
+  new TreeNode(22, new TreeNode(11), new TreeNode(7))
 )
 console.log(leafSimilar(root, root2))

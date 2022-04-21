@@ -18,26 +18,20 @@
  * @param {number[]} heights
  * @return {number}
  */
-var largestRectangleArea = function(heights) {
-    let n = heights.length
-    // 使得最后所有元素都出栈
-    heights.push(-1)
-    let stack = []
-    let max = 0
-    for(let i = 0; i <= n; i++){
-        // 如果当前元素高度小于栈顶元素
-        while(stack.length && heights[i] < heights[stack[stack.length - 1]]){
-            let cur = stack.pop()
-            console.log(cur, stack)
-            if(!stack.length){
-                max = Math.max(max, heights[cur] * i)
-            }else{
-                max = Math.max(max, heights[cur] * (i - stack[stack.length - 1] - 1))
-            }
-        }
-        stack.push(i)
+var largestRectangleArea = function (heights) {
+  heights.push(-1)
+  const n = heights.length
+  const stack = []
+  let max = 0
+  for (let i = 0; i < n; i++) {
+    while (stack.length && heights[stack[stack.length - 1]] > heights[i]) {
+      const cur = stack.pop()
+      const j = !stack.length ? 0 : stack[stack.length - 1] + 1
+      max = Math.max(max, heights[cur] * (i - j))
     }
-    return max
-};
+    stack.push(i)
+  }
+  return max
+}
 
-console.log(largestRectangleArea([2,1,5,2,5,6,2,2,3]))
+console.log(largestRectangleArea([2, 1, 5, 2, 5, 6, 2, 2, 3]))

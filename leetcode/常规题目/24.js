@@ -26,35 +26,35 @@
     进阶：你能在不修改链表节点值的情况下解决这个问题吗?（也就是说，仅修改节点本身。）
  */
 function ListNode(val, next) {
-    this.val = (val===undefined ? 0 : val)
-    this.next = (next===undefined ? null : next)
+  this.val = val === undefined ? 0 : val
+  this.next = next === undefined ? null : next
 }
-var swapPairs = function(head) {
-    let P = new ListNode(null, head)
-    let cur = P.next
-    let pre = P
-    while(cur){
-        if(cur.next){
-            let temp = cur.next.next
-            pre.next = cur.next
-            cur.next = temp
-            pre.next.next = cur
-            pre = cur
-            cur = temp
-        }else{
-            cur = cur.next
-            pre = cur
-        }
-    }
-    return P.next
-};
-var swapPairs = function(head) {
-    if(!head || !head.next) return head
-    let p = head.next
-    head.next = swapPairs(p.next)
-    p.next = head
-    return p
-};
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var swapPairs = function (head) {
+  const dummy = new ListNode(null, head)
+  let cur = dummy.next
+  let pre = dummy
+  while (cur && cur.next) {
+    let n = cur.next.next
+    pre.next = cur.next
+    cur.next = n
+    pre.next.next = cur
+    pre = cur
+    cur = n
+  }
+  return dummy.next
+}
+
+var swapPairs = function (head) {
+  if (!head || !head.next) return head
+  let p = head.next
+  head.next = swapPairs(p.next)
+  p.next = head
+  return p
+}
 let l1 = new ListNode(1)
 l1.next = new ListNode(2)
 l1.next.next = new ListNode(3)
@@ -62,7 +62,7 @@ l1.next.next.next = new ListNode(4)
 l1.next.next.next.next = new ListNode(5)
 
 let l3 = swapPairs(l1, 6)
-while(l3){
-    console.log(l3.val)
-    l3 = l3.next
+while (l3) {
+  console.log(l3.val)
+  l3 = l3.next
 }

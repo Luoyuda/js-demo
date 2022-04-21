@@ -22,30 +22,33 @@
 输出：[2,3,1]
  */
 function ListNode(val) {
-    this.val = val;
-    this.next = null;
+  this.val = val
+  this.next = null
 }
-var reversePrint = function(head) {
-    let res = []
-    let curr = head
-    while(curr){
-        res.push(curr)
-        curr = curr.next
-    }
-    let result = []
-    while(res.length){
-        result.push(res.pop().val)
-    }
-    return result
-};
-var reversePrint = function(head) {
-    if(!head) return []
-    let arr = reversePrint(head.next)
-    arr.push(head.val)
-    return arr
-};
+/**
+ * @param {ListNode} head
+ * @return {number[]}
+ */
+var reversePrint = function (head) {
+  const stack = []
+  while (head) {
+    stack.push(head.val)
+    head = head.next
+  }
+  return stack.reverse()
+}
 
+/**
+ * @param {ListNode} head
+ * @return {number[]}
+ */
+var reversePrint = function (head) {
+  if (!head) return []
+  const arr = reversePrint(head.next)
+  arr.push(head.val)
+  return arr
+}
 var root = new ListNode(1)
-root.next = new ListNode(2) 
-root.next.next = new ListNode(3) 
+root.next = new ListNode(2)
+root.next.next = new ListNode(3)
 console.log(reversePrint(root))

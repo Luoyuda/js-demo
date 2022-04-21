@@ -22,58 +22,50 @@
     提示：
         各函数的调用总次数不超过 20000 次
  */
-var MinStack = function() {
-    this.stack = []
-    this.minStack = []
-};
+var MinStack = function () {
+  this.minStack = []
+  this.stack = []
+}
 
-/** 
- * @param {number} x
+/**
+ * @param {number} val
  * @return {void}
  */
-MinStack.prototype.push = function(x) {
-    this.stack.push(x)
-    if(!this.minStack.length) {
-        this.minStack.push(x)
-    }else{
-        let min = this.minStack[this.minStack.length - 1]
-        if(x > min){
-            this.minStack.push(min)
-        }else{
-            this.minStack.push(x)
-        }
-    }
-};
+MinStack.prototype.push = function (val) {
+  const min = this.min()
+  this.minStack.push(val > min ? min : val)
+  this.stack.push(val)
+}
 
 /**
  * @return {void}
  */
-MinStack.prototype.pop = function() {
-    this.stack.pop()
-    this.minStack.pop()
-};
+MinStack.prototype.pop = function () {
+  this.minStack.pop()
+  this.stack.pop()
+}
 
 /**
  * @return {number}
  */
-MinStack.prototype.top = function() {
-    return this.stack[this.stack.length - 1]
-};
+MinStack.prototype.top = function () {
+  return this.stack[this.stack.length - 1]
+}
 
 /**
  * @return {number}
  */
-MinStack.prototype.min = function() {
-    return this.minStack[this.stack.length - 1]
-};
+MinStack.prototype.min = function () {
+  return this.minStack[this.minStack.length - 1]
+}
 
-let minStack = new MinStack();
-console.log(minStack.push(-2));
-console.log(minStack.push(0));
-console.log(minStack.push(-3));
+let minStack = new MinStack()
+console.log(minStack.push(-2))
+console.log(minStack.push(0))
+console.log(minStack.push(-3))
 console.log(minStack)
-console.log(minStack.min());  //  --> 返回 -3.
-console.log(minStack.pop());
-console.log(minStack.top());  //  --> 返回 0.
-console.log(minStack.min());  //  --> 返回 -2.
+console.log(minStack.min()) //  --> 返回 -3.
+console.log(minStack.pop())
+console.log(minStack.top()) //  --> 返回 0.
+console.log(minStack.min()) //  --> 返回 -2.
 console.log(minStack)

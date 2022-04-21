@@ -22,22 +22,15 @@
     说明:
         A.length == n + m
  */
-var merge = function(A, m, B, n) {
-    let pos1 = m - 1
-    let pos2 = n - 1
-    let pos = n + m - 1
-    while(pos1 >= 0 && pos2 >= 0){
-        A[pos--] = A[pos1] > B[pos2] ? A[pos1--] : B[pos2--]
-    }
-    if(pos1 == -1){
-        for (let i = 0; i < pos2 + 1; i++) {
-            A[i] = B[i]
-        }
-    }
-    // console.log(pos1, pos2, pos)
-    // console.log(A)
-    return A
-};
+var merge = function (A, m, B, n) {
+  let i = m + n - 1
+  m--
+  n--
+  while (m >= 0 && n >= 0) {
+    A[i--] = A[m] > B[n] ? A[m--] : B[n--]
+  }
+  while (n >= 0) A[i--] = B[n--]
+}
 
-console.log(merge([1,2,3,0,0,0], 3, [2,5,6], 3))
+console.log(merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3))
 console.log(merge([0], 0, [1], 1))
