@@ -46,27 +46,28 @@
 //     dfs([], 0)
 //     return res
 // };
-var restoreIpAddresses = function(s) {
-    let res = []
-    let dfs = (arr, start) => {
-        if(start >= s.length && arr.length == 4){
-            res.push(arr.join(','))
-            return
-        }else if(arr.length > 4){
-            return
-        }
-        for (let i = start; i < s.length; i++) {
-            let str = s.slice(start, i + 1)
-            if(str.length >= 2 && str[0] == 0) return;
-            if(str.length >= 3 && +str > 255) return;
-            arr.push(str)
-            dfs(arr.slice(), i + 1)
-            arr.pop()
-        }
+/**
+ * @param {string} s
+ * @return {string[]}
+ */
+var restoreIpAddresses = function (s) {
+  const res = []
+  const n = s.length
+  const dfs = (t, start) => {
+    if (start >= n && t.length === 4) return res.push(t.join('.'))
+    if (t.length > 4) return
+    for (let i = start; i < n; i++) {
+      const str = s.slice(start, i + 1)
+      if (str.length >= 2 && str[0] === '0') return
+      if (str.length >= 3 && +str > 255) return
+      t.push(str)
+      dfs(t.slice(), i + 1)
+      t.pop()
     }
-    dfs([], 0)
-    return res
-};
+  }
+  dfs([], 0)
+  return res
+}
 
 // console.log(restoreIpAddresses('25525511135'))
 // console.log(restoreIpAddresses('0000'))

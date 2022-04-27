@@ -24,22 +24,22 @@
  * @param {number[]} nums
  * @return {number}
  */
-var longestConsecutive = function(nums) {
-    let n = nums.length
-    if(!n) return 0
-    let set = new Set()
-    for(let num of nums) set.add(num)
-    let max = 1
-    for(let i = 0; i < n; i++){
-        if(!set.has(nums[i] - 1)){
-            let curr = nums[i] + 1
-            let ans = 1
-            while(set.has(curr)){
-                ans++
-                curr++
-            }
-            max = Math.max(ans, max)
-        }
+var longestConsecutive = function (nums) {
+  const n = nums.length
+  if (!n) return 0
+  const hash = {}
+  let max = 1
+  for (let i = 0; i < n; i++) hash[nums[i]] = true
+  for (let i = 0; i < n; i++) {
+    if (!hash[nums[i] - 1]) {
+      let curr = nums[i] + 1
+      let ans = 1
+      while (hash[curr]) {
+        ans++
+        curr++
+      }
+      max = Math.max(max, ans)
     }
-    return max
-};
+  }
+  return max
+}

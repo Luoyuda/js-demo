@@ -17,21 +17,43 @@
     限制：
         1 <= s 的长度 <= 8
  */
-var permutation = function(s) {
-    let res = new Set()
-    let hash = {}
-    let dfs = (t) => {
-        if(t.length >= s.length) return res.add(t)
-        for (let i = 0; i < s.length; i++) {
-            const ch = s[i]
-            if(hash[i]) continue
-            hash[i] = true
-            dfs(t + ch)
-            hash[i] = false
-        }
+var permutation = function (s) {
+  let res = new Set()
+  let hash = {}
+  let dfs = (t) => {
+    if (t.length >= s.length) return res.add(t)
+    for (let i = 0; i < s.length; i++) {
+      const ch = s[i]
+      if (hash[i]) continue
+      hash[i] = true
+      dfs(t + ch)
+      hash[i] = false
     }
-    dfs('')
-    return [...res]
-};
+  }
+  dfs('')
+  return [...res]
+}
 
+/**
+ * @param {string} s
+ * @return {string[]}
+ */
+var permutation = function (s) {
+  s = Array.from(s).sort()
+  const res = []
+  const n = s.length
+  const vis = {}
+  const dfs = (str) => {
+    if (str.length === n) return res.push(str)
+    for (let i = 0; i < n; i++) {
+      if (i >= 1 && s[i] === s[i - 1] && !vis[i - 1]) continue
+      if (vis[i]) continue
+      vis[i] = true
+      dfs(str + s[i])
+      vis[i] = false
+    }
+  }
+  dfs('')
+  return res
+}
 console.log(permutation('abc'))

@@ -29,70 +29,101 @@
 
  */
 
-var exist = function(board, word) {
-    let dfs = (x, y, t) => {
-        if(t > word.length - 1) return true
-        // 剪枝条件
-        if(x < 0 || y < 0 || x >= board.length || y >= board[0].length || board[x][y] == '#' || board[x][y] != word[t]) return false
-        let temp = board[x][y]
-        board[x][y] = '#'
-        let flag = dfs(x+1,y,t+1) || dfs(x,y+1,t+1) || dfs(x-1,y,t+1) || dfs(x,y-1,t+1)
-        if(flag) return true
-        board[x][y] = temp
-        return false
-    }
-    for (let i = 0; i < board.length; i++) {
-        for (let j = 0; j < board[0].length; j++) {
-            if(board[i][j] == word[0]){
-                let res = dfs(i,j,0)
-                if(res) return true
-            }
-        }
-    }
+var exist = function (board, word) {
+  let dfs = (x, y, t) => {
+    if (t > word.length - 1) return true
+    // 剪枝条件
+    if (
+      x < 0 ||
+      y < 0 ||
+      x >= board.length ||
+      y >= board[0].length ||
+      board[x][y] == '#' ||
+      board[x][y] != word[t]
+    )
+      return false
+    let temp = board[x][y]
+    board[x][y] = '#'
+    let flag =
+      dfs(x + 1, y, t + 1) ||
+      dfs(x, y + 1, t + 1) ||
+      dfs(x - 1, y, t + 1) ||
+      dfs(x, y - 1, t + 1)
+    if (flag) return true
+    board[x][y] = temp
     return false
-};
-
-var exist = function(board, word){
-    let m = board.length
-    let n = board[0].length
-    let dx = [-1, 0, 1, 0]
-    let dy = [0, 1, 0, -1]
-    let dfs = (x, y, t) => {
-        if(t == word.length) return true
-        let temp = board[x][y]
-        board[x][y] = '#'
-        for (let i = 0; i < 4; i++) {
-            let a = x + dx[i]
-            let b = y + dy[i]
-            if(a >= 0 && a < m && b >= 0 && b < n && board[a][b] == word[t]){
-                if(dfs(a, b, t + 1)) return true
-            }
-        }
-        board[x][y] = temp
-        return false
+  }
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[0].length; j++) {
+      if (board[i][j] == word[0]) {
+        let res = dfs(i, j, 0)
+        if (res) return true
+      }
     }
-    for (let i = 0; i < m; i++) {
-        for (let j = 0; j < n; j++) {
-            if(board[i][j] == word[0]){
-                if(dfs(i, j, 1)) return true
-            }
-        }
-    }
-    return false
+  }
+  return false
 }
 
-console.log(exist([
-    ["A","B","C","E"],
-    ["S","F","C","S"],
-    ["A","D","E","E"]
-], "ABCCED"))
-console.log(exist([
-    ["A","B","C","E"],
-    ["S","F","C","S"],
-    ["A","D","E","E"]
-], "SEE"))
-console.log(exist([
-    ["A","B","C","E"],
-    ["S","F","C","S"],
-    ["A","D","E","E"]
-], "ABCB"))
+/**
+ * @param {character[][]} board
+ * @param {string} word
+ * @return {boolean}
+ */
+var exist = function (board, word) {
+  const m = board.length
+  const n = board[0].length
+  const dx = [-1, 0, 1, 0]
+  const dy = [0, 1, 0, -1]
+  const dfs = (x, y, len) => {
+    if (len === word.length) return true
+    const temp = board[x][y]
+    board[x][y] = '#'
+    for (let i = 0; i < 4; i++) {
+      const a = x + dx[i]
+      const b = y + dy[i]
+      if (a >= 0 && b >= 0 && a < m && b < n && board[a][b] === word[len]) {
+        if (dfs(a, b, len + 1)) return true
+      }
+    }
+    board[x][y] = temp
+    return false
+  }
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (board[i][j] === word[0]) {
+        if (dfs(i, j, 1)) return true
+      }
+    }
+  }
+  return false
+}
+console.log(
+  exist(
+    [
+      ['A', 'B', 'C', 'E'],
+      ['S', 'F', 'C', 'S'],
+      ['A', 'D', 'E', 'E'],
+    ],
+    'ABCCED'
+  )
+)
+console.log(
+  exist(
+    [
+      ['A', 'B', 'C', 'E'],
+      ['S', 'F', 'C', 'S'],
+      ['A', 'D', 'E', 'E'],
+    ],
+    'SEE'
+  )
+)
+console.log(
+  exist(
+    [
+      ['A', 'B', 'C', 'E'],
+      ['S', 'F', 'C', 'S'],
+      ['A', 'D', 'E', 'E'],
+    ],
+    'ABCB'
+  )
+)

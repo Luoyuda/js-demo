@@ -43,23 +43,23 @@
 提示：
     1 <= n <= 30
  */
-var countAndSay = function(n) {
-    let cur = '1'
-    let prev = ''
-    for (let i = 1; i < n; i++) {
-        prev = cur
-        cur = ''
-        let start = end = 0
-        while (end < prev.length){
-            while(end < prev.length && prev[start] == prev[end]){
-                end++
-            }
-            cur += `${end - start}${prev[start]}`
-            start = end
-        }
+var countAndSay = function (n) {
+  let cur = '1'
+  let prev = ''
+  for (let i = 1; i < n; i++) {
+    prev = cur
+    cur = ''
+    let start = (end = 0)
+    while (end < prev.length) {
+      while (end < prev.length && prev[start] == prev[end]) {
+        end++
+      }
+      cur += `${end - start}${prev[start]}`
+      start = end
     }
-    return cur
-};
+  }
+  return cur
+}
 
 console.log(countAndSay(3))
 console.log(countAndSay(5))
