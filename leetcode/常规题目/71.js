@@ -42,61 +42,85 @@
     path 由英文字母，数字，'.'，'/' 或 '_' 组成。
     path 是一个有效的 Unix 风格绝对路径。
  */
-var simplifyPath = function(path) {
-    let stack = []
-    let j = -1
-    for (let i = 0; i <= path.length; i++) {
-        let ch = path[i]
-        if((ch == '/' && j != -1) || i == path.length){
-            let subPath = path.substring(j, i)
-            // console.log(subPath)
-            if(subPath == '/.' || subPath == '/'){
-            }else if(subPath == '/..'){
-                stack.pop()
-            }else{
-                stack.push(subPath)
-            }
-            j = i
-        }else if(ch == '/'){
-            j = i
-        }
+var simplifyPath = function (path) {
+  let stack = []
+  let j = -1
+  for (let i = 0; i <= path.length; i++) {
+    let ch = path[i]
+    if ((ch == '/' && j != -1) || i == path.length) {
+      let subPath = path.substring(j, i)
+      // console.log(subPath)
+      if (subPath == '/.' || subPath == '/') {
+      } else if (subPath == '/..') {
+        stack.pop()
+      } else {
+        stack.push(subPath)
+      }
+      j = i
+    } else if (ch == '/') {
+      j = i
     }
-    // console.log(stack)
-    return stack.length ? stack.join('') : '/'
-};
+  }
+  // console.log(stack)
+  return stack.length ? stack.join('') : '/'
+}
 /**
  * @param {string} path
  * @return {string}
  */
-var simplifyPath = function(path) {
-    let stack = []
-    let j = -1
-    let n = path.length
-    for(let i = 0; i <= n; i++){
-        let c = path[i]
-        if((c == '/' && j >= 0) || i == n){
-            let s = path.substring(j, i)
-            if(s == '/..'){
-                stack.pop()
-            }else if(s == '/' || s == '/.'){
-            }else{
-                stack.push(s)
-            }
-            j = i
-        }else if(c == '/'){
-            j = i
-        }
+var simplifyPath = function (path) {
+  let stack = []
+  let j = -1
+  let n = path.length
+  for (let i = 0; i <= n; i++) {
+    let c = path[i]
+    if ((c == '/' && j >= 0) || i == n) {
+      let s = path.substring(j, i)
+      if (s == '/..') {
+        stack.pop()
+      } else if (s == '/' || s == '/.') {
+      } else {
+        stack.push(s)
+      }
+      j = i
+    } else if (c == '/') {
+      j = i
     }
-    return stack.length ? stack.join('') : '/'
-};
+  }
+  return stack.length ? stack.join('') : '/'
+}
+/**
+ * @param {string} path
+ * @return {string}
+ */
+var simplifyPath = function (path) {
+  const stack = []
+  const n = path.length
+  let j = -1
+  for (let i = 0; i <= n; i++) {
+    const c = path[i]
+    if ((c === '/' && j >= 0) || i == n) {
+      const s = path.substring(j, i)
+      if (s === '/..') {
+        stack.pop()
+      } else if (s !== '/' && s !== '/.') {
+        stack.push(s)
+      }
+      j = i
+    } else if (c === '/') {
+      j = i
+    }
+  }
+  return stack.length ? stack.join('') : '/'
+}
 let params = [
-    "/home/",
-    "/../",
-    "/home//foo/",
-    "/a/./b/../../c/",
-    "/a/../../b/../c//.//",
-    "/a//b////c/d//././/..",
+  '/home/',
+  '/../',
+  '/home//foo/',
+  '/a/./b/../../c/',
+  '/a/../../b/../c//.//',
+  '/a//b////c/d//././/..',
 ]
-params.forEach(item => {
-    console.log(simplifyPath(item))
+params.forEach((item) => {
+  console.log(simplifyPath(item))
 })

@@ -19,106 +19,131 @@
             ["a","a","b"]
         ]
  */
-var partition = function(s) {
-    let res = []
-    let dfs = (curr, start) => {
-        if(start >= s.length){
-            res.push(curr)
-            return 
-        }
-        for (let i = start; i < s.length; i++) {
-            let str = s.slice(start, i + 1)
-            if(str && isPal(str)){
-                curr.push(str);
-                dfs(curr.slice(), i + 1);
-                // 回溯
-                curr.pop();
-            }
-        }
+var partition = function (s) {
+  let res = []
+  let dfs = (curr, start) => {
+    if (start >= s.length) {
+      res.push(curr)
+      return
     }
-    dfs([], 0);
-    return res
-};
+    for (let i = start; i < s.length; i++) {
+      let str = s.slice(start, i + 1)
+      if (str && isPal(str)) {
+        curr.push(str)
+        dfs(curr.slice(), i + 1)
+        // 回溯
+        curr.pop()
+      }
+    }
+  }
+  dfs([], 0)
+  return res
+}
 
 // 判断是否是回文
 function isPal(str) {
-    let len = Math.floor(str.length / 2);
-    if (len === 0) {
-        return true;
+  let len = Math.floor(str.length / 2)
+  if (len === 0) {
+    return true
+  }
+  let add = str.length % 2 === 0 ? 0 : 1
+  let subStr = str.slice(0, len)
+  for (let i = 0; i < len; i++) {
+    if (subStr[len - i - 1] !== str[len + add + i]) {
+      return false
     }
-    let add = str.length % 2 === 0 ? 0 : 1;
-    let subStr = str.slice(0, len);
-    for (let i = 0; i < len; i++) {
-        if (subStr[len - i - 1] !== str[len + add + i]) {
-            return false;
-        }
-    }
-    return true;
+  }
+  return true
 }
 
-var partition = function(s) {
-    let res = []
-    let n = s.length
-    let dp = new Array(n)
-    for (let i = 0; i < n; i++) {
-        dp[i] = new Array(n).fill(true)
+var partition = function (s) {
+  let res = []
+  let n = s.length
+  let dp = new Array(n)
+  for (let i = 0; i < n; i++) {
+    dp[i] = new Array(n).fill(true)
+  }
+  for (let i = n - 1; i >= 0; i--) {
+    for (let j = i + 1; j < n; j++) {
+      dp[i][j] = s[i] == s[j] && dp[i + 1][j - 1]
     }
-    for (let i = n - 1; i >= 0; i--) {
-        for (let j = i + 1; j < n; j++) {
-            dp[i][j] = (s[i] == s[j]) && dp[i+1][j-1]
-        }
+  }
+  let ret = []
+  let dfs = (i) => {
+    if (i == n) {
+      res.push(ret.slice())
+      return
     }
-    let ret = []
-    let dfs = (i) => {
-        if(i == n){
-            res.push(ret.slice())
-            return
-        }
-        for (let j = i; j < n; j++) {
-            if(dp[i][j]){
-                ret.push(s.slice(i, j + 1))
-                dfs(j + 1)
-                ret.pop()
-            }
-        }
+    for (let j = i; j < n; j++) {
+      if (dp[i][j]) {
+        ret.push(s.slice(i, j + 1))
+        dfs(j + 1)
+        ret.pop()
+      }
     }
-    dfs(0)
-    return res
-};
+  }
+  dfs(0)
+  return res
+}
 
 /**
  * @param {string} s
  * @return {string[][]}
  */
-var partition = function(s) {
-    let res = []
-    let dfs = (curr, i) => {
-        if(i == s.length){
-            res.push(curr)
-            return
-        }
-        for(let j = i; j < s.length; j++){
-            let str = s.slice(i, j + 1)
-            if(check(str)){
-                curr.push(str)
-                dfs(curr.slice(), j + 1)
-                curr.pop()
-            }
-        }
+var partition = function (s) {
+  let res = []
+  let dfs = (curr, i) => {
+    if (i == s.length) {
+      res.push(curr)
+      return
     }
-    dfs([], 0)
-    return res
-};
-
-var check = function(s){
-    let i = 0
-    let j = s.length - 1
-    while(i < j){
-        if(s[i] != s[j]) return false
-        i++
-        j--
+    for (let j = i; j < s.length; j++) {
+      let str = s.slice(i, j + 1)
+      if (check(str)) {
+        curr.push(str)
+        dfs(curr.slice(), j + 1)
+        curr.pop()
+      }
     }
-    return true
+  }
+  dfs([], 0)
+  return res
 }
 
+var check = function (s) {
+  let i = 0
+  let j = s.length - 1
+  while (i < j) {
+    if (s[i] != s[j]) return false
+    i++
+    j--
+  }
+  return true
+}
+/**
+ * @param {string} s
+ * @return {string[][]}
+ */
+var partition = function (s) {
+  const n = s.length
+  const dp = new Array(n).fill(0).map(() => new Array(n).fill(true))
+  for (let i = n - 1; i >= 0; i--) {
+    for (let j = i + 1; j < n; j++) {
+      dp[i][j] = s[i] === s[j] && dp[i + 1][j - 1]
+    }
+  }
+  const res = []
+  const dfs = (t, i) => {
+    if (i === n) return res.push(t)
+    for (let j = i; j < n; j++) {
+      if (dp[i][j]) {
+        t.push(s.slice(i, j + 1))
+        dfs(t.slice(), j + 1)
+        t.pop()
+      }
+    }
+  }
+  dfs([], 0)
+  return res
+}
 console.log(partition('aab'))

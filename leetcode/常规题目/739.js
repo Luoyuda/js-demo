@@ -18,17 +18,17 @@
         气温 列表长度的范围是 [1, 30000]。
         每个气温的值的均为华氏度，都是在 [30, 100] 范围内的整数。
     */
-var dailyTemperatures = function(T) {
-    let stack = []
-    let res = new Array(T.length).fill(0)
-    for (let i = 0; i < T.length; i++) {
-        while (stack.length && T[i] > T[stack[stack.length - 1]]){
-            let idx = stack.pop()
-            res[idx] = i - idx
-        }
-        stack.push(i)
+var dailyTemperatures = function (T) {
+  const stack = []
+  const res = new Array(T.length).fill(0)
+  for (let i = 0; i < T.length; i++) {
+    while (stack.length && T[i] > T[stack[stack.length - 1]]) {
+      const idx = stack.pop()
+      res[idx] = i - idx
     }
-    return res
-};
+    stack.push(i)
+  }
+  return res
+}
 
 console.log(dailyTemperatures([73, 74, 75, 71, 69, 72, 76, 73]))

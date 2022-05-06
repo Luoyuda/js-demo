@@ -25,25 +25,25 @@
  * @param {number} k
  * @return {number}
  */
-var characterReplacement = function(s, k) {
-    let n = s.length
-    if(n < 2) return n
-    let A = 'A'.charCodeAt()
-    let getCode = x => x.charCodeAt() - A
-    let freq = new Array(26).fill(0)
-    let right = 0
-    let left = 0
-    let res = 0
-    let maxCount = 0
-    while(right < n){
-        freq[getCode(s[right])]++
-        maxCount = Math.max(maxCount, freq[getCode(s[right])])
-        right++
-        if(right - left > maxCount + k){
-            freq[getCode(s[left])]--
-            left++
-        }
-        res = Math.max(res, right - left)
+var characterReplacement = function (s, k) {
+  let n = s.length
+  if (n < 2) return n
+  let A = 'A'.charCodeAt()
+  let getCode = (x) => x.charCodeAt() - A
+  let freq = new Array(26).fill(0)
+  let right = 0
+  let left = 0
+  let res = 0
+  let maxCount = 0
+  while (right < n) {
+    freq[getCode(s[right])]++
+    maxCount = Math.max(maxCount, freq[getCode(s[right])])
+    right++
+    if (right - left > maxCount + k) {
+      freq[getCode(s[left])]--
+      left++
     }
-    return res
-};
+    res = Math.max(res, right - left)
+  }
+  return res
+}

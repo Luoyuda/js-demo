@@ -30,57 +30,84 @@
     -10^4 <= target <= 10^4
 进阶：你可以设计一个时间复杂度为 O(log n) 的解决方案吗？
  */
-var search = function(nums, target) {
-    if (nums.length == 0) return -1;
-    let n = nums.length - 1;
-    if (n == 0) return nums[0] == target ? 0 : -1;
-    let low = 0
-    let high = n
-    while (low <= high) {
-        let mid = low + Math.floor((high - low) / 2)
-        // console.log(low, high, nums[mid])
-        if(nums[mid] == target) return mid
-        if(nums[low] <= nums[mid]){
-            if(nums[mid] > target && nums[low] <= target){
-                high = mid - 1
-            }else{
-                low = mid + 1
-            }
-        }else{
-            if(nums[mid] < target && nums[high] >= target){
-                low = mid + 1
-            }else{
-                high = mid - 1
-            }
-        }
+var search = function (nums, target) {
+  if (nums.length == 0) return -1
+  let n = nums.length - 1
+  if (n == 0) return nums[0] == target ? 0 : -1
+  let low = 0
+  let high = n
+  while (low <= high) {
+    let mid = low + Math.floor((high - low) / 2)
+    // console.log(low, high, nums[mid])
+    if (nums[mid] == target) return mid
+    if (nums[low] <= nums[mid]) {
+      if (nums[mid] > target && nums[low] <= target) {
+        high = mid - 1
+      } else {
+        low = mid + 1
+      }
+    } else {
+      if (nums[mid] < target && nums[high] >= target) {
+        low = mid + 1
+      } else {
+        high = mid - 1
+      }
     }
-    return -1
-};
+  }
+  return -1
+}
 
-var search = function(nums, target) {
-    let n = nums.length
-    if(!n) return -1
-    // 先找到分界点
-    let l = 0
-    let r = n - 1
-    while(l < r){
-        let m = l + Math.floor((r - l) / 2)
-        if(nums[m] <= nums[r]) r = m
-        else l = m + 1
+var search = function (nums, target) {
+  let n = nums.length
+  if (!n) return -1
+  // 先找到分界点
+  let l = 0
+  let r = n - 1
+  while (l < r) {
+    let m = l + Math.floor((r - l) / 2)
+    if (nums[m] <= nums[r]) r = m
+    else l = m + 1
+  }
+  if (target <= nums[n - 1]) r = n - 1
+  else {
+    l = 0
+    r--
+  }
+  while (l < r) {
+    let m = l + Math.floor((r - l) / 2)
+    if (nums[m] >= target) r = m
+    else l = m + 1
+  }
+  return nums[l] == target ? l : -1
+}
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var search = function (nums, target) {
+  let l = 0
+  let r = nums.length - 1
+  while (l <= r) {
+    let m = l + Math.floor((r - l) / 2)
+    if (nums[m] === target) return m
+    if (nums[l] <= nums[m]) {
+      if (nums[l] <= target && target < nums[m]) {
+        r = m - 1
+      } else {
+        l = m + 1
+      }
+    } else {
+      if (nums[m] < target && target <= nums[r]) {
+        l = m + 1
+      } else {
+        r = m - 1
+      }
     }
-    if(target <= nums[n - 1]) r = n - 1
-    else {
-        l = 0
-        r--
-    }
-    while(l < r){
-        let m = l + Math.floor((r - l) / 2)
-        if(nums[m] >= target) r = m
-        else l = m + 1
-    }
-    return nums[l] == target ? l : -1
-};
-console.log(search([4,4,5,6,7,0,1,2], 4))
+  }
+  return -1
+}
+console.log(search([4, 4, 5, 6, 7, 0, 1, 2], 4))
 // console.log(search([4,5,6,7,0,1,2], 2))
 // console.log(search([4,5,6,7,0,1,2], 4))
 // console.log(search([4,5,6,7,8,1,2,3], 8))

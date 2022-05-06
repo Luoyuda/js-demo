@@ -37,131 +37,93 @@
     0 <= value <= 104
     最多调用 3 * 104 次 get 和 put
  */
-var LRUCache = function(capacity) {
-    this.length = capacity
-    this.queue = []
-    this.hash = {}
-};
 
-/** 
- * @param {number} key
- * @return {number}
+/**
+ * @param {number} k
+ * @param {number} v
+ * @param {Node} l
+ * @param {Node} r
  */
-LRUCache.prototype.get = function(key) {
-    let value = this.hash[key]
-    if(value == undefined) return -1
-    this.update(key)
-    return value
-};
-
-LRUCache.prototype.update = function(key){
-    for (let i = 0; i < this.queue.length; i++) {
-        const num = this.queue[i];
-        if(num == key){
-            for (let j = i; j >= 0; j--) {
-                this.queue[j] = this.queue[j - 1]
-            }
-            this.queue[0] = num
-            break
-        }
-    }
-}
-
-/** 
- * @param {number} key 
- * @param {number} value
- * @return {void}
- */
-LRUCache.prototype.put = function(key, value) {
-    if(this.hash[key] != undefined){
-        this.hash[key] = value;
-        this.update(key)
-        return
-    }
-    if(this.queue.length >= this.length){
-        let key = this.queue.pop()
-        delete this.hash[key]
-    }
-    this.queue.unshift(key)
-    this.hash[key] = value
-};
-
-var Node = function(k, v, l, r){
-    this.l = l
-    this.r = r
-    this.k = k
-    this.v = v
+function Node(k, v, l, r) {
+  this.l = l
+  this.r = r
+  this.k = k
+  this.v = v
 }
 /**
  * @param {number} capacity
  */
-var LRUCache = function(capacity) {
-    this.n = capacity
-    this.map = new Map()
-    this.head = new Node(-1, -1)
-    this.tail = new Node(-1, -1)
-    this.head.r = this.tail
-    this.tail.l = this.head
-};
+var LRUCache = function (capacity) {
+  this.size = capacity
+  this.map = new Map()
+  this.head = new Node(-1, -1)
+  this.tail = new Node(-1, -1)
+  this.head.r = this.tail
+  this.tail.l = this.head
+}
 
-/** 
+/**
  * @param {number} key
  * @return {number}
  */
-LRUCache.prototype.get = function(key) {
-    if(this.map.has(key)){
-        let node = this.map.get(key)
-        this.update(node)
-        return node.v
-    }
-    return -1
-};
+LRUCache.prototype.get = function (key) {
+  const node = this.map.get(key)
+  if (!node) return -1
+  this.update(node)
+  return node.v
+}
 
-/** 
+/**
  * @param {Node} node
  * @return {void}
  */
-LRUCache.prototype.update = function(node) {
-    this.delete(node)
-    node.r = this.head.r
-    node.l = this.head
-    this.head.r.l = node
-    this.head.r = node
-};
+LRUCache.prototype.update = function (node) {
+  // 先从链表中提取出来
+  this.delete(node)
+  // 在头节点位置插入
+  node.r = this.head.r
+  node.l = this.head
+  this.head.r.l = node
+  this.head.r = node
+}
 
-LRUCache.prototype.delete = function(node) {
-    if(node.l){
-        let l = node.l
-        l.r = node.r
-        node.r.l = l
-    }
-};
+/**
+ * @param {Node} key
+ * @return {void}
+ */
+LRUCache.prototype.delete = function (node) {
+  if (node.l) {
+    // 断开节点 1 -> 2 -> 3
+    // 1 -> 3
+    let l = node.l
+    l.r = node.r
+    node.r.l = l
+  }
+}
 
-/** 
- * @param {number} key 
+/**
+ * @param {number} key
  * @param {number} value
  * @return {void}
  */
-LRUCache.prototype.put = function(key, value) {
-    let node
-    if(this.map.has(key)){
-        node = this.map.get(key)
-        node.v = value
-    }else{
-        if(this.map.size === this.n){
-            let del = this.tail.l
-            this.map.delete(del.k)
-            this.delete(del)
-        }
-        node = new Node(key, value)
-        this.map.set(key, node)
-    }
-    this.update(node)
-};
+LRUCache.prototype.put = function (key, value) {
+  const node = this.map.get(key) || new Node(key, value)
+  // 更新节点
+  node.v = value
+  this.map.set(key, node)
+  // 更新位置
+  this.update(node)
+  if (this.map.size > this.size) {
+    // 删除队尾元素
+    let del = this.tail.l
+    this.map.delete(del.k)
+    this.delete(del)
+  }
+}
 
-var funcs = ["put", "put", "get", "put", "get", "put", "get", "get", "get"]
+var funcs = ['put', 'put', 'get', 'put', 'get', 'put', 'get', 'get', 'get']
 var params = [[1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]
-var results =[null, null, 1, null, -1, null, -1, 3, 4]
+var results = [null, null, 1, null, -1, null, -1, 3, 4]
 // var funcs = ["get","put","get","put","put","get","get"]
 // var params = [[2],[2,6],[1],[1,5],[1,2],[1],[2]]
 // var results = [-1,null,-1,null,null,2,6]
@@ -170,10 +132,10 @@ var results =[null, null, 1, null, -1, null, -1, 3, 4]
 // var results =[null,null,null,null,-1,3]
 var lru = new LRUCache(2)
 funcs.forEach((item, index) => {
-    var res = lru[item](...params[index])
-    // console.log(`${item}(${params[index].join(',')})`)
-    // console.log(`res = ${res}`,`result = ${results[index]}`)
-    console.log(res == results[index])
-    // console.log(lru.hash)
-    // console.log(lru.queue)
+  var res = lru[item](...params[index])
+  // console.log(`${item}(${params[index].join(',')})`)
+  // console.log(`res = ${res}`,`result = ${results[index]}`)
+  console.log(res == results[index])
+  // console.log(lru.hash)
+  // console.log(lru.queue)
 })

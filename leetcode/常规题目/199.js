@@ -19,23 +19,23 @@
   5     4       <---
  */
 /**
+ * O(n) O(n)
  * @param {TreeNode} root
  * @return {number[]}
  */
-var rightSideView = function(root) {
-    if(!root) return []
-    let q = [root]
-    let res = []
-    while(q.length){
-        let len = q.length
-        for(let i = 0; i < len; i++){
-            let node = q.shift()
-            if(i == len - 1){
-                res.push(node.val)
-            }
-            if(node.left) q.push(node.left)
-            if(node.right) q.push(node.right)
-        }
+var rightSideView = function (root) {
+  if (!root) return []
+  const q = [root]
+  const result = []
+  while (q.length) {
+    const len = q.length
+    let node = null
+    for (let i = 0; i < len; i++) {
+      node = q.shift()
+      if (node.left) q.push(node.left)
+      if (node.right) q.push(node.right)
     }
-    return res
+    result.push(node.val)
+  }
+  return result
 }

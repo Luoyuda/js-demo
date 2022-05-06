@@ -20,16 +20,16 @@
  * @param {number[]} prices
  * @return {number}
  */
-var maxProfit = function(prices) {
-    let sell = 0
-    let buy = -prices[0]
-    let lock = 0
-    for(let p of prices){
-        let b = Math.max(buy, lock - p)
-        let s = Math.max(sell, buy + p)
-        lock = sell
-        buy = b
-        sell = s
-    }
-    return sell
-};
+var maxProfit = function (prices) {
+  let sell = 0
+  let buy = -prices[0]
+  let lock = 0
+  for (let p of prices) {
+    let b = Math.max(buy, lock - p)
+    let s = Math.max(sell, buy + p)
+    lock = sell
+    buy = b
+    sell = s
+  }
+  return sell
+}

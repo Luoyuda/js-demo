@@ -20,28 +20,24 @@
         输出: 2
         说明: 8 的平方根是 2.82842..., 由于返回类型是整数，小数部分将被舍去。
  */
-var mySqrt = function(x) {
-    let left = 0
-    let right = Math.floor(x / 2) + 1
-    let ans = -1
-    // for (let i = 0; i < 5; i++) {
-        
-    // }
-    while(left <= right){
-        let mid = Math.floor((right + left) / 2)
-        let num = mid * mid
-        // console.log(left, mid, right, num, x)
-        if(num < x){
-            ans = mid
-            left = mid + 1
-        }else if(num > x) {
-            right = mid - 1
-        }else{
-            return mid
-        }
+var mySqrt = function (x) {
+  let left = 0
+  let right = Math.floor(x / 2) + 1
+  let ans = -1
+  while (left <= right) {
+    let mid = Math.floor((right + left) / 2)
+    let num = mid * mid
+    if (num < x) {
+      ans = mid
+      left = mid + 1
+    } else if (num > x) {
+      right = mid - 1
+    } else {
+      return mid
     }
-    return ans
-};
+  }
+  return ans
+}
 
 console.log(mySqrt(100))
 // console.log(Math.sqrt(100))

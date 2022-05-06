@@ -22,35 +22,50 @@
  * @param {number[]} nums
  * @return {number}
  */
-var maxProduct = function(nums) {
-    let n = nums.length;
-    let minDp = nums.slice(0)
-    let maxDp = nums.slice(0)
-    for (let i = 1; i < n; i++) {
-        maxDp[i] = Math.max(maxDp[i - 1] * nums[i], nums[i], minDp[i - 1] * nums[i])
-        minDp[i] = Math.min(minDp[i - 1] * nums[i],  nums[i], maxDp[i - 1] * nums[i])
-    }
-    // console.log(minDp, maxDp)
-    let ans = maxDp[0]
-    for (let i = 1; i < n; i++) {
-        ans = Math.max(ans, maxDp[i])     
-    }
-    return ans
-};
+var maxProduct = function (nums) {
+  let n = nums.length
+  let minDp = nums.slice(0)
+  let maxDp = nums.slice(0)
+  for (let i = 1; i < n; i++) {
+    maxDp[i] = Math.max(maxDp[i - 1] * nums[i], nums[i], minDp[i - 1] * nums[i])
+    minDp[i] = Math.min(minDp[i - 1] * nums[i], nums[i], maxDp[i - 1] * nums[i])
+  }
+  // console.log(minDp, maxDp)
+  let ans = maxDp[0]
+  for (let i = 1; i < n; i++) {
+    ans = Math.max(ans, maxDp[i])
+  }
+  return ans
+}
 
-var maxProduct = function(nums) {
-    let n = nums.length;
-    let min = max = ans = nums[0]
-    for (let i = 1; i < n; i++) {
-        let mx = max
-        let mi = min
-        let x = nums[i]
-        max = Math.max(mx * x, x, mi * x)
-        min = Math.min(mi * x, x, mx * x)
-        ans = Math.max(ans, max, min)     
-    }
-    return ans
-};
+var maxProduct = function (nums) {
+  let n = nums.length
+  let min = (max = ans = nums[0])
+  for (let i = 1; i < n; i++) {
+    let mx = max
+    let mi = min
+    let x = nums[i]
+    max = Math.max(mx * x, x, mi * x)
+    min = Math.min(mi * x, x, mx * x)
+    ans = Math.max(ans, max, min)
+  }
+  return ans
+}
 
-console.log(maxProduct([2,3,-2,-4]))
-console.log(maxProduct([-2,0,-1]))
+var maxProduct = function (nums) {
+  const n = nums.length
+  let max = nums[0]
+  let minPrev = max
+  let maxPrev = max
+  for (let i = 1; i < n; i++) {
+    const a = nums[i]
+    const b = minPrev * a
+    const c = maxPrev * a
+    minPrev = Math.min(a, b, c)
+    maxPrev = Math.max(a, b, c)
+    max = Math.max(max, maxPrev)
+  }
+  return max
+}
+console.log(maxProduct([2, 3, -2, -4]))
+console.log(maxProduct([-2, 0, -1]))

@@ -4,22 +4,22 @@
  * @LastEditors: xiaohuolong
  * @LastEditTime: 2021-04-16 14:13:31
  * @FilePath: /js-demo/leetcode/常规题目/1.js
- */ 
-var twoSum = function(nums, target) {
-    let len = nums.length
-    let res = []
-    if(!len) return res
-    let hash = {}
-    for(let i = 0; i < len; i++) {
-        let el = nums[i]
-        let self = target - el
-        let index = hash[self]
-        if(index != undefined){
-            res.push(index, i)
-        }
-        hash[el] = i
+ */
+var twoSum = function (nums, target) {
+  let len = nums.length
+  let res = []
+  if (!len) return res
+  let hash = {}
+  for (let i = 0; i < len; i++) {
+    let el = nums[i]
+    let self = target - el
+    let index = hash[self]
+    if (index != undefined) {
+      res.push(index, i)
     }
-    return res
+    hash[el] = i
+  }
+  return res
 }
 /**
  * @param {number[]} nums
@@ -45,17 +45,23 @@ var twoSum = function(nums, target) {
     -109 <= target <= 109
     只会存在一个有效答案
  */
-var twoSum = function(nums, target) {
-    let hash = {}
-    for (let i = 0; i < nums.length; i++) {
-        const num = nums[i];
-        if(hash[num] != undefined) {
-            return [hash[num], i]
-        }
-        hash[target - num] = i
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function (nums, target) {
+  const hash = {}
+  const n = nums.length
+  for (let i = 0; i < n; i++) {
+    const x = nums[i]
+    if (hash[x] !== undefined) {
+      return [hash[x], i]
     }
-    return []
-};
-console.log(twoSum([2,7,11,15], 9))
-console.log(twoSum([3,2,4],6))
-console.log(twoSum([3,3],6))
+    hash[target - x] = i
+  }
+  return []
+}
+console.log(twoSum([2, 7, 11, 15], 9))
+console.log(twoSum([3, 2, 4], 6))
+console.log(twoSum([3, 3], 6))

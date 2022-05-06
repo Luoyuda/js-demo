@@ -25,95 +25,132 @@
         -105 <= nums[i] <= 105
 
  */
-var threeSum = function(nums) {
-    if(nums.length < 3) return []
-    nums.sort((a, b) => a - b)
-    let res = []
-    let dfs = (t, start, sum) => {
-        if(t.length == 3 && sum == 0){
-            res.push(t)
-            return
-        }
-        for (let i = start; i < nums.length; i++) {
-            const el = nums[i];
-            if(i > start && nums[i-1] == nums[i]) continue
-            t.push(el)
-            dfs(t.slice(), i+1, el + sum)
-            t.pop(el)
-        }
+var threeSum = function (nums) {
+  if (nums.length < 3) return []
+  nums.sort((a, b) => a - b)
+  let res = []
+  let dfs = (t, start, sum) => {
+    if (t.length == 3 && sum == 0) {
+      res.push(t)
+      return
     }
-    dfs([], 0, 0)
-    return res
-};
-
-var threeSum = function(nums) {
-    let res = []
-    let len = nums.length
-    if(len < 2) return res
-    nums.sort((a, b) => a - b)
-    for (let i = 0; i < len - 2; i++) {
-        if (nums[i] > 0) break;
-        if(i > 0 && nums[i] == nums[i - 1]) continue
-        let left = i + 1
-        let right = len - 1
-        while(left < right){
-            let sum = nums[i] + nums[left] + nums[right]
-            if(sum == 0){
-                res.push([nums[i], nums[left], nums[right]])
-                while(left < right && nums[left] == nums[left + 1]){
-                    left++
-                }
-                while(left < right && nums[right] == nums[right - 1]){
-                    right--
-                }
-                left++
-                right--
-            }else if(sum > 0){
-                right--
-            }else if(sum < 0){
-                left++
-            }
-        }
+    for (let i = start; i < nums.length; i++) {
+      const el = nums[i]
+      if (i > start && nums[i - 1] == nums[i]) continue
+      t.push(el)
+      dfs(t.slice(), i + 1, el + sum)
+      t.pop(el)
     }
-    return res
-};
-
-var threeSum = function(nums) {
-    // 结果数组
-    let res = []
-    let len = nums.length
-    // 少于三个数
-    if(len < 2) return res
-    // 先排序
-    nums.sort((a, b) => a - b)
-    // console.log(nums)
-    for (let i = 0; i < len - 2; i++) {
-        const num = nums[i];
-        // 大于0后续都是正数，直接跳出
-        if(num > 0) break
-        if(i > 0 && num == nums[i - 1]) continue
-        let left = i + 1
-        let right = len - 1
-        while(left < right){
-            let sum = num + nums[left] + nums[right]
-            if(sum == 0){
-                res.push([num, nums[left], nums[right]])
-                while(left < right && nums[left] == nums[left + 1]){
-                    left++
-                }
-                while(left < right && nums[right] == nums[right - 1]){
-                    right--
-                }
-                left++
-                right--
-            }else if(sum > 0){
-                right--
-            }else if(sum < 0){
-                left++
-            }
-        }
-    }
-    return res
+  }
+  dfs([], 0, 0)
+  return res
 }
 
-console.log(threeSum([-1,0,1,2,-1,-4]))
+var threeSum = function (nums) {
+  let res = []
+  let len = nums.length
+  if (len < 2) return res
+  nums.sort((a, b) => a - b)
+  for (let i = 0; i < len - 2; i++) {
+    if (nums[i] > 0) break
+    if (i > 0 && nums[i] == nums[i - 1]) continue
+    let left = i + 1
+    let right = len - 1
+    while (left < right) {
+      let sum = nums[i] + nums[left] + nums[right]
+      if (sum == 0) {
+        res.push([nums[i], nums[left], nums[right]])
+        while (left < right && nums[left] == nums[left + 1]) {
+          left++
+        }
+        while (left < right && nums[right] == nums[right - 1]) {
+          right--
+        }
+        left++
+        right--
+      } else if (sum > 0) {
+        right--
+      } else if (sum < 0) {
+        left++
+      }
+    }
+  }
+  return res
+}
+
+var threeSum = function (nums) {
+  // 结果数组
+  let res = []
+  let len = nums.length
+  // 少于三个数
+  if (len < 2) return res
+  // 先排序
+  nums.sort((a, b) => a - b)
+  // console.log(nums)
+  for (let i = 0; i < len - 2; i++) {
+    const num = nums[i]
+    // 大于0后续都是正数，直接跳出
+    if (num > 0) break
+    if (i > 0 && num == nums[i - 1]) continue
+    let left = i + 1
+    let right = len - 1
+    while (left < right) {
+      let sum = num + nums[left] + nums[right]
+      if (sum == 0) {
+        res.push([num, nums[left], nums[right]])
+        while (left < right && nums[left] == nums[left + 1]) {
+          left++
+        }
+        while (left < right && nums[right] == nums[right - 1]) {
+          right--
+        }
+        left++
+        right--
+      } else if (sum > 0) {
+        right--
+      } else if (sum < 0) {
+        left++
+      }
+    }
+  }
+  return res
+}
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var threeSum = function (nums) {
+  let n = nums.length
+  const res = []
+  if (n < 2) return res
+  nums.sort((a, b) => a - b)
+  for (let i = 0; i < n - 2; i++) {
+    const a = nums[i]
+    if (a > 0) break
+    if (i > 0 && a === nums[i - 1]) continue
+    let l = i + 1
+    let r = n - 1
+    while (l < r) {
+      const b = nums[l]
+      const c = nums[r]
+      const sum = a + b + c
+      if (sum === 0) {
+        res.push([a, b, c])
+        while (l < r && b === nums[l + 1]) {
+          l++
+        }
+        while (l < r && c === nums[r - 1]) {
+          r--
+        }
+        l++
+        r--
+      } else if (sum > 0) {
+        r--
+      } else {
+        l++
+      }
+    }
+  }
+  return res
+}
+console.log(threeSum([-1, 0, 1, 2, -1, -4]))

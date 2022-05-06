@@ -31,60 +31,74 @@
         2 <= n <= 3 * 104
         0 <= height[i] <= 3 * 104
  */
-var maxArea = function(height) {
-    let left = 0
-    let right = height.length - 1
-    let getArea = (l, r) => {
-        // console.log(l, r)
-        // console.log(height[l], height[r])
-        // console.log(r - l) * Math.min(height[r], height[l])
-        return (r - l) * Math.min(height[r], height[l])
+var maxArea = function (height) {
+  let left = 0
+  let right = height.length - 1
+  let getArea = (l, r) => {
+    // console.log(l, r)
+    // console.log(height[l], height[r])
+    // console.log(r - l) * Math.min(height[r], height[l])
+    return (r - l) * Math.min(height[r], height[l])
+  }
+  let area = getArea(left, right)
+  let i = right
+  while (left <= right) {
+    i = right
+    while (left <= i) {
+      area = Math.max(area, getArea(left, i))
+      i--
     }
-    let area = getArea(left, right)
-    let i = right
-    while(left <= right){
-        i = right
-        while(left <= i){
-            area = Math.max(area, getArea(left, i))
-            i--
-        }
-        left++
+    left++
+  }
+  return area
+}
+var maxArea = function (height) {
+  let len = height.length - 1
+  let left = 0
+  let right = len
+  let res = 0
+  while (left < right) {
+    if (height[left] < height[right]) {
+      res = Math.max(res, (right - left) * height[left])
+      left++
+    } else {
+      res = Math.max(res, (right - left) * height[right])
+      right--
     }
-    return area
-};
-var maxArea = function(height){
-    let len = height.length - 1
-    let left = 0
-    let right = len
-    let res = 0
-    while(left < right){
-        if(height[left] < height[right]){
-            res = Math.max(res, (right - left) * height[left])
-            left++
-        }else{
-            res = Math.max(res, (right - left) * height[right])
-            right--
-        }
-    }
-    return res
+  }
+  return res
 }
 
-var maxArea = function(height){
-    let len = height.length - 1
-    let left = 0
-    let right = len
-    let res = 0
-    while(left < right){
-        let area = Math.min(height[left], height[right]) * (right - left)
-        res = Math.max(area, res)
-        if(height[left] < height[right]){
-            left++
-        }else{
-            right--
-        }
+var maxArea = function (height) {
+  let len = height.length - 1
+  let left = 0
+  let right = len
+  let res = 0
+  while (left < right) {
+    let area = Math.min(height[left], height[right]) * (right - left)
+    res = Math.max(area, res)
+    if (height[left] < height[right]) {
+      left++
+    } else {
+      right--
     }
-    return res
+  }
+  return res
+}
+/**
+ * @param {number[]} height
+ * @return {number}
+ */
+var maxArea = function (height) {
+  let l = 0
+  let r = height.length - 1
+  let max = 0
+  while (l < r) {
+    max = Math.max(Math.min(height[l], height[r]) * (r - l), max)
+    if (height[l] < height[r]) l++
+    else r--
+  }
+  return max
 }
 
-
-console.log(maxArea([2,3,4,5,18,17,6]))
+console.log(maxArea([2, 3, 4, 5, 18, 17, 6]))

@@ -129,6 +129,68 @@ var sortList = function(head) {
     return dummy.next
 };
 
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var sortList = function(head) {
+  return toSortList(head, null)
+};
+
+/**
+ * @param {ListNode} head
+ * @param {ListNode} tail
+ * @return {ListNode}
+ */
+var toSortList = function(head, tail) {
+  if(!head) return head
+  if(head.next === tail){
+    head.next = null
+    return head
+  }
+  const mid = findMidNode(head, tail)
+  return marge(toSortList(head, mid), toSortList(mid, tail))
+};
+
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+function marge(l1, l2){
+  const dummy = new ListNode(null)
+  let cur = dummy
+  while(l1 && l2){
+    if(l1.val < l2.val){
+      cur.next = l1
+      l1 = l1.next
+    }else{
+      cur.next = l2
+      l2 = l2.next
+    }
+    cur = cur.next
+  }
+  cur.next = l1 || l2
+  return dummy.next
+}
+
+/**
+ * @param {ListNode} head
+ * @param {ListNode} tail
+ * @return {ListNode}
+ */
+var findMidNode = function(head, tail) {
+  let fast = head
+  let slow = head
+  while(fast && fast !== tail) {
+    slow = slow.next
+    fast = fast.next
+    if(fast && fast !== tail){
+      fast = fast.next
+    }
+  }
+  return slow
+};
 function ListNode(val, next) {
     this.val = (val===undefined ? 0 : val)
     this.next = (next===undefined ? null : next)

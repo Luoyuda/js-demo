@@ -33,64 +33,58 @@
 进阶：
     你可以运用递归和迭代两种方法解决这个问题吗？
  */
-var isSymmetric = function(root) {
-    if(!root || (root.left == root.right && root.left == null)) return true
-    let queue = [root.left, root.right]
-    while (queue.length){
-        let len = queue.length
-        let left = queue.shift()
-        let right = queue.shift()
-        if(!left && !right) continue 
-        if(!left || !right) return false
-        if(left.val != right.val) return false
-        queue.push(left.left, right.right)
-        queue.push(left.right, right.left)
-    }
-    return true
-};
+var isSymmetric = function (root) {
+  if (!root || (root.left == root.right && root.left == null)) return true
+  let queue = [root.left, root.right]
+  while (queue.length) {
+    let len = queue.length
+    let left = queue.shift()
+    let right = queue.shift()
+    if (!left && !right) continue
+    if (!left || !right) return false
+    if (left.val != right.val) return false
+    queue.push(left.left, right.right)
+    queue.push(left.right, right.left)
+  }
+  return true
+}
 /**
  * @param {TreeNode} root
  * @return {boolean}
  */
-var isSymmetric = function(root) {
-    return dfs(root.left, root.right)
-};
+var isSymmetric = function (root) {
+  return dfs(root.left, root.right)
+}
 var dfs = (left, right) => {
-    if(!left && !right) return true
-    if(!left || !right) return false
-    if(left.val != right.val) return false
-    return dfs(left.right, right.left) && dfs(left.left, right.right)
+  if (!left && !right) return true
+  if (!left || !right) return false
+  if (left.val != right.val) return false
+  return dfs(left.right, right.left) && dfs(left.left, right.right)
 }
 
-var isSymmetric = function(root) {
-    if(!root || (root.left == root.right && root.right == null)) return true
-    let q = [root.left, root.right]
-    while(q.length){
-        let left = q.shift()
-        let right = q.shift()
-        if(!left && !right) continue
-        if(!left || !right) return false
-        if(left.val != right.val) return false
-        q.push(left.left, right.right)
-        q.push(left.right, right.left)
-    }
-    return true
+var isSymmetric = function (root) {
+  if (!root || (root.left == root.right && root.right == null)) return true
+  let q = [root.left, root.right]
+  while (q.length) {
+    let left = q.shift()
+    let right = q.shift()
+    if (!left && !right) continue
+    if (!left || !right) return false
+    if (left.val != right.val) return false
+    q.push(left.left, right.right)
+    q.push(left.right, right.left)
+  }
+  return true
 }
 
 function TreeNode(val, left, right) {
-    this.val = (val===undefined ? 0 : val)
-    this.left = (left===undefined ? null : left)
-    this.right = (right===undefined ? null : right)
+  this.val = val === undefined ? 0 : val
+  this.left = left === undefined ? null : left
+  this.right = right === undefined ? null : right
 }
-let root = 
-new TreeNode(1, 
-    new TreeNode(2, 
-        new TreeNode(3), 
-        new TreeNode(4)
-    ), 
-    new TreeNode(2,
-        new TreeNode(4),
-        new TreeNode(3),
-    )
+let root = new TreeNode(
+  1,
+  new TreeNode(2, new TreeNode(3), new TreeNode(4)),
+  new TreeNode(2, new TreeNode(4), new TreeNode(3))
 )
 console.log(isSymmetric(root))

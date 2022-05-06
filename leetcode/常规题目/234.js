@@ -6,8 +6,8 @@
  * @FilePath: /js-demo/leetcode/常规题目/234.js
  */
 function ListNode(val, next) {
-    this.val = (val===undefined ? 0 : val)
-    this.next = (next===undefined ? null : next)
+  this.val = val === undefined ? 0 : val
+  this.next = next === undefined ? null : next
 }
 /**
  * @param {ListNode} head
@@ -29,80 +29,144 @@ function ListNode(val, next) {
     返回结果。
  */
 var findHalf = (head) => {
-    let fast = head
-    let slow = head
-    while(fast.next !== null && fast.next.next !== null){
-        fast = fast.next.next
-        slow = slow.next
-    }
-    return slow
+  let fast = head
+  let slow = head
+  while (fast.next !== null && fast.next.next !== null) {
+    fast = fast.next.next
+    slow = slow.next
+  }
+  return slow
 }
 var reverse = (head) => {
-    let pre = null
-    let curr = head
-    while(curr){
-        let temp = curr.next
-        curr.next = pre
-        pre = curr
-        curr = temp
-    }
-    return pre
+  let pre = null
+  let curr = head
+  while (curr) {
+    let temp = curr.next
+    curr.next = pre
+    pre = curr
+    curr = temp
+  }
+  return pre
 }
-var isPalindrome = function(head) {
-    if(!head) return true
-    let half = findHalf(head)
-    let reverseHead = reverse(half.next)
-    // console.log(reverseHead)
-    // console.log(half)
-    let p1 = head
-    let p2 = reverseHead
-    let flag = true
-    while(flag && p2 != null){
-        if(p1.val != p2.val) flag = false
-        p1 = p1.next
-        p2 = p2.next
-    }
-    half.next = reverse(reverseHead)
-    return flag
-}; 
-var isPalindrome = function(head) {
-    let half = findHalf(head)
-    let reverseHead = reverse(half.next)
-    let p1 = head
-    let p2 = reverseHead
-    let flag = true
-    while (flag && p2) {
-        if(p1.val != p2.val) flag = false
-        p1 = p1.next
-        p2 = p2.next
-    }
-    half.next = reverse(reverseHead)
-    return flag
-};
-var reverse = head => {
-    let prev = null
-    let curr = head
-    while (curr){
-        let temp = curr.next
-        curr.next = prev
-        prev = curr
-        curr = temp
-    }
-    return prev
+var isPalindrome = function (head) {
+  if (!head) return true
+  let half = findHalf(head)
+  let reverseHead = reverse(half.next)
+  // console.log(reverseHead)
+  // console.log(half)
+  let p1 = head
+  let p2 = reverseHead
+  let flag = true
+  while (flag && p2 != null) {
+    if (p1.val != p2.val) flag = false
+    p1 = p1.next
+    p2 = p2.next
+  }
+  half.next = reverse(reverseHead)
+  return flag
 }
-var findHalf = head => {
+var isPalindrome = function (head) {
+  let half = findHalf(head)
+  let reverseHead = reverse(half.next)
+  let p1 = head
+  let p2 = reverseHead
+  let flag = true
+  while (flag && p2) {
+    if (p1.val != p2.val) flag = false
+    p1 = p1.next
+    p2 = p2.next
+  }
+  half.next = reverse(reverseHead)
+  return flag
+}
+var reverse = (head) => {
+  let prev = null
+  let curr = head
+  while (curr) {
+    let temp = curr.next
+    curr.next = prev
+    prev = curr
+    curr = temp
+  }
+  return prev
+}
+var findHalf = (head) => {
+  let fast = head
+  let slow = head
+  while (fast.next && fast.next.next) {
+    fast = fast.next.next
+    slow = slow.next
+  }
+  return slow
+}
+
+/**
+ * O(n) O(n)
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var isPalindrome = function (head) {
+  const stack = []
+  while (head) {
+    stack.push(head.val)
+    head = head.next
+  }
+  let l = 0
+  let r = stack.length - 1
+  while (l < r) {
+    if (stack[l] !== stack[r]) return false
+    l++
+    r--
+  }
+  return true
+}
+
+/**
+ * O(n) O(1)
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var isPalindrome = function (head) {
+  if (!head) return true
+  const mid = middleNode(head)
+  const reserveHead = reverseList(mid.next)
+  let p1 = head
+  let p2 = reserveHead
+  let flag = true
+  while (flag && p2 !== null) {
+    flag = p1.val === p2.val
+    p1 = p1.next
+    p2 = p2.next
+  }
+  // mid.next = reserve(reserveHead)
+  return flag
+  function middleNode(head) {
     let fast = head
     let slow = head
-    while (fast.next && fast.next.next){
-        fast = fast.next.next
-        slow = slow.next
+    while (fast.next && fast.next.next) {
+      fast = fast.next.next
+      slow = slow.next
     }
     return slow
+  }
+  function reverseList(head) {
+    let prev = null
+    while (head) {
+      const next = head.next
+      head.next = prev
+      prev = head
+      head = next
+    }
+    return prev
+  }
 }
-let l1 = new ListNode(1, new ListNode(2, new ListNode(2, new ListNode(1,  new ListNode(1)))))
+let l1 = new ListNode(
+  1,
+  new ListNode(2, new ListNode(2, new ListNode(1, new ListNode(1))))
+)
 let p = l1
-while(p){
-    console.log(p.val)
-    p = p.next
+while (p) {
+  console.log(p.val)
+  p = p.next
 }
 console.log(isPalindrome(l1))

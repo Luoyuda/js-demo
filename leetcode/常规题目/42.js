@@ -21,6 +21,7 @@
     0 <= height[i] <= 105
  */
 /**
+ * 双指针
  * @param {number[]} height
  * @return {number}
  */
@@ -44,6 +45,7 @@ var trap = function (height) {
   return ans
 }
 /**
+ * 单调栈
  * @param {number[]} height
  * @return {number}
  */

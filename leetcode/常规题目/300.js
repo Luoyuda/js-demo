@@ -20,39 +20,40 @@
  * @param {number[]} nums
  * @return {number}
  */
-var lengthOfLIS = function(nums) {
-    if(!nums.length) return 0
-    let dp = []
-    dp[0] = 1
-    let max = 1
-    for (let i = 1; i < nums.length; i++) {
-        dp[i] = 1
-        for (let j = 0; j < i; j++) {
-            if(nums[i] > nums[j]){
-                dp[i] = Math.max(dp[i], dp[j] + 1)
-            }
-        }
-        max = Math.max(max, dp[i])
+var lengthOfLIS = function (nums) {
+  if (!nums.length) return 0
+  let dp = []
+  dp[0] = 1
+  let max = 1
+  for (let i = 1; i < nums.length; i++) {
+    dp[i] = 1
+    for (let j = 0; j < i; j++) {
+      if (nums[i] > nums[j]) {
+        dp[i] = Math.max(dp[i], dp[j] + 1)
+      }
     }
-    return max
+    max = Math.max(max, dp[i])
+  }
+  return max
 }
 // 动态规划 + 二分
-var lengthOfLIS = function(nums) {
-    let tail = []
-    let res = 0
-    for(let num of nums){
-        let i = 0, j = res
-        while(i < j){
-            let m = Math.floor((i + j) / 2)
-            if(num > tail[m]) i = m + 1
-            else j = m
-        }
-        tail[i] = num
-        if(j === res) res++
+var lengthOfLIS = function (nums) {
+  let tail = []
+  let res = 0
+  for (let num of nums) {
+    let i = 0,
+      j = res
+    while (i < j) {
+      let m = Math.floor((i + j) / 2)
+      if (num > tail[m]) i = m + 1
+      else j = m
     }
-    return res
-};
-console.log(lengthOfLIS([10,9,2,5,3,7,101,18]))
+    tail[i] = num
+    if (j === res) res++
+  }
+  return res
+}
+console.log(lengthOfLIS([10, 9, 2, 5, 3, 7, 101, 18]))
 console.log(lengthOfLIS([1]))
 console.log(lengthOfLIS([]))
-console.log(lengthOfLIS([4,10,4,3,8,9]))
+console.log(lengthOfLIS([4, 10, 4, 3, 8, 9]))

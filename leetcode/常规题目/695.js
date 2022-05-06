@@ -29,73 +29,77 @@
     对于上面这个给定的矩阵, 返回 0。
 注意: 给定的矩阵grid 的长度和宽度都不超过 50。
  */
-var maxAreaOfIsland = function(grid) {
-    let m = grid.length
-    if(!m) return 0
-    let n = grid[0].length
-    if(!n) return 0
-    let dfs = (x, y) => {
-        if(x < 0 || y < 0 || x >= m || y >= n || grid[x][y] == 0) return 0
-        // console.log(x, y)
-        grid[x][y] = 0
-        return dfs(x + 1, y) + dfs(x, y + 1) + dfs(x - 1, y) + dfs(x, y - 1) + 1
+var maxAreaOfIsland = function (grid) {
+  let m = grid.length
+  if (!m) return 0
+  let n = grid[0].length
+  if (!n) return 0
+  let dfs = (x, y) => {
+    if (x < 0 || y < 0 || x >= m || y >= n || grid[x][y] == 0) return 0
+    // console.log(x, y)
+    grid[x][y] = 0
+    return dfs(x + 1, y) + dfs(x, y + 1) + dfs(x - 1, y) + dfs(x, y - 1) + 1
+  }
+  let max = 0
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (grid[i][j] == 1) {
+        max = Math.max(max, dfs(i, j))
+      }
     }
-    let max = 0
-    for (let i = 0; i < m; i++) {
-        for (let j = 0; j < n; j++) {
-            if(grid[i][j] == 1){
-                max = Math.max(max, dfs(i, j))
-            }
-        }
-    }
-    return max
-};
+  }
+  return max
+}
 
 /**
  * @param {number[][]} grid
  * @return {number}
  */
-var maxAreaOfIsland = function(grid) {
-    let dx = [-1, 0, 1, 0]
-    let dy = [0, 1, 0, -1]
-    let m = grid.length
-    let n = grid[0].length
-    let ans = 0
-    let dfs = (x, y) => {
-        grid[x][y] = 0
-        let res = 1
-        for(let i = 0; i < 4; i++){
-            let a = x + dx[i]
-            let b = y + dy[i]
-            if(a >= 0 && b >= 0 && a < m && b < n && grid[a][b] == 1){
-                res += dfs(a, b)
-            }
-        }
-        return res 
+var maxAreaOfIsland = function (grid) {
+  let dx = [-1, 0, 1, 0]
+  let dy = [0, 1, 0, -1]
+  let m = grid.length
+  let n = grid[0].length
+  let ans = 0
+  let dfs = (x, y) => {
+    grid[x][y] = 0
+    let res = 1
+    for (let i = 0; i < 4; i++) {
+      let a = x + dx[i]
+      let b = y + dy[i]
+      if (a >= 0 && b >= 0 && a < m && b < n && grid[a][b] == 1) {
+        res += dfs(a, b)
+      }
     }
-    for(let i = 0; i < m; i++){
-        for(let j = 0; j < n; j++){
-            if(grid[i][j] == 1){
-                ans = Math.max(ans, dfs(i, j))
-            }
-        }
+    return res
+  }
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (grid[i][j] == 1) {
+        ans = Math.max(ans, dfs(i, j))
+      }
     }
-    return ans
-};
+  }
+  return ans
+}
 
-console.log(maxAreaOfIsland([
-    [0,0,1,0,0,0,0,1,0,0,0,0,0],
-    [0,0,0,0,0,0,0,1,1,1,0,0,0],
-    [0,1,1,0,1,0,0,0,0,0,0,0,0],
-    [0,1,0,0,1,1,0,0,1,0,1,0,0],
-    [0,1,0,0,1,1,0,0,1,1,1,0,0],
-    [0,0,0,0,0,0,0,0,0,0,1,0,0],
-    [0,0,0,0,0,0,0,1,1,1,0,0,0],
-    [0,0,0,0,0,0,0,1,1,0,0,0,0]
-]))
-console.log(maxAreaOfIsland([
-    [1,1,0,0,0],
-    [1,1,0,0,0],
-    [0,0,0,1,1],
-    [0,0,0,1,1]
-]))
+console.log(
+  maxAreaOfIsland([
+    [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+    [0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0],
+    [0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+  ])
+)
+console.log(
+  maxAreaOfIsland([
+    [1, 1, 0, 0, 0],
+    [1, 1, 0, 0, 0],
+    [0, 0, 0, 1, 1],
+    [0, 0, 0, 1, 1],
+  ])
+)

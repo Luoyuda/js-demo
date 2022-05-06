@@ -25,56 +25,67 @@
     -1000 <= targetSum <= 1000
  */
 function TreeNode(val, left, right) {
-    this.val = (val===undefined ? 0 : val)
-    this.left = (left===undefined ? null : left)
-    this.right = (right===undefined ? null : right)
+  this.val = val === undefined ? 0 : val
+  this.left = left === undefined ? null : left
+  this.right = right === undefined ? null : right
 }
 /**
  * @param {TreeNode} root
  * @param {number} targetSum
  * @return {number[][]}
  */
-var pathSum = function(root, targetSum) {
-    let res = []
-    if(!root) return res
-    let dfs = (root, target, path) => {
-        if(!root) return
-        let val = root.val
-        let diff = target - val
-        path.push(root.val)
-        if(!diff && !root.left && !root.right){
-            res.push(path)
-            return
-        }
-        dfs(root.left, diff, path.slice())
-        dfs(root.right, diff, path.slice())
+var pathSum = function (root, targetSum) {
+  let res = []
+  if (!root) return res
+  let dfs = (root, target, path) => {
+    if (!root) return
+    let val = root.val
+    let diff = target - val
+    path.push(root.val)
+    if (!diff && !root.left && !root.right) {
+      res.push(path)
+      return
     }
-    dfs(root, targetSum, [])
-    return res
-};
+    dfs(root.left, diff, path.slice())
+    dfs(root.right, diff, path.slice())
+  }
+  dfs(root, targetSum, [])
+  return res
+}
 var root = new TreeNode(
-    5,
-    new TreeNode(4, 
-        new TreeNode(11, 
-            new TreeNode(7), 
-            new TreeNode(2)
-        )
-    ),
-    new TreeNode(8, 
-        new TreeNode(13), 
-        new TreeNode(4, 
-            new TreeNode(5), 
-            new TreeNode(1)
-        )
-    ),
+  5,
+  new TreeNode(4, new TreeNode(11, new TreeNode(7), new TreeNode(2))),
+  new TreeNode(
+    8,
+    new TreeNode(13),
+    new TreeNode(4, new TreeNode(5), new TreeNode(1))
+  )
 )
+/**
+ * @param {TreeNode} root
+ * @param {number} targetSum
+ * @return {number[][]}
+ */
+var pathSum = function (root, targetSum) {
+  const result = []
+  const dfs = (root, res, sum) => {
+    if (!root) return
+    sum -= root.val
+    res.push(root.val)
+    if (sum === 0 && !root.left && !root.right) return result.push(res.slice())
+    dfs(root.left, res.slice(), sum)
+    dfs(root.right, res.slice(), sum)
+  }
+  dfs(root, [], targetSum)
+  return result
+}
 // var root = new TreeNode(
 //     -2,
-//     new TreeNode(-3, 
+//     new TreeNode(-3,
 //     ),
 // )
 let paths = pathSum(root, 22)
 // let paths = pathSum(root, -5)
 for (const path of paths) {
-    console.log(path)
+  console.log(path)
 }

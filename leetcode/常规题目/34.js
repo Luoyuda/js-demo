@@ -29,36 +29,64 @@
     nums 是一个非递减数组
     -109 <= target <= 109
  */
-var binarySearch = function(nums, target, low){
-    let l = 0
-    let r = nums.length - 1
-    let ans = nums.length
-    while (l <= r) {
-        let mid = l + Math.floor((r - l) / 2)
-        if(nums[mid] > target || (low && nums[mid] >= target)){
-            r = mid - 1
-            ans = mid
-        }else{
-            l = mid + 1
-        }
+var binarySearch = function (nums, target, low) {
+  let l = 0
+  let r = nums.length - 1
+  let ans = nums.length
+  while (l <= r) {
+    let mid = l + Math.floor((r - l) / 2)
+    if (nums[mid] > target || (low && nums[mid] >= target)) {
+      r = mid - 1
+      ans = mid
+    } else {
+      l = mid + 1
     }
-    return ans
+  }
+  return ans
 }
-var searchRange = function(nums, target) {
-    let res = [-1, -1]
-    if(!nums.length) return res
-    let left = binarySearch(nums, target, true)
-    let right = binarySearch(nums, target, false) - 1
-    if (left <= right && right < nums.length && nums[left] === target && nums[right] === target) {
-        res = [left, right];
-    } 
-    return res
-};
-
+var searchRange = function (nums, target) {
+  let res = [-1, -1]
+  if (!nums.length) return res
+  let left = binarySearch(nums, target, true)
+  let right = binarySearch(nums, target, false) - 1
+  if (
+    left <= right &&
+    right < nums.length &&
+    nums[left] === target &&
+    nums[right] === target
+  ) {
+    res = [left, right]
+  }
+  return res
+}
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var searchRange = function (nums, target) {
+  let l = 0
+  let r = nums.length - 1
+  while (l < r) {
+    let m = l + ((r - l + 1) >> 1)
+    if (nums[m] <= target) l = m
+    else r = m - 1
+  }
+  if (nums[l] !== target) return [-1, -1]
+  let end = l
+  l = 0
+  r = end
+  while (l < r) {
+    let m = l + ((r - l) >> 1)
+    if (nums[m] >= target) r = m
+    else l = m + 1
+  }
+  return [l, end]
+}
 let params = [
-    [[5,7,7,8,8,10], 8],
-    [[1], 1],
+  [[5, 7, 7, 8, 8, 10], 8],
+  [[1], 1],
 ]
-params.forEach(item => {
-    console.log(searchRange(...item))
+params.forEach((item) => {
+  console.log(searchRange(...item))
 })

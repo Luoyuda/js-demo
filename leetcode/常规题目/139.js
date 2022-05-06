@@ -27,45 +27,62 @@
         输入: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
         输出: false
  */
-var wordBreak = function(s, wordDict) {
-    let len = s.length
-    let wordSet = new Set(wordDict)
-    let dp = new Array(len + 1).fill(false)
-    dp[0] = true
-    for (let i = 1; i <= len; i++) {
-        for (let j = i-1; j >= 0; j--) {
-            if(dp[i]) break
-            if(!dp[j]) continue
-            let str = s.slice(j, i)
-            // console.log(str)
-            if(wordSet.has(str) && dp[j]){
-                dp[i] = true
-                break
-            }
-        }
+var wordBreak = function (s, wordDict) {
+  let len = s.length
+  let wordSet = new Set(wordDict)
+  let dp = new Array(len + 1).fill(false)
+  dp[0] = true
+  for (let i = 1; i <= len; i++) {
+    for (let j = i - 1; j >= 0; j--) {
+      if (dp[i]) break
+      if (!dp[j]) continue
+      let str = s.slice(j, i)
+      // console.log(str)
+      if (wordSet.has(str) && dp[j]) {
+        dp[i] = true
+        break
+      }
     }
-    return dp[len]
-};
+  }
+  return dp[len]
+}
 
-var wordBreak = function(s, wordDict) {
-    let len = s.length
-    let map = {}
-    for (const word of wordDict) {
-        map[word] = true
+var wordBreak = function (s, wordDict) {
+  let len = s.length
+  let map = {}
+  for (const word of wordDict) {
+    map[word] = true
+  }
+  let dp = new Array(len + 1).fill(false)
+  dp[0] = true
+  for (let i = 1; i <= len; i++) {
+    for (let j = i - 1; j >= 0; j--) {
+      if (!dp[j]) continue
+      let str = s.slice(j, i)
+      if (map[str]) {
+        dp[i] = true
+        break
+      }
     }
-    let dp = new Array(len + 1).fill(false)
-    dp[0] = true
-    for (let i = 1; i <= len; i++) {
-        for (let j = i-1; j >= 0; j--) {
-            if(!dp[j]) continue
-            let str = s.slice(j, i)
-            if(map[str]){
-                dp[i] = true
-                break
-            }
-        }
+  }
+  return dp[len]
+}
+
+var wordBreak = function (s, wordDict) {
+  const n = s.length
+  const m = wordDict.length
+  const dp = new Array(n + 1).fill(false)
+  dp[0] = true
+  const hash = {}
+  for (let i = 0; i < m; i++) hash[wordDict[i]] = true
+  for (let i = 1; i <= n; i++) {
+    for (let j = i - 1; j >= 0; j--) {
+      if (!dp[j]) continue
+      dp[i] = hash[s.slice(j, i)]
+      if (dp[i]) break
     }
-    return dp[len]
-};
-console.log(wordBreak('applepenapple', ["apple", "pen"]))
-console.log(wordBreak('catsandog', ["cats", "dog", "sand", "and", "cat"]))
+  }
+  return !!dp[n]
+}
+console.log(wordBreak('applepenapple', ['apple', 'pen']))
+console.log(wordBreak('catsandog', ['cats', 'dog', 'sand', 'and', 'cat']))

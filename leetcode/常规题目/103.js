@@ -17,38 +17,62 @@
  * @param {TreeNode} root
  * @return {number[][]}
  */
-var zigzagLevelOrder = function(root) {
-    let res = []
-    if(!root) return []
-    let stack = [root]
-    let isOrderLeft = true
-    while (stack.length){
-        let levelList = []
-        let size = stack.length
-        for (let i = 0; i < size; i++) {
-            let node = stack.shift()
-            if(isOrderLeft){
-                levelList.push(node.val)
-            }else{
-                levelList.unshift(node.val)
-            }
-            if (node.left !== null) {
-                stack.push(node.left);
-            }
-            if (node.right !== null) {
-                stack.push(node.right);
-            }
-        }
-        res.push(levelList)
-        isOrderLeft = !isOrderLeft
+var zigzagLevelOrder = function (root) {
+  let res = []
+  if (!root) return []
+  let stack = [root]
+  let isOrderLeft = true
+  while (stack.length) {
+    let levelList = []
+    let size = stack.length
+    for (let i = 0; i < size; i++) {
+      let node = stack.shift()
+      if (isOrderLeft) {
+        levelList.push(node.val)
+      } else {
+        levelList.unshift(node.val)
+      }
+      if (node.left !== null) {
+        stack.push(node.left)
+      }
+      if (node.right !== null) {
+        stack.push(node.right)
+      }
     }
-    return res
-};
-
+    res.push(levelList)
+    isOrderLeft = !isOrderLeft
+  }
+  return res
+}
+/**
+ * O(n) O(n)
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var zigzagLevelOrder = function (root) {
+  const result = []
+  if (!root) return result
+  const stack = [root]
+  let flag = true
+  while (stack.length) {
+    const res = []
+    const len = stack.length
+    for (let i = 0; i < len; i++) {
+      const node = stack.shift()
+      res.push(node.val)
+      if (node.left) stack.push(node.left)
+      if (node.right) stack.push(node.right)
+    }
+    if (!flag) res.reverse()
+    flag = !flag
+    result.push(res)
+  }
+  return result
+}
 function TreeNode(val, left, right) {
-    this.val = (val===undefined ? 0 : val)
-    this.left = (left===undefined ? null : left)
-    this.right = (right===undefined ? null : right)
+  this.val = val === undefined ? 0 : val
+  this.left = left === undefined ? null : left
+  this.right = right === undefined ? null : right
 }
 let root = new TreeNode(7)
 root.left = new TreeNode(3)

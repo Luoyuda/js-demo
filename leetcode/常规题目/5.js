@@ -22,51 +22,77 @@
     提示：
         1 <= s.length <= 1000
         s 仅由数字和英文字母（大写和/或小写）组成
- */ 
-var longestPalindrome = function(s) {
-    let n = s.length
-    let dp = []
-    for (let i = 0; i < n; i++) {
-        dp[i] = []
+ */
+var longestPalindrome = function (s) {
+  let n = s.length
+  let dp = []
+  for (let i = 0; i < n; i++) {
+    dp[i] = []
+  }
+  let str = ''
+  for (let l = 0; l < n; l++) {
+    for (let i = 0; i + l < n; i++) {
+      let j = i + l
+      if (l == 0) {
+        dp[i][j] = true
+      } else if (l == 1) {
+        dp[i][j] = s[i] == s[j]
+      } else {
+        dp[i][j] = s[i] == s[j] && dp[i + 1][j - 1]
+      }
+      if (dp[i][j] && l + 1 > str.length) {
+        str = s.substring(i, i + l + 1)
+      }
     }
-    let str = ''
-    for (let l = 0; l < n; l++) {
-        for (let i = 0; i + l < n; i++) {
-            let j = i + l
-            if(l == 0){
-                dp[i][j] = true
-            }else if(l == 1){
-                dp[i][j] = s[i] == s[j]
-            }else {
-                dp[i][j] = s[i] == s[j] && dp[i+1][j-1]
-            }
-            if(dp[i][j] && l + 1 > str.length){
-                str = s.substring(i, i + l + 1)
-            }
-        }
-    }
-    return str
+  }
+  return str
 }
-var longestPalindrome = function(s) {
-    if(s == null || s.length < 1) return ""
-    let start = 0
-    let end = 0
-    for (let i = 0; i < s.length; i++) {
-        let len1 = expandAroundCenter(s, i, i)
-        let len2 = expandAroundCenter(s, i, i + 1)
-        let len = Math.max(len1, len2)
-        if(len > end - start){
-            start = i - Math.floor((len - 1) / 2)
-            end = i + Math.floor(len / 2)
-        }
+var longestPalindrome = function (s) {
+  if (s == null || s.length < 1) return ''
+  let start = 0
+  let end = 0
+  for (let i = 0; i < s.length; i++) {
+    let len1 = expandAroundCenter(s, i, i)
+    let len2 = expandAroundCenter(s, i, i + 1)
+    let len = Math.max(len1, len2)
+    if (len > end - start) {
+      start = i - Math.floor((len - 1) / 2)
+      end = i + Math.floor(len / 2)
     }
-    return s.substring(start, end + 1)
+  }
+  return s.substring(start, end + 1)
 }
 var expandAroundCenter = (s, left, right) => {
-    while (left >= 0 && right < s.length && s[left] == s[right]) {
-        --left;
-        ++right;
-    }
-    return right - left - 1;
+  while (left >= 0 && right < s.length && s[left] == s[right]) {
+    --left
+    ++right
+  }
+  return right - left - 1
 }
 console.log(longestPalindrome('babad'))
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var longestPalindrome = function (s) {
+  let start = 0
+  let end = 0
+  const n = s.length
+  for (let i = 0; i < n; i++) {
+    const len1 = expand(s, i, i)
+    const len2 = expand(s, i, i + 1)
+    const len = Math.max(len1, len2)
+    if (len > end - start) {
+      start = i - Math.floor((len - 1) / 2)
+      end = i + Math.floor(len / 2)
+    }
+  }
+  return s.substring(start, end + 1)
+}
+const expand = (s, l, r) => {
+  while (l >= 0 && r < s.length && s[l] === s[r]) {
+    l--
+    r++
+  }
+  return r - l - 1
+}

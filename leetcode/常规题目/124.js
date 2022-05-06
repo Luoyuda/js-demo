@@ -6,9 +6,9 @@
  * @FilePath: /js-demo/leetcode/常规题目/124.js
  */
 function TreeNode(val, left, right) {
-    this.val = (val===undefined ? 0 : val)
-    this.left = (left===undefined ? null : left)
-    this.right = (right===undefined ? null : right)
+  this.val = val === undefined ? 0 : val
+  this.left = left === undefined ? null : left
+  this.right = right === undefined ? null : right
 }
 /**
  * @param {TreeNode} root
@@ -29,26 +29,27 @@ function TreeNode(val, left, right) {
     树中节点数目范围是 [1, 3 * 104]
     -1000 <= Node.val <= 1000
  */
-var maxPathSum = function(root) {
-    let max = -Infinity
-    let dfs = (root)=>{
-        if(!root) return 0
-        let left = Math.max(dfs(root.left), 0)
-        let right = Math.max(dfs(root.right), 0)
-        let temp = root.val + left + right
-        max = Math.max(max, temp)
-        return root.val + Math.max(left, right)
-    }
-    dfs(root)
-    return max
-};
-
-let root = new TreeNode(-10,
-    new TreeNode(9),
-    new TreeNode(20, 
-        new TreeNode(15),
-        new TreeNode(7),
-    )
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxPathSum = function (root) {
+  let max = Number.MIN_SAFE_INTEGER
+  const dfs = (node) => {
+    if (!node) return 0
+    const l = Math.max(dfs(node.left), 0)
+    const r = Math.max(dfs(node.right), 0)
+    const val = l + r + node.val
+    max = Math.max(val, max)
+    return node.val + Math.max(l, r)
+  }
+  dfs(root)
+  return max
+}
+let root = new TreeNode(
+  -10,
+  new TreeNode(9),
+  new TreeNode(20, new TreeNode(15), new TreeNode(7))
 )
 
 console.log(maxPathSum(root))

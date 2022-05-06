@@ -35,46 +35,46 @@
  * @param {TreeNode} root
  * @return {string}
  */
-var serialize = function(root) {
-    if(!root) return '[]'
-    let q = [root]
-    let ans = ''
-    while(q.length){
-        let node = q.shift()
-        if(!node) ans += 'null,'
-        else {
-            ans +=  node.val + ','
-            q.push(node.left)
-            q.push(node.right)
-        }
+var serialize = function (root) {
+  if (!root) return '[]'
+  let q = [root]
+  let ans = ''
+  while (q.length) {
+    let node = q.shift()
+    if (!node) ans += 'null,'
+    else {
+      ans += node.val + ','
+      q.push(node.left)
+      q.push(node.right)
     }
-    return '[' + ans.substring(0, ans.length-1) + ']';
-};
+  }
+  return '[' + ans.substring(0, ans.length - 1) + ']'
+}
 /**
  * Decodes your encoded data to tree.
  *
  * @param {string} data
  * @return {TreeNode}
  */
-var deserialize = function(data) {
-    if(data == '[]') return null
-    let values = data.substring(1, data.length - 1).split(',')
-    let root = new TreeNode(values.shift())
-    let q = [root]
-    while(q.length){
+var deserialize = function (data) {
+  if (data == '[]') return null
+  let values = data.substring(1, data.length - 1).split(',')
+  let root = new TreeNode(values.shift())
+  let q = [root]
+  while (q.length) {
     // for (let index = 0; index < 10; index++) {
-        let node = q.shift()
-        if(node) {
-            let left = values.shift()
-            let right = values.shift()
-            node.left = left == 'null' ? null : new TreeNode(left)
-            node.right = right == 'null' ? null : new TreeNode(right)
-            q.push(node.left)
-            q.push(node.right)
-        }
+    let node = q.shift()
+    if (node) {
+      let left = values.shift()
+      let right = values.shift()
+      node.left = left == 'null' ? null : new TreeNode(left)
+      node.right = right == 'null' ? null : new TreeNode(right)
+      q.push(node.left)
+      q.push(node.right)
     }
-    return root
-};
+  }
+  return root
+}
 
 /**
  * Encodes a tree to a single string.
@@ -82,59 +82,56 @@ var deserialize = function(data) {
  * @param {TreeNode} root
  * @return {string}
  */
-var serialize = function(root) {
-    if(!root) return '[]'
-    let q = [root]
-    let res = []
-    while(q.length){
-        let node = q.shift()
-        if(!node) res.push('#')
-        else{
-            res.push(node.val + '')
-            q.push(node.left)
-            q.push(node.right)
-        }
+var serialize = function (root) {
+  if (!root) return '[]'
+  let q = [root]
+  let res = []
+  while (q.length) {
+    let node = q.shift()
+    if (!node) res.push('#')
+    else {
+      res.push(node.val + '')
+      q.push(node.left)
+      q.push(node.right)
     }
-    return '[' + res.join(',') + ']'
-};
+  }
+  return '[' + res.join(',') + ']'
+}
 /**
  * Decodes your encoded data to tree.
  *
  * @param {string} data
  * @return {TreeNode}
  */
-var deserialize = function(data) {
-    if(data == '[]') return null
-    let values = data.substring(1, data.length - 1).split(',')
-    let i = 0
-    let root = new TreeNode(values[i++])
-    let q = [root]
-    while(q.length){
-        let node = q.shift()
-        if(node){
-            let left = values[i++]
-            let right = values[i++]
-            node.left = left == '#' ? null : new TreeNode(left)
-            node.right = right == '#' ? null : new TreeNode(right)
-            q.push(node.left)
-            q.push(node.right)
-        }
+var deserialize = function (data) {
+  if (data == '[]') return null
+  let values = data.substring(1, data.length - 1).split(',')
+  let i = 0
+  let root = new TreeNode(values[i++])
+  let q = [root]
+  while (q.length) {
+    let node = q.shift()
+    if (node) {
+      let left = values[i++]
+      let right = values[i++]
+      node.left = left == '#' ? null : new TreeNode(left)
+      node.right = right == '#' ? null : new TreeNode(right)
+      q.push(node.left)
+      q.push(node.right)
     }
-    return root
-};
+  }
+  return root
+}
 
 function TreeNode(val, left, right) {
-    this.val = val === undefined ? null : val;
-    this.left = left === undefined ? null : left;
-    this.right = right === undefined ? null : right;
-};
-var root = new TreeNode(1, 
-    new TreeNode(2, 
-    ), 
-    new TreeNode(3, 
-        new TreeNode(4),
-        new TreeNode(5)
-    )
+  this.val = val === undefined ? null : val
+  this.left = left === undefined ? null : left
+  this.right = right === undefined ? null : right
+}
+var root = new TreeNode(
+  1,
+  new TreeNode(2),
+  new TreeNode(3, new TreeNode(4), new TreeNode(5))
 )
 
 let res = serialize(root)

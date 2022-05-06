@@ -17,34 +17,51 @@
         输出：2 或 3 
  */
 // 遍历
-var findRepeatNumber = function(nums) {
-    let vis = {}
-    let result = null
-    for (let i = 0; i < nums.length; i++) {
-        let element = nums[i];
-        if(vis[element]) {
-            result = element
-            break
-        }else{
-            vis[element] = true
-        }
+var findRepeatNumber = function (nums) {
+  let vis = {}
+  let result = null
+  for (let i = 0; i < nums.length; i++) {
+    let element = nums[i]
+    if (vis[element]) {
+      result = element
+      break
+    } else {
+      vis[element] = true
     }
-    return result
-};
+  }
+  return result
+}
 // 原地交换
-var findRepeatNumber = function(nums) {
-    let i = 0
-    while(i < nums.length){
-        if(nums[i] == i){
-            i += 1
-            continue
-        }else{
-            if(nums[nums[i]] == nums[i]) return nums[i]
-            let temp = nums[i]
-            nums[i] = nums[nums[i]]
-            nums[temp] = temp
-        }
+var findRepeatNumber = function (nums) {
+  let i = 0
+  while (i < nums.length) {
+    if (nums[i] == i) {
+      i += 1
+      continue
+    } else {
+      if (nums[nums[i]] == nums[i]) return nums[i]
+      let temp = nums[i]
+      nums[i] = nums[nums[i]]
+      nums[temp] = temp
     }
-};
-
+  }
+}
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findRepeatNumber = function (nums) {
+  const n = nums.length
+  let i = 0
+  while (i < n) {
+    if (nums[i] === i) {
+      i++
+    } else {
+      if (nums[nums[i]] === nums[i]) return nums[i]
+      const temp = nums[i]
+      nums[i] = nums[nums[i]]
+      nums[temp] = temp
+    }
+  }
+}
 console.log(findRepeatNumber([2, 3, 1, 0, 2, 5, 3]))

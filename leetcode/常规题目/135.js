@@ -26,17 +26,17 @@
  * @param {number[]} ratings
  * @return {number}
  */
-var candy = function(ratings) {
-    let n = ratings.length
-    let left = new Array(n).fill(1)
-    let right = new Array(n).fill(1)
-    for(let i = 1; i < n; i++){
-        if(ratings[i] > ratings[i - 1]) left[i] = left[i - 1] + 1
-    }
-    let count = left[n - 1]
-    for(let i = n - 2; i >= 0; i--){
-        if(ratings[i] > ratings[i + 1]) right[i] = right[i + 1] + 1
-        count += Math.max(left[i], right[i])
-    }
-    return count
-};
+var candy = function (ratings) {
+  const n = ratings.length
+  const l = new Array(n).fill(1)
+  const r = new Array(n).fill(1)
+  for (let i = 1; i < n; i++) {
+    if (ratings[i] > ratings[i - 1]) l[i] = l[i - 1] + 1
+  }
+  let count = l[n - 1]
+  for (let i = n - 2; i >= 0; i--) {
+    if (ratings[i] > ratings[i + 1]) r[i] = r[i + 1] + 1
+    count += Math.max(l[i], r[i])
+  }
+  return count
+}

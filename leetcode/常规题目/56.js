@@ -26,24 +26,45 @@
     intervals[i].length == 2
     0 <= starti <= endi <= 104
  */
-var merge = function(intervals) {
-    let res = []
-    let len = intervals.length
-    if(!len) return res
-    intervals.sort((a, b) => a[0] - b[0])
-    // console.log(intervals)
-    for (let i = 0; i < len; i++) {
-        let l = intervals[i][0]
-        let r = intervals[i][1]
-        if(res.length == 0 || res[res.length - 1][1] < l){
-            res.push([l, r])
-        }else{
-            res[res.length - 1][1] = Math.max(res[res.length - 1][1], r)
-        }
+/**
+ * @param {number[][]} intervals
+ * @return {number[][]}
+ */
+var merge = function (intervals) {
+  intervals.sort((a, b) => a[0] - b[0])
+  const n = intervals.length
+  const res = []
+  for (let i = 0; i < n; i++) {
+    const l = intervals[i][0]
+    const r = intervals[i][1]
+    if (!res.length || res[res.length - 1][1] < l) {
+      res.push([l, r])
+    } else {
+      res[res.length - 1][1] = Math.max(res[res.length - 1][1], r)
     }
-    return res
-};
-let params = [[[1,3],[2,6],[8,10],[15,18]], [[1,4],[4,5]], [[1,4],[0,4]], [[1,4],[2,3]]]
-params.forEach(item => {
-    console.log(merge(item))
+  }
+  return res
+}
+let params = [
+  [
+    [1, 3],
+    [2, 6],
+    [8, 10],
+    [15, 18],
+  ],
+  [
+    [1, 4],
+    [4, 5],
+  ],
+  [
+    [1, 4],
+    [0, 4],
+  ],
+  [
+    [1, 4],
+    [2, 3],
+  ],
+]
+params.forEach((item) => {
+  console.log(merge(item))
 })

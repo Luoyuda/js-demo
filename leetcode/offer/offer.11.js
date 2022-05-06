@@ -19,22 +19,39 @@
         输入：[2,2,2,0,1]
         输出：0
  */
-var minArray = function(numbers) {
-    let left = 0
-    let right = numbers.length - 1
-    while(left < right){
-        let mid = left + Math.floor((right - left) / 2)
-        // console.log(left, mid, right)
-        if(numbers[mid] > numbers[right]){
-            left = mid + 1
-        }else if(numbers[mid] < numbers[right]){
-            right = mid
-        }else{
-            right--
-        }
+var minArray = function (numbers) {
+  let left = 0
+  let right = numbers.length - 1
+  while (left < right) {
+    let mid = left + Math.floor((right - left) / 2)
+    if (numbers[mid] > numbers[right]) {
+      left = mid + 1
+    } else if (numbers[mid] < numbers[right]) {
+      right = mid
+    } else {
+      right--
     }
-    return numbers[left]
-};
-
+  }
+  return numbers[left]
+}
+/**
+ * @param {number[]} numbers
+ * @return {number}
+ */
+var minArray = function (numbers) {
+  let l = 0
+  let r = numbers.length - 1
+  while (l < r) {
+    let m = l + ((r - l) >> 1)
+    if (numbers[m] > numbers[r]) {
+      l = m + 1
+    } else if (numbers[m] < numbers[r]) {
+      r = m
+    } else {
+      r--
+    }
+  }
+  return numbers[l]
+}
 // console.log(minArray([3,4,5,1,2]))
-console.log(minArray([2,2,2,0,1]))
+console.log(minArray([2, 2, 2, 0, 1]))

@@ -6,10 +6,6 @@
  * @FilePath: /js-demo/leetcode/常规题目/236.js
  */
 /**
- * @param {TreeNode} root
- * @param {TreeNode} p
- * @param {TreeNode} q
- * @return {TreeNode}
 236. 二叉树的最近公共祖先
     给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
     百度百科中最近公共祖先的定义为：“对于有根树 T 的两个节点 p、q，最近公共祖先表示为一个节点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
@@ -31,33 +27,43 @@
     p != q
     p 和 q 均存在于给定的二叉树中。
  */
-var lowestCommonAncestor = function(root, p, q) {
-    let ans
-    let dfs = (root, p, q) => {
-        if(root == null) return false
-        let left = dfs(root.left, p, q)
-        let right = dfs(root.right, p, q)
-        if((left && right) || (root.val == p.val || root.val == q.val) && (left || right)){
-            ans = root
-        }
-        return left || right || (root.val == p.val || root.val == q.val)
+
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+var lowestCommonAncestor = function (root, p, q) {
+  let ans
+  let dfs = (root, p, q) => {
+    if (root == null) return false
+    let left = dfs(root.left, p, q)
+    let right = dfs(root.right, p, q)
+    if (
+      (left && right) ||
+      ((root.val == p.val || root.val == q.val) && (left || right))
+    ) {
+      ans = root
     }
-    dfs(root, p, q)
-    return ans
-};
-var lowestCommonAncestor = function(root, p, q) {
-    if(!root || root == p || root == q) return root
-    let left = lowestCommonAncestor(root.left, p, q)
-    let right = lowestCommonAncestor(root.right, p, q)
-    if(!left && !right) return null
-    if(!left) return right
-    if(!right) return left
-    // return root
-};
+    return left || right || root.val == p.val || root.val == q.val
+  }
+  dfs(root, p, q)
+  return ans
+}
+var lowestCommonAncestor = function (root, p, q) {
+  if (!root || root == p || root == q) return root
+  let left = lowestCommonAncestor(root.left, p, q)
+  let right = lowestCommonAncestor(root.right, p, q)
+  if (!left && !right) return null
+  if (!left) return right
+  if (!right) return left
+  return root
+}
 
 function TreeNode(val) {
-    this.val = val;
-    this.left = this.right = null;
+  this.val = val
+  this.left = this.right = null
 }
 let r3 = new TreeNode(3)
 let r5 = new TreeNode(5)

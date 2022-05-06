@@ -28,25 +28,25 @@
         1 <= m + n <= 200
         -109 <= nums1[i], nums2[i] <= 109
  */
-var merge = function(nums1, m, nums2, n) {
-    let pos1 = m - 1
-    let pos2 = n - 1
-    let pos = m + n - 1
-    while (pos1 >= 0 && pos2 >= 0){
-        nums1[pos--] = nums1[pos1] > nums2[pos2] ? nums1[pos1--] : nums2[pos2--]
+var merge = function (nums1, m, nums2, n) {
+  let pos1 = m - 1
+  let pos2 = n - 1
+  let pos = m + n - 1
+  while (pos1 >= 0 && pos2 >= 0) {
+    nums1[pos--] = nums1[pos1] > nums2[pos2] ? nums1[pos1--] : nums2[pos2--]
+  }
+  if (pos1 == -1) {
+    for (let i = 0; i < pos2 + 1; i++) {
+      nums1[i] = nums2[i]
     }
-    if(pos1 == -1){
-        for (let i = 0; i < pos2 + 1; i++) {
-            nums1[i] = nums2[i]
-        }
-    }
-    return nums1
-};
+  }
+  return nums1
+}
 
-console.log(merge([1,2,3,0,0,0], 3, [2,5,6], 3))
+console.log(merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3))
 console.log(merge([1], 1, [], 0))
 console.log(merge([0], 0, [1], 1))
-console.log(merge([4,5,6,0,0,0], 3, [1,2,3], 3))
-console.log(merge([4,0,0,0,0,0], 1, [1,2,3,5,6], 5))
-console.log(merge([1,2,4,5,6,0], 5, [3], 1))
-console.log(merge([-1,0,0,3,3,3,0,0,0], 6, [1,2,2], 3))
+console.log(merge([4, 5, 6, 0, 0, 0], 3, [1, 2, 3], 3))
+console.log(merge([4, 0, 0, 0, 0, 0], 1, [1, 2, 3, 5, 6], 5))
+console.log(merge([1, 2, 4, 5, 6, 0], 5, [3], 1))
+console.log(merge([-1, 0, 0, 3, 3, 3, 0, 0, 0], 6, [1, 2, 2], 3))

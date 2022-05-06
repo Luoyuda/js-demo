@@ -46,19 +46,19 @@
  * @param {number[]} cost
  * @return {number}
  */
-var canCompleteCircuit = function(gas, cost) {
-    let n = gas.length
-    for(let i = 0,j; i < n; i = i + j + 1){
-        let res = 0
-        for(j = 0; j < n; j++){
-            let k = (i + j) % n
-            res += gas[k] - cost[k]
-            if(res < 0) break
-        }
-        if(j >= n) return i
+var canCompleteCircuit = function (gas, cost) {
+  let n = gas.length
+  for (let i = 0, j; i < n; i = i + j + 1) {
+    let res = 0
+    for (j = 0; j < n; j++) {
+      let k = (i + j) % n
+      res += gas[k] - cost[k]
+      if (res < 0) break
     }
-    return -1
-};
+    if (j >= n) return i
+  }
+  return -1
+}
 var gas = [1, 2, 3, 4, 5]
 var cost = [3, 4, 5, 1, 2]
 console.log(canCompleteCircuit(gas, cost))

@@ -30,25 +30,63 @@
     -100 <= Node.val <= 100
     进阶: 递归算法很简单，你可以通过迭代算法完成吗？
  */
-var inorderTraversal = function(root) {
-    let res = []
-    if(!root) return res
-    let stack = []
-    while(root || stack.length){
-        while(root){
-            stack.push(root)
-            root = root.left
-        }
-        root = stack.pop()
-        res.push(root.val)
-        root = root.right
+var inorderTraversal = function (root) {
+  let res = []
+  if (!root) return res
+  let stack = []
+  while (root || stack.length) {
+    while (root) {
+      stack.push(root)
+      root = root.left
     }
-    return res
-};
+    root = stack.pop()
+    res.push(root.val)
+    root = root.right
+  }
+  return res
+}
+/**
+ * O(n) O(n)
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var inorderTraversal = function (root) {
+  const result = []
+  const dfs = (root) => {
+    if (!root) return
+    dfs(root.left)
+    result.push(root.val)
+    dfs(root.right)
+  }
+  dfs(root)
+  return result
+}
+
+/**
+ * O(n) O(n)
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var inorderTraversal = function (root) {
+  const result = []
+  if (!root) return result
+  const stack = []
+  let node = root
+  while (stack.length || node) {
+    while (node) {
+      stack.push(node)
+      node = node.left
+    }
+    node = stack.pop()
+    result.push(node.val)
+    node = node.right
+  }
+  return result
+}
 function TreeNode(val, left, right) {
-    this.val = (val===undefined ? 0 : val)
-    this.left = (left===undefined ? null : left)
-    this.right = (right===undefined ? null : right)
+  this.val = val === undefined ? 0 : val
+  this.left = left === undefined ? null : left
+  this.right = right === undefined ? null : right
 }
 let root = new TreeNode(1)
 root.right = new TreeNode(2)

@@ -30,26 +30,45 @@
  * @param {string} text2
  * @return {number}
  */
-var longestCommonSubsequence = function(text1, text2) {
-    let m = text1.length
-    let n = text2.length
-    let dp = new Array(m + 1).fill(0).map(() => new Array(n + 1).fill(0))
-    for (let i = 1; i <= m; i++) {
-        const c1 = text1[i - 1]
-        for (let j = 1; j <= n; j++) {
-            const c2 = text2[j - 1]
-            // console.log(c1, c2)
-            if(c1 == c2){
-                dp[i][j] = dp[i-1][j-1] + 1
-            }else{
-                dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1])
-            }
-        }
+var longestCommonSubsequence = function (text1, text2) {
+  let m = text1.length
+  let n = text2.length
+  let dp = new Array(m + 1).fill(0).map(() => new Array(n + 1).fill(0))
+  for (let i = 1; i <= m; i++) {
+    const c1 = text1[i - 1]
+    for (let j = 1; j <= n; j++) {
+      const c2 = text2[j - 1]
+      if (c1 == c2) {
+        dp[i][j] = dp[i - 1][j - 1] + 1
+      } else {
+        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1])
+      }
     }
-    // console.log(dp)
-    return dp[m][n]
-};
-
+  }
+  return dp[m][n]
+}
+/**
+ * @param {string} text1
+ * @param {string} text2
+ * @return {number}
+ */
+var longestCommonSubsequence = function (text1, text2) {
+  const n = text1.length
+  const m = text2.length
+  const dp = new Array(n + 1).fill(0).map(() => new Array(m + 1).fill(0))
+  for (let i = 1; i <= n; i++) {
+    const ch1 = text1[i - 1]
+    for (let j = 1; j <= m; j++) {
+      const ch2 = text2[j - 1]
+      if (ch1 === ch2) {
+        dp[i][j] = dp[i - 1][j - 1] + 1
+      } else {
+        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1])
+      }
+    }
+  }
+  return dp[n][m]
+}
 // var longestCommonSubsequence = function(text1, text2) {
 //     const m = text1.length, n = text2.length;
 //     const dp = new Array(m + 1).fill(0).map(() => new Array(n + 1).fill(0));

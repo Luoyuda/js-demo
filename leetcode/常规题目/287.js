@@ -35,30 +35,34 @@
         你可以只用常量级 O(1) 的额外空间解决这个问题吗？
         你可以设计一个时间复杂度小于 O(n2) 的解决方案吗？
  */
-var findDuplicate = function(nums) {
-    let arr = []
-    for (let i = 0; i < nums.length; i++) {
-        const el = nums[i];
-        if(arr[el]){
-            return el
-        }else{
-            arr[el] = true
-        }
+var findDuplicate = function (nums) {
+  let arr = []
+  for (let i = 0; i < nums.length; i++) {
+    const el = nums[i]
+    if (arr[el]) {
+      return el
+    } else {
+      arr[el] = true
     }
-    return null
-};
-var findDuplicate = function(nums) {
-    let fast = 0
-    let slow = 0
-    do{
-        slow = nums[slow]
-        fast = nums[nums[fast]]
-    }while(fast != slow)
-    slow = 0
-    while (slow != fast) {
-        slow = nums[slow];
-        fast = nums[fast];
-    }
-    return slow
-};
-console.log(findDuplicate([1,3,4,2,2]))
+  }
+  return null
+}
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findDuplicate = function (nums) {
+  let fast = 0
+  let slow = 0
+  do {
+    slow = nums[slow]
+    fast = nums[nums[fast]]
+  } while (fast != slow)
+  slow = 0
+  while (slow != fast) {
+    slow = nums[slow]
+    fast = nums[fast]
+  }
+  return slow
+}
+console.log(findDuplicate([1, 3, 4, 2, 2]))

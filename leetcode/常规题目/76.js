@@ -25,40 +25,40 @@
  * @param {string} t
  * @return {string}
  */
-var minWindow = function(s, t) {
-    let map = new Map()
-    let hash = {}
-    for(let ch of t){
-        hash[ch] = 0
-        map.set(ch, (map.get(ch) || 0) + 1)
+var minWindow = function (s, t) {
+  let map = new Map()
+  let hash = {}
+  for (let ch of t) {
+    hash[ch] = 0
+    map.set(ch, (map.get(ch) || 0) + 1)
+  }
+  let l = 0
+  let r = -1
+  let check = () => {
+    for (let [ch, count] of map.entries()) {
+      if (hash[ch] < count) return false
     }
-    let l = 0
-    let r = -1
-    let check = () => {
-        for(let [ch, count] of map.entries()){
-            if(hash[ch] < count) return false
-        }
-        return true
+    return true
+  }
+  let len = Infinity
+  let start = -1
+  let end = -1
+  while (r < s.length) {
+    r++
+    if (hash[s[r]] !== undefined) {
+      hash[s[r]]++
     }
-    let len = Infinity
-    let start = -1
-    let end = -1;
-    while(r < s.length){
-        r++
-        if(hash[s[r]] !== undefined){
-            hash[s[r]]++
-        }
-        while(l <= r && check()){
-            if(r - l + 1 < len){
-                len = r - l + 1
-                start = l
-                end = l + len
-            }
-            if(hash[s[l]]){
-                hash[s[l]]--
-            }
-            l++
-        }
+    while (l <= r && check()) {
+      if (r - l + 1 < len) {
+        len = r - l + 1
+        start = l
+        end = l + len
+      }
+      if (hash[s[l]]) {
+        hash[s[l]]--
+      }
+      l++
     }
-    return s.substring(start, end)
-};
+  }
+  return s.substring(start, end)
+}

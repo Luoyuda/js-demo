@@ -20,37 +20,37 @@
 说明:
     假设你总是可以到达数组的最后一个位置。
  */
-var jump = function(nums) {
-    let len = nums.length
-    let end = 0
-    let maxPosition = 0
-    let steps = 0
-    for (let i = 0; i < len - 1; i++) {
-        maxPosition = Math.max(maxPosition, i + nums[i])
-        if(i == end){
-            end = maxPosition
-            steps++
-        }
+var jump = function (nums) {
+  let len = nums.length
+  let end = 0
+  let maxPosition = 0
+  let steps = 0
+  for (let i = 0; i < len - 1; i++) {
+    maxPosition = Math.max(maxPosition, i + nums[i])
+    if (i == end) {
+      end = maxPosition
+      steps++
     }
-    return steps
-};
-var jump = function(nums) {
-    let n = nums.length
-    if(n == 1) return 0
-    let l = 0
-    let r = 0
-    let steps = 0
-    while(l <= r){
-        let max = 0
-        for (let i = l; i <= r; i++){
-            max = Math.max(max, nums[i] + i)
-        }
-        l = r + 1
-        r = max
-        steps++
-        if(r >= n - 1) break
+  }
+  return steps
+}
+var jump = function (nums) {
+  let n = nums.length
+  if (n == 1) return 0
+  let l = 0
+  let r = 0
+  let steps = 0
+  while (l <= r) {
+    let max = 0
+    for (let i = l; i <= r; i++) {
+      max = Math.max(max, nums[i] + i)
     }
-    return steps
-};
-var nums = [2,3,1,1,4]
+    l = r + 1
+    r = max
+    steps++
+    if (r >= n - 1) break
+  }
+  return steps
+}
+var nums = [2, 3, 1, 1, 4]
 console.log(jump(nums))

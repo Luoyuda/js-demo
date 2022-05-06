@@ -17,59 +17,58 @@
     queue.pop();   // 返回 1
     queue.empty(); // 返回 false
  */
-    var MyQueue = function() {
-        this.enqueue = []
-        this.dequeue = []
-    };
-    
-    /**
-     * Push element x to the back of queue. 
-     * @param {number} x
-     * @return {void}
-     */
-    MyQueue.prototype.push = function(x) {
-        this.enqueue.push(x)
-    };
-    
-    /**
-     * Removes the element from in front of queue and returns that element.
-     * @return {number}
-     */
-    MyQueue.prototype.pop = function() {
-        if(!this.dequeue.length){
-            while(this.enqueue.length){
-                this.dequeue.push(this.enqueue.pop())
-            }
-        }
-        return this.dequeue.pop()
-    };
-    
-    /**
-     * Get the front element.
-     * @return {number}
-     */
-    MyQueue.prototype.peek = function() {
-        if(!this.dequeue.length){
-            while(this.enqueue.length){
-                this.dequeue.push(this.enqueue.pop())
-            }
-        }
-        return this.dequeue[this.dequeue.length - 1]
-    };
-    
-    /**
-     * Returns whether the queue is empty.
-     * @return {boolean}
-     */
-    MyQueue.prototype.empty = function() {
-        return !this.dequeue.length && !this.enqueue.length
-    };
-    
-    const queue = new MyQueue();
-    console.log(queue.push(1));
-    console.log(queue.push(2));
-    console.log(queue.peek());  // 返回 1
-    console.log(queue.pop());   // 返回 1
-    console.log(queue.empty()); // 返回 false
-    console.log(queue.pop());   // 返回 1
-    
+var MyQueue = function () {
+  this.enqueue = []
+  this.dequeue = []
+}
+
+/**
+ * Push element x to the back of queue.
+ * @param {number} x
+ * @return {void}
+ */
+MyQueue.prototype.push = function (x) {
+  this.enqueue.push(x)
+}
+
+/**
+ * Removes the element from in front of queue and returns that element.
+ * @return {number}
+ */
+MyQueue.prototype.pop = function () {
+  if (!this.dequeue.length) {
+    while (this.enqueue.length) {
+      this.dequeue.push(this.enqueue.pop())
+    }
+  }
+  return this.dequeue.pop()
+}
+
+/**
+ * Get the front element.
+ * @return {number}
+ */
+MyQueue.prototype.peek = function () {
+  if (!this.dequeue.length) {
+    while (this.enqueue.length) {
+      this.dequeue.push(this.enqueue.pop())
+    }
+  }
+  return this.dequeue[this.dequeue.length - 1]
+}
+
+/**
+ * Returns whether the queue is empty.
+ * @return {boolean}
+ */
+MyQueue.prototype.empty = function () {
+  return !this.dequeue.length && !this.enqueue.length
+}
+
+const queue = new MyQueue()
+console.log(queue.push(1))
+console.log(queue.push(2))
+console.log(queue.peek()) // 返回 1
+console.log(queue.pop()) // 返回 1
+console.log(queue.empty()) // 返回 false
+console.log(queue.pop()) // 返回 1

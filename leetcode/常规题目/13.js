@@ -4,7 +4,7 @@
  * @LastEditors: xiaohuolong
  * @LastEditTime: 2021-04-17 14:43:41
  * @FilePath: /js-demo/leetcode/常规题目/13.js
- */ 
+ */
 /*
 13.罗马数字转整数
     罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。
@@ -48,27 +48,27 @@
     关于罗马数字的详尽书写规则，可以参考 罗马数字 - Mathematics 。
 */
 var map = {
-    'I':1,
-    'V':5,
-    'X':10,
-    'L':50,
-    'C':100,
-    'D':500,
-    'M':1000
+  I: 1,
+  V: 5,
+  X: 10,
+  L: 50,
+  C: 100,
+  D: 500,
+  M: 1000,
 }
-var romanToInt = function(s) {
-    let last = 0
-    let curr = 0
-    for (let i = 0; i < s.length; i++) {
-        let num = map[s[i]]
-        if(num > last) {
-            curr -= last
-        }else{
-            curr += last
-        }
-        last = num
+var romanToInt = function (s) {
+  let last = 0
+  let curr = 0
+  for (let i = 0; i < s.length; i++) {
+    let num = map[s[i]]
+    if (num > last) {
+      curr -= last
+    } else {
+      curr += last
     }
-    return curr + last
+    last = num
+  }
+  return curr + last
 }
 console.log(romanToInt('III'))
 console.log(romanToInt('IV'))

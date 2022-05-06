@@ -28,44 +28,75 @@
     0 <= nums.length <= 100
     0 <= nums[i] <= 400
  */
-var rob = function(nums) {
-    // f(x) = max(f(x-2) + num[x], f(x-1))
-    if(!nums || !nums.length) return 0
-    if(nums.length == 1) return nums[0]
-    let dp = []
-    let prev = nums[0]
-    let curr = Math.max(nums[0], nums[1])
-    for (let i = 2; i < nums.length; i++) {
-        let temp = Math.max(prev + nums[i], curr)
-        prev = curr
-        curr = temp
-    }
-    return curr
-};
+var rob = function (nums) {
+  // f(x) = max(f(x-2) + num[x], f(x-1))
+  if (!nums || !nums.length) return 0
+  if (nums.length == 1) return nums[0]
+  let dp = []
+  let prev = nums[0]
+  let curr = Math.max(nums[0], nums[1])
+  for (let i = 2; i < nums.length; i++) {
+    let temp = Math.max(prev + nums[i], curr)
+    prev = curr
+    curr = temp
+  }
+  return curr
+}
 
 /**
  * @param {number[]} nums
  * @return {number}
  */
-var rob = function(nums) {
-    // dp[i] = Math.max(dp[i-1], dp[i-2] + nums[i])
-    let n = nums.length
-    if(!nums || !n) return 0;
-    if(n == 1) return nums[0]
-    // let dp = []
-    // dp[0] = nums[0]
-    // dp[1] = Math.max(nums[0], nums[1])
-    let prev = nums[0]
-    let curr = Math.max(nums[0], nums[1])
-    for (let i = 2; i < n; i++) {
-        let temp = Math.max(curr, prev + nums[i])
-        prev = curr
-        curr = temp
-        // dp[i] = Math.max(dp[i-1], dp[i - 2] + nums[i])
-    }
-    // return dp[n-1]
-    return curr
-};
-
-console.log(rob([1,2,3,1]))
-console.log(rob([2,7,9,3,1]))
+var rob = function (nums) {
+  // dp[i] = Math.max(dp[i-1], dp[i-2] + nums[i])
+  let n = nums.length
+  if (!nums || !n) return 0
+  if (n == 1) return nums[0]
+  // let dp = []
+  // dp[0] = nums[0]
+  // dp[1] = Math.max(nums[0], nums[1])
+  let prev = nums[0]
+  let curr = Math.max(nums[0], nums[1])
+  for (let i = 2; i < n; i++) {
+    let temp = Math.max(curr, prev + nums[i])
+    prev = curr
+    curr = temp
+    // dp[i] = Math.max(dp[i-1], dp[i - 2] + nums[i])
+  }
+  // return dp[n-1]
+  return curr
+}
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var rob = function (nums) {
+  // f(x) = max(f(x - 2) + nums[x], f(x - 1))
+  const dp = []
+  dp[0] = nums[0]
+  dp[1] = Math.max(nums[0], nums[1])
+  const n = nums.length
+  for (let i = 2; i < n; i++) {
+    dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1])
+  }
+  return dp[n - 1]
+}
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var rob = function (nums) {
+  // f(x) = max(f(x - 2) + nums[x], f(x - 1))
+  const n = nums.length
+  if (n === 1) return nums[0]
+  let prev = nums[0]
+  let curr = Math.max(nums[0], nums[1])
+  for (let i = 2; i < n; i++) {
+    let temp = Math.max(prev + nums[i], curr)
+    prev = curr
+    curr = temp
+  }
+  return curr
+}
+console.log(rob([1, 2, 3, 1]))
+console.log(rob([2, 7, 9, 3, 1]))

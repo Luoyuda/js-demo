@@ -44,42 +44,42 @@
  * @param {string} s
  * @return {number}
  */
-var numDecodings = function(s) {
-    let n = s.length
-    let dp = new Array(n + 1).fill(0)
-    dp[0] = 1
-    for (let i = 1; i <= n; i++) {
-        let s1 = s[i - 1]
-        let s2 = s[i - 2]
-        if(s1 != '0'){
-            dp[i] += dp[i - 1]
-        }
-        if(s2 && s2 != '0' && ((s2 - 0) * 10 + (s1 - 0)) <= 26){
-            dp[i] += dp[i - 2]
-        }
+var numDecodings = function (s) {
+  let n = s.length
+  let dp = new Array(n + 1).fill(0)
+  dp[0] = 1
+  for (let i = 1; i <= n; i++) {
+    let s1 = s[i - 1]
+    let s2 = s[i - 2]
+    if (s1 != '0') {
+      dp[i] += dp[i - 1]
     }
-    return dp[n]
-};
-var numDecodings = function(s) {
-    let n = s.length
-    let a = 0
-    let b = 1
-    let c = 0
-    for (let i = 1; i <= n; i++) {
-        c = 0
-        let s1 = s[i - 1]
-        let s2 = s[i - 2]
-        if(s1 != '0'){
-            c += b
-        }
-        if(s2 && s2 != '0' && ((s2 - 0) * 10 + (s1 - 0)) <= 26){
-            c += a
-        }
-        a = b
-        b = c
+    if (s2 && s2 != '0' && (s2 - 0) * 10 + (s1 - 0) <= 26) {
+      dp[i] += dp[i - 2]
     }
-    return c
-};
+  }
+  return dp[n]
+}
+var numDecodings = function (s) {
+  let n = s.length
+  let a = 0
+  let b = 1
+  let c = 0
+  for (let i = 1; i <= n; i++) {
+    c = 0
+    let s1 = s[i - 1]
+    let s2 = s[i - 2]
+    if (s1 != '0') {
+      c += b
+    }
+    if (s2 && s2 != '0' && (s2 - 0) * 10 + (s1 - 0) <= 26) {
+      c += a
+    }
+    a = b
+    b = c
+  }
+  return c
+}
 
 console.log(numDecodings('12'))
 console.log(numDecodings('226'))

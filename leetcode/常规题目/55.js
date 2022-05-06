@@ -24,20 +24,37 @@
     1 <= nums.length <= 3 * 104
     0 <= nums[i] <= 105
  */
-var canJump = function(nums) {
-    let n = nums.length
-    let right = 0
-    for (let i = 0; i < n; i++) {
-        if(i <= right){
-            right = Math.max(right, i + nums[i])
-            if(right >= n - 1){
-                return true
-            }
-        }
+var canJump = function (nums) {
+  let n = nums.length
+  let right = 0
+  for (let i = 0; i < n; i++) {
+    if (i <= right) {
+      right = Math.max(right, i + nums[i])
+      if (right >= n - 1) {
+        return true
+      }
     }
-    return false
-};
-var nums = [2,3,1,1,4]
+  }
+  return false
+}
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var canJump = function (nums) {
+  let k = 0
+  const n = nums.length
+  for (let i = 0; i < n; i++) {
+    if (i <= k) {
+      k = Math.max(k, i + nums[i])
+      if (k >= n - 1) {
+        return true
+      }
+    }
+  }
+  return false
+}
+var nums = [2, 3, 1, 1, 4]
 // var nums = [3,2,1,0,4]
 var nums = [0]
 // var nums = [2,5,0,0]
