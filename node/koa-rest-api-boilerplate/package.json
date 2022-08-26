@@ -65,7 +65,7 @@
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^7.4.0",
-    "mongoose": "^6.2.2",
+    "mongoose": "^6.4.6",
     "pino": "^6.11.3",
     "swagger-jsdoc": "6",
     "uuid": "3.4.0"
